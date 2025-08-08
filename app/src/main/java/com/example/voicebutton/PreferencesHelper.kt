@@ -1,0 +1,113 @@
+package com.example.voicebutton
+
+import android.content.Context
+import androidx.preference.PreferenceManager
+
+object PreferencesHelper {
+    private const val VOLUME_STEP_KEY = "volume_step"
+    private const val SHOW_PERCENTAGE_KEY = "show_percentage"
+    private const val VIBRATION_KEY = "vibration_enabled"
+    private const val AUTO_START_KEY = "auto_start"
+    private const val THEME_KEY = "theme_mode"
+    private const val SCHEDULED_VOLUME_KEY = "scheduled_volume"
+    private const val MORNING_VOLUME_KEY = "morning_volume"
+    private const val EVENING_VOLUME_KEY = "evening_volume"
+    private const val NIGHT_VOLUME_KEY = "night_volume"
+    
+    // Tema modları
+    const val THEME_LIGHT = 0
+    const val THEME_DARK = 1
+    const val THEME_AUTO = 2
+    
+    fun getVolumeStep(context: Context): Int {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getInt(VOLUME_STEP_KEY, 1)
+    }
+    
+    fun setVolumeStep(context: Context, step: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putInt(VOLUME_STEP_KEY, step).apply()
+    }
+    
+    fun getShowPercentage(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(SHOW_PERCENTAGE_KEY, false)
+    }
+    
+    fun setShowPercentage(context: Context, show: Boolean) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putBoolean(SHOW_PERCENTAGE_KEY, show).apply()
+    }
+    
+    fun getVibrationEnabled(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(VIBRATION_KEY, true)
+    }
+    
+    fun setVibrationEnabled(context: Context, enabled: Boolean) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putBoolean(VIBRATION_KEY, enabled).apply()
+    }
+    
+    fun getAutoStart(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(AUTO_START_KEY, false)
+    }
+    
+    fun setAutoStart(context: Context, enabled: Boolean) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putBoolean(AUTO_START_KEY, enabled).apply()
+    }
+    
+    // Tema ayarları
+    fun getTheme(context: Context): Int {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getInt(THEME_KEY, THEME_AUTO)
+    }
+    
+    fun setTheme(context: Context, theme: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putInt(THEME_KEY, theme).apply()
+    }
+    
+    // Zamanlanmış ses ayarları
+    fun isScheduledVolumeEnabled(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(SCHEDULED_VOLUME_KEY, false)
+    }
+    
+    fun setScheduledVolumeEnabled(context: Context, enabled: Boolean) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putBoolean(SCHEDULED_VOLUME_KEY, enabled).apply()
+    }
+    
+    fun getMorningVolume(context: Context): Int {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getInt(MORNING_VOLUME_KEY, 50)
+    }
+    
+    fun setMorningVolume(context: Context, volume: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putInt(MORNING_VOLUME_KEY, volume).apply()
+    }
+    
+    fun getEveningVolume(context: Context): Int {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getInt(EVENING_VOLUME_KEY, 70)
+    }
+    
+    fun setEveningVolume(context: Context, volume: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putInt(EVENING_VOLUME_KEY, volume).apply()
+    }
+    
+    fun getNightVolume(context: Context): Int {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getInt(NIGHT_VOLUME_KEY, 20)
+    }
+    
+    fun setNightVolume(context: Context, volume: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putInt(NIGHT_VOLUME_KEY, volume).apply()
+    }
+}

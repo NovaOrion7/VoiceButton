@@ -1,0 +1,183 @@
+package com.example.voicebutton
+
+import android.content.Context
+import android.media.AudioManager
+
+object AdvancedVolumeHelper {
+    
+    // Ses türleri için sabitler
+    object StreamTypes {
+        const val MEDIA = AudioManager.STREAM_MUSIC
+        const val RING = AudioManager.STREAM_RING
+        const val NOTIFICATION = AudioManager.STREAM_NOTIFICATION
+        const val ALARM = AudioManager.STREAM_ALARM
+        const val CALL = AudioManager.STREAM_VOICE_CALL
+        const val SYSTEM = AudioManager.STREAM_SYSTEM
+    }
+    
+    data class VolumeInfo(
+        val current: Int,
+        val max: Int,
+        val percentage: Int
+    )
+    
+    fun getVolumeInfo(context: Context, streamType: Int): VolumeInfo {
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val current = audioManager.getStreamVolume(streamType)
+        val max = audioManager.getStreamMaxVolume(streamType)
+        val percentage = if (max > 0) (current * 100 / max) else 0
+        
+        return VolumeInfo(current, max, percentage)
+    }
+    
+    fun setVolume(context: Context, streamType: Int, volume: Int, showUI: Boolean = false) {
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val maxVolume = audioManager.getStreamMaxVolume(streamType)
+        val targetVolume = volume.coerceIn(0, maxVolume)
+        
+        audioManager.setStreamVolume(
+            streamType,
+            targetVolume,
+            if (showUI) AudioManager.FLAG_SHOW_UI else 0
+        )
+    }
+    
+    fun setVolumeByPercentage(context: Context, streamType: Int, percentage: Int, showUI: Boolean = false) {
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val maxVolume = audioManager.getStreamMaxVolume(streamType)
+        val targetVolume = if (maxVolume > 0) (maxVolume * percentage / 100) else 0
+        
+        setVolume(context, streamType, targetVolume, showUI)
+    }
+    
+    fun adjustVolume(context: Context, streamType: Int, direction: Int, steps: Int = 1) {
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        
+        for (i in 1..steps) {
+            audioManager.adjustStreamVolume(
+                streamType,
+                direction,
+                if (i == steps) AudioManager.FLAG_SHOW_UI else 0
+            )
+        }
+    }
+    
+    fun getAllVolumeInfo(context: Context): Map<String, VolumeInfo> {
+        return mapOf(
+            "media" to getVolumeInfo(context, StreamTypes.MEDIA),
+            "ring" to getVolumeInfo(context, StreamTypes.RING),
+            "notification" to getVolumeInfo(context, StreamTypes.NOTIFICATION),
+            "alarm" to getVolumeInfo(context, StreamTypes.ALARM),
+            "call" to getVolumeInfo(context, StreamTypes.CALL),
+            "system" to getVolumeInfo(context, StreamTypes.SYSTEM)
+        )
+    }
+    
+    fun getStreamTypeByName(name: String): Int {
+        return when (name.lowercase()) {
+            "media" -> StreamTypes.MEDIA
+            "ring" -> StreamTypes.RING
+            "notification" -> StreamTypes.NOTIFICATION
+            "alarm" -> StreamTypes.ALARM
+            "call" -> StreamTypes.CALL
+            "system" -> StreamTypes.SYSTEM
+            else -> StreamTypes.MEDIA
+        }
+    }
+    
+    fun getStreamDisplayName(context: Context, streamType: Int): String {
+        return when (streamType) {
+            StreamTypes.MEDIA -> context.getString(R.string.media_volume)
+            StreamTypes.RING -> context.getString(R.string.ring_volume)
+            StreamTypes.NOTIFICATION -> context.getString(R.string.notification_volume)
+            StreamTypes.ALARM -> context.getString(R.string.alarm_volume)
+            StreamTypes.CALL -> context.getString(R.string.call_volume)
+            StreamTypes.SYSTEM -> context.getString(R.string.system_volume)
+            else -> context.getString(R.string.media_volume)
+        }
+    }
+    
+    // Hızlı ses seviyeleri
+    fun setQuickVolume(context: Context, streamType: Int, level: QuickVolumeLevel) {
+        val percentage = when (level) {
+            QuickVolumeLevel.SILENT -> 0
+            QuickVolumeLevel.LOW -> 25
+            QuickVolumeLevel.MEDIUM -> 50
+            QuickVolumeLevel.HIGH -> 75
+            QuickVolumeLevel.MAX -> 100
+        }
+        setVolumeByPercentage(context, streamType, percentage, true)
+    }
+    
+    enum class QuickVolumeLevel {
+        SILENT, LOW, MEDIUM, HIGH, MAX
+    }
+    
+    // Volume Boost fonksiyonu - Gerçek ses artırma
+    fun applyVolumeBoost(context: Context, boostPercentage: Int) {
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        
+        // Ana stream türleri için boost uygula
+        val streamTypes = listOf(
+            StreamTypes.MEDIA,
+            StreamTypes.RING,
+            StreamTypes.NOTIFICATION,
+            StreamTypes.ALARM
+        )
+        
+        streamTypes.forEach { streamType ->
+            val currentVolume = audioManager.getStreamVolume(streamType)
+            val maxVolume = audioManager.getStreamMaxVolume(streamType)
+            
+            if (currentVolume > 0) {
+                // Mevcut ses seviyesini yüzde olarak hesapla
+                val currentPercentage = (currentVolume * 100) / maxVolume
+                
+                // Boost ekle ama maksimum %100'ü geçmesin
+                val targetPercentage = (currentPercentage + boostPercentage).coerceAtMost(100)
+                val targetVolume = (maxVolume * targetPercentage / 100)
+                
+                audioManager.setStreamVolume(streamType, targetVolume, 0)
+                
+                // Ayrıca AudioEffect ile bass boost uygula
+                try {
+                    AudioEffectsHelper.applyPreset(context, "electronic") // Yüksek bass preset
+                } catch (e: Exception) {
+                    // AudioEffect çalışmazsa sadece volume boost yap
+                }
+            }
+        }
+        
+        // İstatistik kaydet
+        StatisticsHelper.recordVolumeChange(context)
+    }
+    
+    // Volume boost durumunu kontrol et
+    fun isVolumeBoostActive(context: Context): Boolean {
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val mediaVolume = audioManager.getStreamVolume(StreamTypes.MEDIA)
+        val maxVolume = audioManager.getStreamMaxVolume(StreamTypes.MEDIA)
+        
+        // Eğer ses seviyesi maksimumun %85'inden fazlaysa boost aktif sayılır
+        return mediaVolume > (maxVolume * 0.85)
+    }
+    
+    // Boost'u temizle/normale döndür
+    fun clearVolumeBoost(context: Context) {
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        
+        val streamTypes = listOf(
+            StreamTypes.MEDIA,
+            StreamTypes.RING,
+            StreamTypes.NOTIFICATION,
+            StreamTypes.ALARM
+        )
+        
+        streamTypes.forEach { streamType ->
+            val maxVolume = audioManager.getStreamMaxVolume(streamType)
+            val normalVolume = (maxVolume * 0.7).toInt() // %70 seviyesine düşür
+            
+            audioManager.setStreamVolume(streamType, normalVolume, 0)
+        }
+    }
+}

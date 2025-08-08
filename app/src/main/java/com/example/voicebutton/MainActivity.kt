@@ -1,0 +1,1564 @@
+package com.example.voicebutton
+
+import android.Manifest
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.media.AudioManager
+import android.os.Build
+import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
+import kotlinx.coroutines.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
+import kotlinx.coroutines.delay
+import com.example.voicebutton.ui.theme.VoiceButtonTheme
+import kotlinx.coroutines.delay
+
+class MainActivity : ComponentActivity() {
+    
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // İzin verildi, servisi başlat
+        }
+    }
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // Splash ekranını yükle
+        installSplashScreen()
+        
+        super.onCreate(savedInstanceState)
+        
+        // Dil ayarını uygula
+        LanguageHelper.applyLanguage(this)
+        
+        // AdMob'u başlat
+        AdMobHelper.initializeAds(this)
+        AdMobHelper.loadInterstitialAd(this)
+        
+        // Edge-to-edge ve sistem UI ayarları
+        enableEdgeToEdge()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        
+        // Bildirim izni kontrol et
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    // İzin var
+                }
+                else -> {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        }
+        
+        setContent {
+            VoiceButtonTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    VolumeControlScreen()
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun VolumeControlScreen() {
+    val context = LocalContext.current
+    var isServiceRunning by remember { mutableStateOf(false) }
+    var currentVolume by remember { mutableStateOf(0) }
+    var maxVolume by remember { mutableStateOf(0) }
+    var selectedLanguage by remember { mutableStateOf("tr") }
+    var showLanguageDialog by remember { mutableStateOf(false) }
+    var showVolumeStepDialog by remember { mutableStateOf(false) }
+    var showThemeDialog by remember { mutableStateOf(false) }
+    var showScheduleDialog by remember { mutableStateOf(false) }
+    var showAdvancedVolumeDialog by remember { mutableStateOf(false) }
+    var showAboutDialog by remember { mutableStateOf(false) }
+    var showProfilesDialog by remember { mutableStateOf(false) }
+    var showStatisticsDialog by remember { mutableStateOf(false) }
+    var showProfileDialog by remember { mutableStateOf(false) }
+    var showStatsDialog by remember { mutableStateOf(false) }
+    var showPercentage by remember { mutableStateOf(true) }
+    var vibrationEnabled by remember { mutableStateOf(true) }
+    var volumeStep by remember { mutableIntStateOf(1) }
+    var currentTheme by remember { mutableIntStateOf(PreferencesHelper.THEME_AUTO) }
+    var scheduledVolumeEnabled by remember { mutableStateOf(false) }
+    var allVolumeInfo by remember { mutableStateOf(emptyMap<String, AdvancedVolumeHelper.VolumeInfo>()) }
+    var currentProfile by remember { mutableStateOf("varsayilan") }
+    var statsData by remember { mutableStateOf(emptyMap<String, Any>()) }
+    
+    val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    val scrollState = rememberScrollState()
+    val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    
+    // Ses seviyesini güncelle
+    LaunchedEffect(Unit) {
+        try {
+            // Önce temel ses ayarlarını al
+            currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+            maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+            
+            // Arka plan işlemlerini IO dispatcher'da yap
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                try {
+                    // Session başlangıcını kaydet
+                    StatisticsHelper.recordSessionStart(context)
+                    // Stats data yükle
+                    val stats = StatisticsHelper.getAllStats(context)
+                    // Current profile yükle
+                    val profile = ProfileHelper.getCurrentProfile(context)
+                    // Preferences yükle
+                    val language = LanguageHelper.getLanguage(context)
+                    val showPerc = PreferencesHelper.getShowPercentage(context)
+                    val vibEnabled = PreferencesHelper.getVibrationEnabled(context)
+                    val volStep = PreferencesHelper.getVolumeStep(context)
+                    val theme = PreferencesHelper.getTheme(context)
+                    val schedEnabled = PreferencesHelper.isScheduledVolumeEnabled(context)
+                    val volumeInfo = AdvancedVolumeHelper.getAllVolumeInfo(context)
+                    
+                    // UI güncellemelerini Main dispatcher'da yap
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                        statsData = stats
+                        currentProfile = profile
+                        selectedLanguage = language
+                        showPercentage = showPerc
+                        vibrationEnabled = vibEnabled
+                        volumeStep = volStep
+                        currentTheme = theme
+                        scheduledVolumeEnabled = schedEnabled
+                        allVolumeInfo = volumeInfo
+                    }
+                } catch (e: Exception) {
+                    // Hata durumunda varsayılan değerleri kullan
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                        statsData = emptyMap()
+                        currentProfile = "varsayilan"
+                        selectedLanguage = "tr"
+                        showPercentage = true
+                        vibrationEnabled = true
+                        volumeStep = 1
+                        currentTheme = PreferencesHelper.THEME_AUTO
+                        scheduledVolumeEnabled = false
+                        allVolumeInfo = emptyMap()
+                    }
+                }
+            }
+            
+            // Zamanlanmış ses kontrolünü uygula (kısa gecikme ile)
+            kotlinx.coroutines.delay(500)
+            try {
+                ScheduledVolumeHelper.applyScheduledVolume(context)
+                // Ses seviyesini tekrar güncelle
+                currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+            } catch (e: Exception) {
+                // Scheduled volume hatası önemli değil, devam et
+            }
+        } catch (e: Exception) {
+            // Genel hata durumunda temel değerleri ayarla
+            currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+            maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        }
+    }
+    
+    // Session bitişini kaydet
+    DisposableEffect(Unit) {
+        onDispose {
+            StatisticsHelper.recordSessionEnd(context)
+        }
+    }
+    
+    // Titreşim fonksiyonu
+    fun vibrate() {
+        if (vibrationEnabled && vibrator.hasVibrator()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(50)
+            }
+        }
+    }
+    
+    // Ses ayarlama fonksiyonu
+    fun adjustVolume(direction: Int) {
+        for (i in 1..volumeStep) {
+            audioManager.adjustStreamVolume(
+                AudioManager.STREAM_MUSIC,
+                direction,
+                if (i == volumeStep) AudioManager.FLAG_SHOW_UI else 0
+            )
+        }
+        currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        
+        // İstatistik kaydet
+        StatisticsHelper.recordVolumeChange(context)
+        // Stats data güncelle
+        statsData = StatisticsHelper.getAllStats(context)
+        
+        // Titreşim
+        vibrate()
+    }
+    
+    // Belirli ses seviyesi ayarlama
+    fun setVolumeLevel(level: Int) {
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, level, AudioManager.FLAG_SHOW_UI)
+        currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        vibrate()
+    }
+    
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+            .padding(16.dp)
+            .navigationBarsPadding()
+            .statusBarsPadding(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Dil seçimi butonu
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            OutlinedButton(
+                onClick = { showLanguageDialog = true },
+                modifier = Modifier.size(width = 120.dp, height = 40.dp)
+            ) {
+                Text(
+                    text = "🌐 ${context.getString(R.string.language)}",
+                    fontSize = 12.sp
+                )
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        // Başlık
+        Text(
+            text = context.getString(R.string.volume_control_title),
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Text(
+            text = context.getString(R.string.volume_control_subtitle),
+            fontSize = 16.sp,
+            color = getSecondaryTextColor(),
+            textAlign = TextAlign.Center
+        )
+        
+        Spacer(modifier = Modifier.height(32.dp))
+        
+        // Mevcut ses seviyesi
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = context.getString(R.string.current_volume_level),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                Text(
+                    text = if (maxVolume > 0) {
+                        if (showPercentage) 
+                            "${(currentVolume * 100 / maxVolume)}%" 
+                        else 
+                            "$currentVolume / $maxVolume"
+                    } else {
+                        if (showPercentage) "0%" else "0 / 0"
+                    },
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                LinearProgressIndicator(
+                    progress = { if (maxVolume > 0) currentVolume.toFloat() / maxVolume.toFloat() else 0f },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+                )
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(32.dp))
+        
+        // Ses kontrolü butonları
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            // Ses azalt butonu
+            Button(
+                onClick = { adjustVolume(AudioManager.ADJUST_LOWER) },
+                modifier = Modifier.size(80.dp),
+                shape = RoundedCornerShape(40.dp)
+            ) {
+                Text(
+                    text = "−",
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            
+            // Sessiz/Sesi aç butonu
+            Button(
+                onClick = {
+                    if (currentVolume == 0) {
+                        setVolumeLevel(if (maxVolume > 0) maxVolume / 2 else 5)
+                    } else {
+                        setVolumeLevel(0)
+                    }
+                },
+                modifier = Modifier.size(80.dp),
+                shape = RoundedCornerShape(40.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (currentVolume == 0) 
+                        MaterialTheme.colorScheme.error 
+                    else 
+                        MaterialTheme.colorScheme.secondary
+                )
+            ) {
+                Text(
+                    text = if (currentVolume == 0) "🔇" else "🔊",
+                    fontSize = 24.sp
+                )
+            }
+            
+            // Ses artır butonu
+            Button(
+                onClick = { adjustVolume(AudioManager.ADJUST_RAISE) },
+                modifier = Modifier.size(80.dp),
+                shape = RoundedCornerShape(40.dp)
+            ) {
+                Text(
+                    text = "+",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(24.dp))
+        
+        // Hızlı ayarlar
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = context.getString(R.string.quick_settings),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    OutlinedButton(
+                        onClick = { setVolumeLevel(0) },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = context.getString(R.string.min_volume),
+                            fontSize = 12.sp
+                        )
+                    }
+                    
+                    Spacer(modifier = Modifier.width(8.dp))
+                    
+                    OutlinedButton(
+                        onClick = { setVolumeLevel(if (maxVolume > 0) maxVolume / 2 else 0) },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = context.getString(R.string.half_volume),
+                            fontSize = 12.sp
+                        )
+                    }
+                    
+                    Spacer(modifier = Modifier.width(8.dp))
+                    
+                    OutlinedButton(
+                        onClick = { setVolumeLevel(if (maxVolume > 0) maxVolume else 0) },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = context.getString(R.string.max_volume),
+                            fontSize = 12.sp
+                        )
+                    }
+                }
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(24.dp))
+        
+        // Ayarlar
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = context.getString(R.string.settings),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Ses adım boyutu
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = context.getString(R.string.volume_step),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = context.getString(R.string.volume_step_description),
+                            fontSize = 12.sp,
+                            color = getSecondaryTextColor()
+                        )
+                    }
+                    TextButton(onClick = { showVolumeStepDialog = true }) {
+                        Text(
+                            text = when(volumeStep) {
+                                1 -> context.getString(R.string.small_step)
+                                2 -> context.getString(R.string.medium_step)
+                                3 -> context.getString(R.string.large_step)
+                                else -> context.getString(R.string.medium_step)
+                            }
+                        )
+                    }
+                }
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                
+                // Yüzde gösterimi
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = context.getString(R.string.show_percentage),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = context.getString(R.string.show_percentage_description),
+                            fontSize = 12.sp,
+                            color = getSecondaryTextColor()
+                        )
+                    }
+                    Switch(
+                        checked = showPercentage,
+                        onCheckedChange = { 
+                            showPercentage = it
+                            PreferencesHelper.setShowPercentage(context, it)
+                        }
+                    )
+                }
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                
+                // Titreşim
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = context.getString(R.string.vibration),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = context.getString(R.string.vibration_description),
+                            fontSize = 12.sp,
+                            color = getSecondaryTextColor()
+                        )
+                    }
+                    Switch(
+                        checked = vibrationEnabled,
+                        onCheckedChange = { 
+                            vibrationEnabled = it
+                            PreferencesHelper.setVibrationEnabled(context, it)
+                            if (it) vibrate()
+                        }
+                    )
+                }
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                
+                // Tema seçimi
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = context.getString(R.string.theme),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = when(currentTheme) {
+                                PreferencesHelper.THEME_LIGHT -> context.getString(R.string.light_theme)
+                                PreferencesHelper.THEME_DARK -> context.getString(R.string.dark_theme)
+                                else -> context.getString(R.string.auto_theme)
+                            } + " • ${ScheduledVolumeHelper.getScheduleStatus(context)}",
+                            fontSize = 12.sp,
+                            color = getSecondaryTextColor()
+                        )
+                    }
+                    TextButton(onClick = { 
+                        showThemeDialog = true
+                        // Ayarlar açılırken reklam göster
+                        if (context is MainActivity) {
+                            AdMobHelper.showInterstitialAd(context)
+                        }
+                    }) {
+                        Text(
+                            text = when(currentTheme) {
+                                PreferencesHelper.THEME_LIGHT -> "☀️"
+                                PreferencesHelper.THEME_DARK -> "🌙"
+                                else -> "🌙/☀️"
+                            }
+                        )
+                    }
+                }
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                
+                // Zamanlanmış ses
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = context.getString(R.string.scheduled_volume),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = context.getString(R.string.morning_volume) + ", " + 
+                                  context.getString(R.string.evening_volume) + ", " +
+                                  context.getString(R.string.night_volume),
+                            fontSize = 12.sp,
+                            color = getSecondaryTextColor()
+                        )
+                    }
+                    TextButton(onClick = { showScheduleDialog = true }) {
+                        Text(text = if (scheduledVolumeEnabled) "⏰" else "⏱️")
+                    }
+                }
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                
+                // Profiller
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = context.getString(R.string.profiles),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = "${ProfileHelper.getDefaultProfiles(context)[currentProfile]?.icon ?: "🏠"} ${ProfileHelper.getDefaultProfiles(context)[currentProfile]?.name ?: "Ev"}",
+                            fontSize = 12.sp,
+                            color = getSecondaryTextColor()
+                        )
+                    }
+                    TextButton(onClick = { 
+                        showProfileDialog = true
+                        // Profiller açılırken reklam göster
+                        if (context is MainActivity) {
+                            AdMobHelper.showInterstitialAd(context)
+                        }
+                    }) {
+                        Text(text = "🎮")
+                    }
+                }
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                
+                // İstatistikler
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = context.getString(R.string.statistics),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = "${stringResource(R.string.today)}: ${statsData["today_volume_changes"]} ${stringResource(R.string.changes)}",
+                            fontSize = 12.sp,
+                            color = getSecondaryTextColor()
+                        )
+                    }
+                    TextButton(onClick = { 
+                        showStatsDialog = true
+                        // İstatistikler açılırken reklam göster
+                        if (context is MainActivity) {
+                            AdMobHelper.showInterstitialAd(context)
+                        }
+                    }) {
+                        Text(text = "📊")
+                    }
+                }
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(24.dp))
+        
+        // Kalıcı bildirim kontrolü
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = context.getString(R.string.persistent_notification),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                Text(
+                    text = if (isServiceRunning) 
+                        context.getString(R.string.notification_active) 
+                    else 
+                        context.getString(R.string.notification_inactive),
+                    fontSize = 16.sp,
+                    color = if (isServiceRunning) 
+                        MaterialTheme.colorScheme.primary 
+                    else 
+                        getSecondaryTextColor()
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Button(
+                    onClick = {
+                        if (isServiceRunning) {
+                            // Servisi durdur
+                            val stopIntent = Intent(context, VolumeControlService::class.java).apply {
+                                action = VolumeControlService.ACTION_STOP_SERVICE
+                            }
+                            context.startService(stopIntent)
+                            isServiceRunning = false
+                        } else {
+                            // Servisi başlat
+                            val startIntent = Intent(context, VolumeControlService::class.java)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                context.startForegroundService(startIntent)
+                            } else {
+                                context.startService(startIntent)
+                            }
+                            isServiceRunning = true
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (isServiceRunning) 
+                            MaterialTheme.colorScheme.error 
+                        else 
+                            MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Text(
+                        text = if (isServiceRunning) 
+                            context.getString(R.string.stop_service_button) 
+                        else 
+                            context.getString(R.string.start_service),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+                
+                if (!isServiceRunning) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    
+                    Text(
+                        text = context.getString(R.string.notification_description),
+                        fontSize = 12.sp,
+                        color = getSecondaryTextColor(),
+                        textAlign = TextAlign.Center
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Widget ekleme butonu
+                OutlinedButton(
+                    onClick = {
+                        // Widget ekleme işlemi
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            val appWidgetManager = AppWidgetManager.getInstance(context)
+                            val myProvider = ComponentName(context, VolumeWidget::class.java)
+                            
+                            if (appWidgetManager.isRequestPinAppWidgetSupported) {
+                                appWidgetManager.requestPinAppWidget(myProvider, null, null)
+                            } else {
+                                // Fallback: Widget sayfasını aç
+                                try {
+                                    val intent = Intent("android.appwidget.action.APPWIDGET_PICK")
+                                    context.startActivity(intent)
+                                } catch (e: Exception) {
+                                    // Manuel widget ekleme talimatı göster
+                                }
+                            }
+                        } else {
+                            // Eski Android versiyonları için widget sayfasını aç
+                            try {
+                                val intent = Intent("android.appwidget.action.APPWIDGET_PICK")
+                                context.startActivity(intent)
+                            } catch (e: Exception) {
+                                // Manuel widget ekleme talimatı göster
+                            }
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text("📱")
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = context.getString(R.string.add_widget),
+                            fontSize = 14.sp
+                        )
+                    }
+                }
+                
+                Text(
+                    text = context.getString(R.string.widget_description),
+                    fontSize = 12.sp,
+                    color = getSecondaryTextColor(),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(32.dp))
+        
+        // Nova Orion geliştirici imzası
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            HorizontalDivider(
+                modifier = Modifier.width(100.dp),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+            )
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Text(
+                text = "✨ Nova Orion ✨",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.95f),
+                textAlign = TextAlign.Center
+            )
+            
+            Text(
+                text = "Developed with ❤️",
+                fontSize = 10.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                textAlign = TextAlign.Center
+            )
+        }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        // Banner Reklam
+        BannerAdView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        )
+        
+        // Dil seçimi dialog'u
+        if (showLanguageDialog) {
+            AlertDialog(
+                onDismissRequest = { showLanguageDialog = false },
+                title = {
+                    Text(text = context.getString(R.string.language))
+                },
+                text = {
+                    Column {
+                        TextButton(
+                            onClick = {
+                                LanguageHelper.setLanguage(context, "tr")
+                                selectedLanguage = "tr"
+                                showLanguageDialog = false
+                                // Activity'yi yeniden başlat
+                                (context as ComponentActivity).recreate()
+                            }
+                        ) {
+                            Text(
+                                text = context.getString(R.string.turkish),
+                                color = if (selectedLanguage == "tr") 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                LanguageHelper.setLanguage(context, "en")
+                                selectedLanguage = "en"
+                                showLanguageDialog = false
+                                // Activity'yi yeniden başlat
+                                (context as ComponentActivity).recreate()
+                            }
+                        ) {
+                            Text(
+                                text = context.getString(R.string.english),
+                                color = if (selectedLanguage == "en") 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showLanguageDialog = false }) {
+                        Text("OK")
+                    }
+                }
+            )
+        }
+        
+        // Ses adım boyutu dialog'u
+        if (showVolumeStepDialog) {
+            AlertDialog(
+                onDismissRequest = { showVolumeStepDialog = false },
+                title = {
+                    Text(text = context.getString(R.string.volume_step))
+                },
+                text = {
+                    Column {
+                        TextButton(
+                            onClick = {
+                                volumeStep = 1
+                                PreferencesHelper.setVolumeStep(context, 1)
+                                showVolumeStepDialog = false
+                            }
+                        ) {
+                            Text(
+                                text = context.getString(R.string.small_step),
+                                color = if (volumeStep == 1) 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                volumeStep = 2
+                                PreferencesHelper.setVolumeStep(context, 2)
+                                showVolumeStepDialog = false
+                            }
+                        ) {
+                            Text(
+                                text = context.getString(R.string.medium_step),
+                                color = if (volumeStep == 2) 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                volumeStep = 3
+                                PreferencesHelper.setVolumeStep(context, 3)
+                                showVolumeStepDialog = false
+                            }
+                        ) {
+                            Text(
+                                text = context.getString(R.string.large_step),
+                                color = if (volumeStep == 3) 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showVolumeStepDialog = false }) {
+                        Text("OK")
+                    }
+                }
+            )
+        }
+        
+        // Tema seçimi dialog'u
+        if (showThemeDialog) {
+            AlertDialog(
+                onDismissRequest = { showThemeDialog = false },
+                title = {
+                    Text(text = context.getString(R.string.theme))
+                },
+                text = {
+                    Column {
+                        TextButton(
+                            onClick = {
+                                currentTheme = PreferencesHelper.THEME_LIGHT
+                                PreferencesHelper.setTheme(context, PreferencesHelper.THEME_LIGHT)
+                                showThemeDialog = false
+                                // Activity'yi yeniden başlat
+                                (context as ComponentActivity).recreate()
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "☀️",
+                                    fontSize = 24.sp
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text(
+                                    text = context.getString(R.string.light_theme),
+                                    fontSize = 16.sp,
+                                    fontWeight = if (currentTheme == PreferencesHelper.THEME_LIGHT) 
+                                        FontWeight.Bold else FontWeight.Normal,
+                                    color = if (currentTheme == PreferencesHelper.THEME_LIGHT) 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                currentTheme = PreferencesHelper.THEME_DARK
+                                PreferencesHelper.setTheme(context, PreferencesHelper.THEME_DARK)
+                                showThemeDialog = false
+                                // Activity'yi yeniden başlat
+                                (context as ComponentActivity).recreate()
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🌙",
+                                    fontSize = 24.sp
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text(
+                                    text = context.getString(R.string.dark_theme),
+                                    fontSize = 16.sp,
+                                    fontWeight = if (currentTheme == PreferencesHelper.THEME_DARK) 
+                                        FontWeight.Bold else FontWeight.Normal,
+                                    color = if (currentTheme == PreferencesHelper.THEME_DARK) 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                currentTheme = PreferencesHelper.THEME_AUTO
+                                PreferencesHelper.setTheme(context, PreferencesHelper.THEME_AUTO)
+                                showThemeDialog = false
+                                // Activity'yi yeniden başlat
+                                (context as ComponentActivity).recreate()
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🌙/☀️",
+                                    fontSize = 20.sp
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text(
+                                    text = context.getString(R.string.auto_theme),
+                                    fontSize = 16.sp,
+                                    fontWeight = if (currentTheme == PreferencesHelper.THEME_AUTO) 
+                                        FontWeight.Bold else FontWeight.Normal,
+                                    color = if (currentTheme == PreferencesHelper.THEME_AUTO) 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showThemeDialog = false }) {
+                        Text("OK")
+                    }
+                }
+            )
+        }
+        
+        // Zamanlanmış ses dialog'u
+        if (showScheduleDialog) {
+            AlertDialog(
+                onDismissRequest = { showScheduleDialog = false },
+                title = {
+                    Text(text = context.getString(R.string.scheduled_volume))
+                },
+                text = {
+                    Column {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(context.getString(R.string.enable_schedule))
+                            Switch(
+                                checked = scheduledVolumeEnabled,
+                                onCheckedChange = { 
+                                    scheduledVolumeEnabled = it
+                                    PreferencesHelper.setScheduledVolumeEnabled(context, it)
+                                }
+                            )
+                        }
+                        
+                        if (scheduledVolumeEnabled) {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            
+                            Text(
+                                text = "🌅 ${context.getString(R.string.morning_volume)} (06:00-12:00): ${PreferencesHelper.getMorningVolume(context)}%",
+                                fontSize = 14.sp
+                            )
+                            Text(
+                                text = "🌆 ${context.getString(R.string.evening_volume)} (12:00-22:00): ${PreferencesHelper.getEveningVolume(context)}%",
+                                fontSize = 14.sp
+                            )
+                            Text(
+                                text = "🌙 ${context.getString(R.string.night_volume)} (22:00-06:00): ${PreferencesHelper.getNightVolume(context)}%",
+                                fontSize = 14.sp
+                            )
+                            
+                            Spacer(modifier = Modifier.height(12.dp))
+                            
+                            // Şu anki durum
+                            Text(
+                                text = "${stringResource(R.string.currently)}: ${ScheduledVolumeHelper.getCurrentTimeSlot(context)}",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            
+                            Spacer(modifier = Modifier.height(8.dp))
+                            
+                            // Test butonu
+                            Button(
+                                onClick = { 
+                                    ScheduledVolumeHelper.forceApplySchedule(context)
+                                    currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("🔄 ${stringResource(R.string.apply_now)}")
+                            }
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showScheduleDialog = false }) {
+                        Text("OK")
+                    }
+                }
+            )
+        }
+        
+        // Profil seçimi dialog'ı
+        if (showProfileDialog) {
+            ProfileSelectionDialog(
+                profiles = ProfileHelper.getDefaultProfiles(context),
+                currentProfile = currentProfile,
+                onProfileSelected = { profileId ->
+                    ProfileHelper.applyProfile(context, profileId) { volume ->
+                        currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                    }
+                    StatisticsHelper.recordProfileUsage(context, profileId)
+                    currentProfile = profileId
+                    statsData = StatisticsHelper.getAllStats(context)
+                    showProfileDialog = false
+                },
+                onDismiss = { showProfileDialog = false }
+            )
+        }
+        
+        // İstatistikler dialog'ı
+        if (showStatsDialog) {
+            StatisticsDialog(
+                stats = statsData,
+                onDismiss = { showStatsDialog = false }
+            )
+        }
+        
+    }
+}
+
+@Composable
+fun ProfileSelectionDialog(
+    profiles: Map<String, ProfileHelper.VolumeProfile>,
+    currentProfile: String,
+    onProfileSelected: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { 
+            Text(
+                text = stringResource(R.string.select_profile),
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            LazyColumn(
+                modifier = Modifier.padding(8.dp)
+            ) {
+                items(profiles.keys.toList()) { profileId ->
+                    val profile = profiles[profileId]!!
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                            .clickable { onProfileSelected(profileId) },
+                        colors = CardDefaults.cardColors(
+                            containerColor = if (profileId == currentProfile) {
+                                MaterialTheme.colorScheme.primaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.surface
+                            }
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = profile.icon,
+                                fontSize = 24.sp,
+                                modifier = Modifier.padding(end = 12.dp)
+                            )
+                            Column {
+                                Text(
+                                    text = profile.name,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 16.sp,
+                                    color = if (profileId == currentProfile) {
+                                        MaterialTheme.colorScheme.onPrimaryContainer
+                                    } else {
+                                        MaterialTheme.colorScheme.onSurface
+                                    }
+                                )
+                                Text(
+                                    text = profile.description,
+                                    fontSize = 14.sp,
+                                    color = if (profileId == currentProfile) {
+                                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                                    } else {
+                                        getSecondaryTextColor()
+                                    }
+                                )
+                                Text(
+                                    text = "🎵${profile.mediaVolume}% 📱${profile.ringVolume}% 🔔${profile.notificationVolume}% ⏰${profile.alarmVolume}%",
+                                    fontSize = 12.sp,
+                                    color = if (profileId == currentProfile) {
+                                        MaterialTheme.colorScheme.onPrimaryContainer
+                                    } else {
+                                        MaterialTheme.colorScheme.primary
+                                    },
+                                    modifier = Modifier.padding(top = 4.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.close))
+            }
+        }
+    )
+}
+
+@Composable
+fun StatisticsDialog(
+    stats: Map<String, Any>,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { 
+            Text(
+                text = stringResource(R.string.statistics),
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            LazyColumn(
+                modifier = Modifier.padding(8.dp)
+            ) {
+                item {
+                    Text(
+                        text = "📊 ${stringResource(R.string.today)}",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 16.sp,
+                        color = getTextColor(),
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    
+                    StatsCard(
+                        icon = "🔊",
+                        title = stringResource(R.string.volume_changes),
+                        value = "${stats["today_volume_changes"]} ${stringResource(R.string.times)}"
+                    )
+                    
+                    StatsCard(
+                        icon = "⏱️",
+                        title = stringResource(R.string.session_time),
+                        value = "${stats["today_session_time"]} ${stringResource(R.string.minutes)}"
+                    )
+                    
+                    Spacer(modifier = Modifier.height(16.dp))
+                    
+                    Text(
+                        text = "📈 ${stringResource(R.string.this_week)}",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 16.sp,
+                        color = getTextColor(),
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    
+                    StatsCard(
+                        icon = "🔊",
+                        title = stringResource(R.string.total_changes),
+                        value = "${stats["week_volume_changes"]} ${stringResource(R.string.times)}"
+                    )
+                    
+                    StatsCard(
+                        icon = "📱",
+                        title = stringResource(R.string.daily_average),
+                        value = "${(stats["week_volume_changes"] as? Int ?: 0) / 7} ${stringResource(R.string.times)}"
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.close))
+            }
+        }
+    )
+}
+
+@Composable
+fun StatsCard(
+    icon: String,
+    title: String,
+    value: String
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = icon,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(end = 12.dp)
+            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    fontSize = 14.sp,
+                    color = getSecondaryTextColor()
+                )
+                Text(
+                    text = value,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun AudioEffectsDialog(
+    currentPreset: String,
+    presets: Map<String, AudioEffectsHelper.AudioPreset>,
+    onPresetSelected: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { 
+            Text(
+                text = stringResource(R.string.audio_effects),
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            LazyColumn(
+                modifier = Modifier.padding(8.dp)
+            ) {
+                items(presets.keys.toList()) { presetId ->
+                    val preset = presets[presetId]!!
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                            .clickable { onPresetSelected(presetId) },
+                        colors = CardDefaults.cardColors(
+                            containerColor = if (presetId == currentPreset) {
+                                MaterialTheme.colorScheme.primaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.surface
+                            }
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = preset.icon,
+                                fontSize = 24.sp,
+                                modifier = Modifier.padding(end = 12.dp)
+                            )
+                            Column {
+                                Text(
+                                    text = preset.name,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 16.sp,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                                Text(
+                                    text = preset.description,
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF212121)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.close))
+            }
+        }
+    )
+}
+
+@Composable
+fun VolumeBoostDialog(
+    onDismiss: () -> Unit,
+    onBoostApplied: (Int) -> Unit
+) {
+    var boostLevel by remember { mutableStateOf(25) }
+    
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { 
+            Text(
+                text = stringResource(R.string.volume_boost),
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.volume_boost_warning),
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.error,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+                
+                Text(
+                    text = "${stringResource(R.string.boost_level)}: +%$boostLevel",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("0%", fontSize = 12.sp)
+                    Slider(
+                        value = boostLevel.toFloat(),
+                        onValueChange = { boostLevel = it.toInt() },
+                        valueRange = 0f..100f,
+                        modifier = Modifier.weight(1f).padding(horizontal = 8.dp)
+                    )
+                    Text("100%", fontSize = 12.sp)
+                }
+                
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp)
+                    ) {
+                        Text(stringResource(R.string.boost_tip_title), fontWeight = FontWeight.Medium, fontSize = 14.sp)
+                        Text(stringResource(R.string.boost_tip_1), fontSize = 12.sp)
+                        Text(stringResource(R.string.boost_tip_2), fontSize = 12.sp)
+                        Text(stringResource(R.string.boost_tip_3), fontSize = 12.sp)
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onBoostApplied(boostLevel) }
+            ) {
+                Text("⚡ ${stringResource(R.string.boost_apply)}")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.cancel))
+            }
+        }
+    )
+}

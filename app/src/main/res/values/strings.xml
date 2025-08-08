@@ -1,0 +1,150 @@
+<resources>
+    <string name="app_name">Ses Kontrolü</string>
+    <string name="volume_control_active">Ses Kontrolü Aktif</string>
+    <string name="volume_up">Ses +</string>
+    <string name="volume_down">Ses -</string>
+    <string name="stop_service">Kapat</string>
+    <string name="volume_control_title">Ses Kontrolü</string>
+    <string name="volume_control_subtitle">Ses tuşu bozuk telefonlar için kalıcı ses kontrolü</string>
+    <string name="current_volume_level">Mevcut Ses Seviyesi</string>
+    <string name="persistent_notification">Kalıcı Bildirim</string>
+    <string name="notification_active">Aktif</string>
+    <string name="notification_inactive">Kapalı</string>
+    <string name="start_service">Başlat</string>
+    <string name="stop_service_button">Kapat</string>
+    <string name="notification_description">Bildirimlerde sürekli + ve - butonları görünür</string>
+    <string name="language">Dil</string>
+    <string name="turkish">Türkçe</string>
+    <string name="english">İngilizce</string>
+    <string name="settings">Ayarlar</string>
+    <string name="volume_step">Ses Adım Boyutu</string>
+    <string name="volume_step_description">Her basışta ne kadar ses değişimi olacağını ayarlayın</string>
+    <string name="small_step">Küçük (1)</string>
+    <string name="medium_step">Orta (2)</string>
+    <string name="large_step">Büyük (3)</string>
+    <string name="show_percentage">Yüzde Göster</string>
+    <string name="show_percentage_description">Ses seviyesini yüzde olarak göster</string>
+    <string name="vibration">Titreşim</string>
+    <string name="vibration_description">Ses değiştiğinde titreşim ver</string>
+    <string name="auto_start">Otomatik Başlat</string>
+    <string name="auto_start_description">Telefon açıldığında otomatik olarak başlat</string>
+    <string name="about">Hakkında</string>
+    <string name="app_version">Uygulama Sürümü</string>
+    <string name="developer">Geliştirici: VoiceButton Team</string>
+    <string name="mute">Sessiz</string>
+    <string name="unmute">Sesi Aç</string>
+    <string name="reset_volume">Sesi Sıfırla</string>
+    <string name="reset_volume_description">Ses seviyesini varsayılan değere döndür</string>
+    <string name="quick_settings">Hızlı Ayarlar</string>
+    <string name="max_volume">Maksimum Ses</string>
+    <string name="half_volume">Yarı Ses</string>
+    <string name="min_volume">Minimum Ses</string>
+    <string name="theme">Tema</string>
+    <string name="light_theme">Açık Tema</string>
+    <string name="dark_theme">Koyu Tema</string>
+    <string name="auto_theme">Otomatik</string>
+    <string name="scheduled_volume">Zamanlı Ses</string>
+    <string name="morning_volume">Sabah Sesi</string>
+    <string name="evening_volume">Akşam Sesi</string>
+    <string name="night_volume">Gece Sesi</string>
+    <string name="enable_schedule">Zamanlamayı Etkinleştir</string>
+    <string name="morning_time">Sabah Saati (06:00)</string>
+    <string name="evening_time">Akşam Saati (18:00)</string>
+    <string name="night_time">Gece Saati (22:00)</string>
+    
+    <!-- Widget -->
+    <string name="widget_description">Ana ekran widget\'ı ile hızlı ses kontrolü</string>
+    <string name="widget_name">Ses Kontrolü</string>
+    <string name="add_widget">Ana Ekrana Widget Ekle</string>
+    
+    <!-- Gelişmiş Ses Kontrolleri -->
+    <string name="sound_types">Ses Türleri</string>
+    <string name="media_volume">Medya Sesi</string>
+    <string name="ring_volume">Zil Sesi</string>
+    <string name="notification_volume">Bildirim Sesi</string>
+    <string name="alarm_volume">Alarm Sesi</string>
+    <string name="call_volume">Çağrı Sesi</string>
+    <string name="system_volume">Sistem Sesi</string>
+    
+    <!-- Profiller -->
+    <string name="profiles">Profiller</string>
+    <string name="gaming_profile">Oyun Profili</string>
+    <string name="work_profile">İş Profili</string>
+    <string name="sleep_profile">Uyku Profili</string>
+    <string name="home_profile">Ev Profili</string>
+    <string name="current_profile">Mevcut Profil</string>
+    <string name="apply_profile">Profili Uygula</string>
+    
+    <!-- İstatistikler -->
+    <string name="statistics">İstatistikler</string>
+    <string name="daily_stats">Günlük İstatistikler</string>
+    <string name="weekly_stats">Haftalık İstatistikler</string>
+    <string name="volume_changes">Ses Değişiklikleri</string>
+    <string name="average_volume">Ortalama Ses</string>
+    <string name="usage_time">Kullanım Süresi</string>
+    <string name="favorite_profile">En Çok Kullanılan Profil</string>
+    
+    <!-- Ses Efektleri -->
+    <string name="audio_effects">Ses Efektleri</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="bass_boost">Bass Boost</string>
+    <string name="virtualizer">3D Virtualizer</string>
+    <string name="presets">Preset\'ler</string>
+    <string name="normal_preset">Normal</string>
+    <string name="rock_preset">Rock</string>
+    <string name="pop_preset">Pop</string>
+    <string name="classical_preset">Klasik</string>
+    <string name="jazz_preset">Jazz</string>
+    <string name="electronic_preset">Elektronik</string>
+    <string name="custom_preset">Özel</string>
+    <string name="effects_disabled">Ses efektleri kapalı</string>
+    
+    <!-- Additional Features -->
+    <string name="select_profile">Profil Seç</string>
+    <string name="close">Kapat</string>
+    
+    <!-- Profile Names -->
+    <string name="profile_gaming">Oyun</string>
+    <string name="profile_work">İş</string>
+    <string name="profile_sleep">Uyku</string>
+    <string name="profile_home">Ev</string>
+    
+    <!-- Profile Descriptions -->
+    <string name="profile_gaming_desc">Oyun ve medya için optimize edilmiş</string>
+    <string name="profile_work_desc">Odaklanma ve toplantılar için</string>
+    <string name="profile_sleep_desc">Gece saatleri için sessiz mod</string>
+    <string name="profile_home_desc">Ev ortamı için dengeli ses</string>
+    
+    <!-- Audio Preset Descriptions -->
+    <string name="preset_rock_desc">Güçlü bas ve tiz</string>
+    <string name="preset_pop_desc">Dengeli ve canlı ses</string>
+    <string name="preset_classical_desc">Doğal ve ayrıntılı</string>
+    <string name="preset_jazz_desc">Sıcak ve yumuşak tonlar</string>
+    <string name="preset_electronic_desc">Yoğun bas ve parlak ses</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">Ses Limitini Aş</string>
+    <string name="volume_boost_desc">Normal limitin üzerinde ses seviyesi</string>
+    <string name="volume_boost_warning">⚠️ DİKKAT: Bu özellik ses kalitesini bozabilir ve hoparlöre zarar verebilir!</string>
+    <string name="boost_level">Boost Seviyesi</string>
+    <string name="boost_apply">Uygula</string>
+    <string name="boost_active">Boost Aktif - Yüksek Ses</string>
+    <string name="boost_tip_title">💡 İpucu:</string>
+    <string name="boost_tip_1">• Video sesini artırmak için %25-50 yeterli</string>
+    <string name="boost_tip_2">• %75+ kulakları korumak için dikkatli olun</string>
+    <string name="boost_tip_3">• Kulaklık kullanırken daha dikkatli olun</string>
+    <string name="cancel">İptal</string>
+    
+    <!-- Additional translations for UI elements -->
+    <string name="today">Bugün</string>
+    <string name="this_week">Bu Hafta</string>
+    <string name="currently">Şu an</string>
+    <string name="apply_now">Şimdi Uygula</string>
+    <string name="daily_average">Günlük Ortalama</string>
+    <string name="times">kez</string>
+    <string name="total_changes">Toplam Değişiklik</string>
+    <string name="session_time">Uygulama Süresi</string>
+    <string name="minutes">dk</string>
+    <string name="closed">Kapalı</string>
+    <string name="changes">değişiklik</string>
+</resources>

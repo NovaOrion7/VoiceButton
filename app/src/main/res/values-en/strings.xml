@@ -1,0 +1,137 @@
+<resources>
+    <string name="app_name">Volume Control</string>
+    <string name="volume_control_active">Volume Control Active</string>
+    <string name="volume_up">Volume +</string>
+    <string name="volume_down">Volume -</string>
+    <string name="stop_service">Close</string>
+    <string name="volume_control_title">Volume Control</string>
+    <string name="volume_control_subtitle">Persistent volume control for phones with broken volume buttons</string>
+    <string name="current_volume_level">Current Volume Level</string>
+    <string name="persistent_notification">Persistent Notification</string>
+    <string name="notification_active">Active</string>
+    <string name="notification_inactive">Inactive</string>
+    <string name="start_service">Start</string>
+    <string name="stop_service_button">Stop</string>
+    <string name="notification_description">Always visible + and - buttons in notifications</string>
+    <string name="language">Language</string>
+    <string name="turkish">Turkish</string>
+    <string name="english">English</string>
+    <string name="settings">Settings</string>
+    <string name="volume_step">Volume Step Size</string>
+    <string name="volume_step_description">Set how much volume changes with each press</string>
+    <string name="small_step">Small (1)</string>
+    <string name="medium_step">Medium (2)</string>
+    <string name="large_step">Large (3)</string>
+    <string name="show_percentage">Show Percentage</string>
+    <string name="show_percentage_description">Display volume level as percentage</string>
+    <string name="vibration">Vibration</string>
+    <string name="vibration_description">Vibrate when volume changes</string>
+    <string name="auto_start">Auto Start</string>
+    <string name="auto_start_description">Start automatically when phone boots</string>
+    <string name="about">About</string>
+    <string name="app_version">App Version</string>
+    <string name="developer">Developer: VoiceButton Team</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
+    <string name="reset_volume">Reset Volume</string>
+    <string name="reset_volume_description">Reset volume to default level</string>
+    <string name="quick_settings">Quick Settings</string>
+    <string name="max_volume">Max Volume</string>
+    <string name="half_volume">Half Volume</string>
+    <string name="min_volume">Min Volume</string>
+    <string name="theme">Theme</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="auto_theme">Auto</string>
+    <string name="scheduled_volume">Scheduled Volume</string>
+    <string name="morning_volume">Morning Volume</string>
+    <string name="evening_volume">Evening Volume</string>
+    <string name="night_volume">Night Volume</string>
+    <string name="enable_schedule">Enable Schedule</string>
+    <string name="morning_time">Morning Time (06:00)</string>
+    <string name="evening_time">Evening Time (18:00)</string>
+    <string name="night_time">Night Time (22:00)</string>
+    
+    <!-- Widget -->
+    <string name="widget_description">Quick volume control via home screen widget</string>
+    <string name="widget_name">Volume Control</string>
+    <string name="add_widget">Add Widget to Home Screen</string>
+    
+    <!-- Advanced Sound Controls -->
+    <string name="sound_types">Sound Types</string>
+    <string name="media_volume">Media Volume</string>
+    <string name="ring_volume">Ring Volume</string>
+    <string name="notification_volume">Notification Volume</string>
+    <string name="alarm_volume">Alarm Volume</string>
+    <string name="call_volume">Call Volume</string>
+    <string name="system_volume">System Volume</string>
+    
+    <!-- Profiles -->
+    <string name="profiles">Profiles</string>
+    <string name="gaming_profile">Gaming Profile</string>
+    <string name="work_profile">Work Profile</string>
+    <string name="sleep_profile">Sleep Profile</string>
+    <string name="home_profile">Home Profile</string>
+    <string name="current_profile">Current Profile</string>
+    <string name="apply_profile">Apply Profile</string>
+    
+    <!-- Statistics -->
+    <string name="statistics">Statistics</string>
+    <string name="daily_stats">Daily Statistics</string>
+    <string name="weekly_stats">Weekly Statistics</string>
+    <string name="volume_changes">Volume Changes</string>
+    <string name="average_volume">Average Volume</string>
+    <string name="usage_time">Usage Time</string>
+    <string name="favorite_profile">Most Used Profile</string>
+    
+    <!-- Audio Effects -->
+    <string name="audio_effects">Audio Effects</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="bass_boost">Bass Boost</string>
+    <string name="virtualizer">3D Virtualizer</string>
+    <string name="presets">Presets</string>
+    <string name="normal_preset">Normal</string>
+    <string name="rock_preset">Rock</string>
+    <string name="pop_preset">Pop</string>
+    <string name="classical_preset">Classical</string>
+    <string name="jazz_preset">Jazz</string>
+    <string name="electronic_preset">Electronic</string>
+    <string name="custom_preset">Custom</string>
+    <string name="effects_disabled">Audio effects disabled</string>
+    
+    <!-- Additional Advanced Features -->
+    <string name="select_profile">Select Profile</string>
+    <string name="close">Close</string>
+    
+    <!-- Profile Names -->
+    <string name="profile_gaming">Gaming</string>
+    <string name="profile_work">Work</string>
+    <string name="profile_sleep">Sleep</string>
+    <string name="profile_home">Home</string>
+    
+    <!-- Profile Descriptions -->
+    <string name="profile_gaming_desc">Optimized for gaming and media</string>
+    <string name="profile_work_desc">For focus and meetings</string>
+    <string name="profile_sleep_desc">Quiet mode for night hours</string>
+    <string name="profile_home_desc">Balanced audio for home environment</string>
+    
+    <!-- Audio Preset Descriptions -->
+    <string name="preset_rock_desc">Strong bass and treble</string>
+    <string name="preset_pop_desc">Balanced and vibrant sound</string>
+    <string name="preset_classical_desc">Natural and detailed</string>
+    <string name="preset_jazz_desc">Warm and smooth tones</string>
+    <string name="preset_electronic_desc">Heavy bass and bright sound</string>
+    
+    <!-- Additional translations for UI elements -->
+    <string name="today">Today</string>
+    <string name="this_week">This Week</string>
+    <string name="currently">Currently</string>
+    <string name="apply_now">Apply Now</string>
+    <string name="daily_average">Daily Average</string>
+    <string name="times">times</string>
+    <string name="total_changes">Total Changes</string>
+    <string name="session_time">Session Time</string>
+    <string name="minutes">minutes</string>
+    <string name="closed">Closed</string>
+    <string name="changes">changes</string>
+</resources>

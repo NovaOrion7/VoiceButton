@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.VoiceButton" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Light theme için daha iyi contrast -->
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#424242</item>
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="android:colorPrimary">#1976D2</item>
+    </style>
+    
+    <!-- Siyah splash ekranı teması -->
+    <style name="Theme.VoiceButton.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">1500</item>
+        <item name="postSplashScreenTheme">@style/Theme.VoiceButton</item>
+    </style>
+
+</resources>

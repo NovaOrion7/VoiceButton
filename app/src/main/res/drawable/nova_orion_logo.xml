@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="24dp"
+    android:viewportWidth="120"
+    android:viewportHeight="24">
+    
+    <!-- Nova Orion text with gradient effect -->
+    <group android:translateX="10" android:translateY="12">
+        <!-- Background glow -->
+        <path
+            android:pathData="M0,0 L100,0 L100,12 L0,12 Z"
+            android:fillColor="#22FFFFFF" />
+        
+        <!-- Main text background -->
+        <path
+            android:pathData="M2,2 L98,2 L98,10 L2,10 Z"
+            android:fillColor="#FF4444" />
+    </group>
+    
+    <!-- Text content (Nova Orion) -->
+    <group android:translateX="15" android:translateY="16">
+        <path
+            android:pathData="M0,0 L8,0 L8,1 L0,1 Z"
+            android:fillColor="#FFFFFF" />
+        <path
+            android:pathData="M10,0 L18,0 L18,1 L10,1 Z"
+            android:fillColor="#FFFFFF" />
+        <path
+            android:pathData="M20,0 L28,0 L28,1 L20,1 Z"
+            android:fillColor="#FFFFFF" />
+        <path
+            android:pathData="M30,0 L38,0 L38,1 L30,1 Z"
+            android:fillColor="#FFFFFF" />
+        
+        <path
+            android:pathData="M50,0 L58,0 L58,1 L50,1 Z"
+            android:fillColor="#FFFFFF" />
+        <path
+            android:pathData="M60,0 L68,0 L68,1 L60,1 Z"
+            android:fillColor="#FFFFFF" />
+        <path
+            android:pathData="M70,0 L78,0 L78,1 L70,1 Z"
+            android:fillColor="#FFFFFF" />
+        <path
+            android:pathData="M80,0 L88,0 L88,1 L80,1 Z"
+            android:fillColor="#FFFFFF" />
+    </group>
+</vector>
