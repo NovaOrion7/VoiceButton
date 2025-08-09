@@ -12,8 +12,8 @@ android {
         applicationId = "com.novaorion.volumecontrol"
         minSdk = 24
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 3
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,12 +29,24 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+            
+            // Debug symbols and mapping file
+            isDebuggable = false
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
+        }
+        
+        debug {
+            isMinifyEnabled = false
+            isDebuggable = true
         }
     }
     compileOptions {
@@ -46,6 +58,18 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    
+    bundle {
+        language {
+            enableSplit = true
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
     }
 }
 
