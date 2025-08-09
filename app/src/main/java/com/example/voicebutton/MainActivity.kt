@@ -74,6 +74,9 @@ class MainActivity : ComponentActivity() {
         
         super.onCreate(savedInstanceState)
         
+        // Dili uygula
+        LanguageHelper.applyLanguage(this)
+        
         // Volume change receiver'ı başlat
         volumeChangeReceiver = VolumeChangeReceiver()
         
@@ -974,11 +977,7 @@ fun VolumeControlScreen() {
                     Column {
                         TextButton(
                             onClick = {
-                                LanguageHelper.setLanguage(context, "tr")
-                                selectedLanguage = "tr"
-                                showLanguageDialog = false
-                                // Activity'yi yeniden başlat
-                                (context as ComponentActivity).recreate()
+                                LanguageHelper.changeLanguageAndRestart(context as MainActivity, "tr")
                             }
                         ) {
                             Text(
@@ -992,11 +991,7 @@ fun VolumeControlScreen() {
                         
                         TextButton(
                             onClick = {
-                                LanguageHelper.setLanguage(context, "en")
-                                selectedLanguage = "en"
-                                showLanguageDialog = false
-                                // Activity'yi yeniden başlat
-                                (context as ComponentActivity).recreate()
+                                LanguageHelper.changeLanguageAndRestart(context as MainActivity, "en")
                             }
                         ) {
                             Text(

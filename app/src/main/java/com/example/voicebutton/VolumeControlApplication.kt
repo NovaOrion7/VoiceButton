@@ -1,0 +1,18 @@
+package com.example.voicebutton
+
+import android.app.Application
+import android.content.Context
+
+class VolumeControlApplication : Application() {
+    
+    override fun onCreate() {
+        super.onCreate()
+        // Dili uygula
+        LanguageHelper.applyLanguage(this)
+    }
+    
+    override fun attachBaseContext(base: Context?) {
+        val context = base?.let { LanguageHelper.updateBaseContextLanguage(it) } ?: base
+        super.attachBaseContext(context)
+    }
+}
