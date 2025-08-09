@@ -147,4 +147,25 @@
     <string name="minutes">dk</string>
     <string name="closed">Kapalı</string>
     <string name="changes">değişiklik</string>
+    
+    <!-- Floating Button -->
+    <string name="floating_button">Ekran Üstü Buton</string>
+    <string name="floating_button_active">Ekran Buton Aktif</string>
+    <string name="floating_button_description">Ekran üzerinde sürüklenebilir ses kontrol butonu</string>
+    <string name="floating_button_permission_info">Ekran üstünde buton göstermek için izin gerekli</string>
+    <string name="floating_button_active_description">Ekran üstü ses butonu şu anda aktif</string>
+    <string name="start_floating_button">Ekran Butonunu Başlat</string>
+    <string name="stop_floating_button">Ekran Butonunu Kapat</string>
+    <string name="enable_floating_button">Ekran Butonunu Aktif Et</string>
+    <string name="floating_active">Ekran butonu aktif</string>
+    <string name="floating_inactive">Ekran butonu pasif</string>
+    <string name="start_floating">Ekran Kontrolünü Başlat</string>
+    <string name="stop_floating">Ekran Kontrolünü Durdur</string>
+    <string name="permission_overlay">Ekran Üstü İzni</string>
+    <string name="permission_overlay_description">Ekran üstünde floating kontroller göstermek için izin gerekli</string>
+    <string name="grant_permission">İzin Ver</string>
+    <string name="permission_granted">İzin verildi</string>
+    <string name="permission_denied">İzin reddedildi</string>
+    <string name="floating_controls_started">Ekran kontrolleri başlatıldı</string>
+    <string name="floating_controls_stopped">Ekran kontrolleri durduruldu</string>
 </resources>

@@ -11,13 +11,6 @@ object LanguageHelper {
     fun setLanguage(context: Context, languageCode: String) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit().putString(LANGUAGE_KEY, languageCode).apply()
-        
-        val locale = Locale(languageCode)
-        Locale.setDefault(locale)
-        
-        val config = Configuration()
-        config.setLocale(locale)
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
     }
     
     fun getLanguage(context: Context): String {
@@ -30,8 +23,21 @@ object LanguageHelper {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
         
-        val config = Configuration()
+        val config = Configuration(context.resources.configuration)
         config.setLocale(locale)
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+        
+        // Modern Android için context güncelleme
+        context.createConfigurationContext(config)
+    }
+    
+    fun updateBaseContextLanguage(context: Context): Context {
+        val languageCode = getLanguage(context)
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(locale)
+        
+        return context.createConfigurationContext(config)
     }
 }

@@ -5,12 +5,15 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -53,14 +56,26 @@ class MainActivity : ComponentActivity() {
         }
     }
     
+    private val requestOverlayPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Settings.canDrawOverlays(this)) {
+                // Overlay izni verildi, floating button başlatılabilir
+            }
+        }
+    }
+    
+    private lateinit var volumeChangeReceiver: VolumeChangeReceiver
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         // Splash ekranını yükle
         installSplashScreen()
         
         super.onCreate(savedInstanceState)
         
-        // Dil ayarını uygula
-        LanguageHelper.applyLanguage(this)
+        // Volume change receiver'ı başlat
+        volumeChangeReceiver = VolumeChangeReceiver()
         
         // AdMob'u başlat
         AdMobHelper.initializeAds(this)
@@ -96,6 +111,36 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    
+    override fun onResume() {
+        super.onResume()
+        // Volume change receiver'ı kaydet
+        val filter = IntentFilter("android.media.VOLUME_CHANGED_ACTION")
+        registerReceiver(volumeChangeReceiver, filter)
+    }
+    
+    override fun onPause() {
+        super.onPause()
+        // Volume change receiver'ı kayıttan çıkar
+        try {
+            unregisterReceiver(volumeChangeReceiver)
+        } catch (e: IllegalArgumentException) {
+            // Receiver zaten unregister edilmiş
+        }
+    }
+    
+    fun startOverlayPermissionRequest() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply {
+                data = Uri.parse("package:$packageName")
+            }
+            requestOverlayPermissionLauncher.launch(intent)
+        }
+    }
+    
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let { LanguageHelper.updateBaseContextLanguage(it) } ?: newBase)
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -116,6 +161,7 @@ fun VolumeControlScreen() {
     var showStatisticsDialog by remember { mutableStateOf(false) }
     var showProfileDialog by remember { mutableStateOf(false) }
     var showStatsDialog by remember { mutableStateOf(false) }
+    var showFloatingDialog by remember { mutableStateOf(false) }
     var showPercentage by remember { mutableStateOf(true) }
     var vibrationEnabled by remember { mutableStateOf(true) }
     var volumeStep by remember { mutableIntStateOf(1) }
@@ -132,6 +178,11 @@ fun VolumeControlScreen() {
     // Ses seviyesini güncelle
     LaunchedEffect(Unit) {
         try {
+            // Volume change listener'ı ayarla
+            VolumeChangeReceiver.setOnVolumeChangeListener { newVolume ->
+                currentVolume = newVolume
+            }
+            
             // Önce temel ses ayarlarını al
             currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
             maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
@@ -202,6 +253,7 @@ fun VolumeControlScreen() {
     DisposableEffect(Unit) {
         onDispose {
             StatisticsHelper.recordSessionEnd(context)
+            VolumeChangeReceiver.removeOnVolumeChangeListener()
         }
     }
     
@@ -838,6 +890,37 @@ fun VolumeControlScreen() {
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 4.dp)
                 )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Floating Button kontrolü
+                OutlinedButton(
+                    onClick = { showFloatingDialog = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text("🎯")
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = if (FloatingButtonService.isFloatingActive()) 
+                                context.getString(R.string.floating_button_active) 
+                            else 
+                                context.getString(R.string.floating_button),
+                            fontSize = 14.sp
+                        )
+                    }
+                }
+                
+                Text(
+                    text = context.getString(R.string.floating_button_description),
+                    fontSize = 12.sp,
+                    color = getSecondaryTextColor(),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
             }
         }
         
@@ -1207,6 +1290,86 @@ fun VolumeControlScreen() {
             StatisticsDialog(
                 stats = statsData,
                 onDismiss = { showStatsDialog = false }
+            )
+        }
+        
+        // Floating Button dialog'u
+        if (showFloatingDialog) {
+            AlertDialog(
+                onDismissRequest = { showFloatingDialog = false },
+                title = {
+                    Text(text = context.getString(R.string.floating_button))
+                },
+                text = {
+                    Column {
+                        if (FloatingButtonService.isFloatingActive()) {
+                            Text(
+                                text = context.getString(R.string.floating_button_active_description),
+                                fontSize = 14.sp,
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+                            
+                            Button(
+                                onClick = {
+                                    val intent = Intent(context, FloatingButtonService::class.java).apply {
+                                        action = FloatingButtonService.ACTION_STOP_FLOATING
+                                    }
+                                    context.startService(intent)
+                                    showFloatingDialog = false
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.error
+                                )
+                            ) {
+                                Text(context.getString(R.string.stop_floating_button))
+                            }
+                        } else {
+                            Text(
+                                text = context.getString(R.string.floating_button_permission_info),
+                                fontSize = 14.sp,
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+                            
+                            Button(
+                                onClick = {
+                                    // Overlay izni kontrol et
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                        if (!Settings.canDrawOverlays(context)) {
+                                            // İzin yok, ayarlara yönlendir
+                                            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply {
+                                                data = Uri.parse("package:${context.packageName}")
+                                            }
+                                            (context as MainActivity).startOverlayPermissionRequest()
+                                        } else {
+                                            // İzin var, floating button başlat
+                                            val intent = Intent(context, FloatingButtonService::class.java).apply {
+                                                action = FloatingButtonService.ACTION_START_FLOATING
+                                            }
+                                            context.startService(intent)
+                                            showFloatingDialog = false
+                                        }
+                                    } else {
+                                        // Eski Android versiyonu, doğrudan başlat
+                                        val intent = Intent(context, FloatingButtonService::class.java).apply {
+                                            action = FloatingButtonService.ACTION_START_FLOATING
+                                        }
+                                        context.startService(intent)
+                                        showFloatingDialog = false
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(context.getString(R.string.start_floating_button))
+                            }
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showFloatingDialog = false }) {
+                        Text("OK")
+                    }
+                }
             )
         }
         

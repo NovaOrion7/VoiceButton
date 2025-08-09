@@ -134,4 +134,25 @@
     <string name="minutes">minutes</string>
     <string name="closed">Closed</string>
     <string name="changes">changes</string>
+    
+    <!-- Floating Button Feature -->
+    <string name="floating_button">Floating Button</string>
+    <string name="floating_button_description">Draggable volume controls on screen</string>
+    <string name="enable_floating_button">Enable Floating Button</string>
+    <string name="floating_active">Floating controls active</string>
+    <string name="floating_inactive">Floating controls inactive</string>
+    <string name="start_floating">Start Floating Controls</string>
+    <string name="stop_floating">Stop Floating Controls</string>
+    <string name="permission_overlay">Overlay Permission</string>
+    <string name="permission_overlay_description">Permission required to show floating controls on screen</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="permission_granted">Permission granted</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="floating_controls_started">Floating controls started</string>
+    <string name="floating_controls_stopped">Floating controls stopped</string>
+    <string name="floating_button_permission_info">Permission required to show floating button on screen</string>
+    <string name="floating_button_active_description">Floating volume button is currently active</string>
+    <string name="floating_button_active">Screen Button Active</string>
+    <string name="start_floating_button">Start Screen Button</string>
+    <string name="stop_floating_button">Stop Screen Button</string>
 </resources>

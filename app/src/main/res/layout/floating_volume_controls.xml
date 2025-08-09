@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/floating_background"
+    android:padding="8dp">
+
+    <!-- Ana floating button -->
+    <ImageButton
+        android:id="@+id/floating_main_button"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/floating_button_background"
+        android:src="@drawable/ic_volume_up"
+        android:contentDescription="Volume Control"
+        android:scaleType="center" />
+
+    <!-- Genişletilmiş kontroller -->
+    <LinearLayout
+        android:id="@+id/expanded_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/expanded_controls_background"
+        android:padding="12dp">
+
+        <!-- Ses seviyesi göstergesi -->
+        <TextView
+            android:id="@+id/volume_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Ses kontrol butonları -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Ses azalt -->
+            <ImageButton
+                android:id="@+id/volume_down_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/small_button_background"
+                android:src="@drawable/ic_volume_down"
+                android:contentDescription="Volume Down"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Ses artır -->
+            <ImageButton
+                android:id="@+id/volume_up_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/small_button_background"
+                android:src="@drawable/ic_volume_up"
+                android:contentDescription="Volume Up"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <!-- Kapatma butonu -->
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/close_button_background"
+            android:src="@drawable/ic_close"
+            android:contentDescription="Close"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
