@@ -74,8 +74,9 @@ class MainActivity : ComponentActivity() {
         
         super.onCreate(savedInstanceState)
         
-        // Dili uygula
-        LanguageHelper.applyLanguage(this)
+        // Dili zorla uygula
+        val languageCode = LanguageHelper.getLanguage(this)
+        LanguageHelper.forceUpdateLanguage(this, languageCode)
         
         // Volume change receiver'ı başlat
         volumeChangeReceiver = VolumeChangeReceiver()

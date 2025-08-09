@@ -12,8 +12,8 @@ android {
         applicationId = "com.novaorion.volumecontrol"
         minSdk = 24
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -87,6 +87,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics:1.7.5")
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("com.google.android.gms:play-services-ads:23.3.0")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

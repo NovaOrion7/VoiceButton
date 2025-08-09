@@ -2,9 +2,10 @@ package com.example.voicebutton
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
+import android.os.LocaleList
 import androidx.preference.PreferenceManager
 import java.util.Locale
 
@@ -35,15 +36,22 @@ object LanguageHelper {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
         
-        val config = Configuration(context.resources.configuration)
-        config.setLocale(locale)
+        val resources: Resources = context.resources
+        val config: Configuration = resources.configuration
         
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            context.createConfigurationContext(config)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            config.setLocales(LocaleList(locale))
         } else {
             @Suppress("DEPRECATION")
-            context.resources.updateConfiguration(config, context.resources.displayMetrics)
-            context
+            config.locale = locale
+        }
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return context.createConfigurationContext(config)
+        } else {
+            @Suppress("DEPRECATION")
+            resources.updateConfiguration(config, resources.displayMetrics)
+            return context
         }
     }
     
@@ -51,13 +59,42 @@ object LanguageHelper {
         // Dili kaydet
         setLanguage(activity, languageCode)
         
-        // Task'ı temizle ve aktiviteyi yeniden başlat
-        val intent = Intent(activity, activity.javaClass).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        // Manual olarak configuration'ı güncelle
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        
+        val resources: Resources = activity.resources
+        val config: Configuration = resources.configuration
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            config.setLocales(LocaleList(locale))
+        } else {
+            @Suppress("DEPRECATION")
+            config.locale = locale
         }
-        activity.startActivity(intent)
-        activity.finish()
+        
+        @Suppress("DEPRECATION")
+        resources.updateConfiguration(config, resources.displayMetrics)
+        
+        // Activity'yi recreate et
+        activity.recreate()
+    }
+    
+    fun forceUpdateLanguage(context: Context, languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        
+        val resources: Resources = context.resources
+        val config: Configuration = Configuration(resources.configuration)
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            config.setLocales(LocaleList(locale))
+        } else {
+            @Suppress("DEPRECATION")
+            config.locale = locale
+        }
+        
+        @Suppress("DEPRECATION")
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

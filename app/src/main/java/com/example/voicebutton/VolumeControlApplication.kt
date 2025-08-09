@@ -7,8 +7,9 @@ class VolumeControlApplication : Application() {
     
     override fun onCreate() {
         super.onCreate()
-        // Dili uygula
-        LanguageHelper.applyLanguage(this)
+        // Uygulama başlarken dil ayarlarını zorla uygula
+        val languageCode = LanguageHelper.getLanguage(this)
+        LanguageHelper.forceUpdateLanguage(this, languageCode)
     }
     
     override fun attachBaseContext(base: Context?) {
