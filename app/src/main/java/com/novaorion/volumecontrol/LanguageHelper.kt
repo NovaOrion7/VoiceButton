@@ -94,6 +94,37 @@ object LanguageHelper {
         activity.recreate()
     }
     
+    fun changeLanguageInstantly(activity: Activity, languageCode: String, onComplete: () -> Unit = {}) {
+        // Dili kaydet
+        setLanguage(activity, languageCode)
+        
+        // Modern API ile dil değiştir (Play Store için)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            try {
+                val locale = Locale(languageCode)
+                val localeList = LocaleListCompat.create(locale)
+                AppCompatDelegate.setApplicationLocales(localeList)
+                
+                // Callback'i çağır ve return et
+                onComplete()
+                return // Modern API kullanıldı, restart gerekmez
+            } catch (e: Exception) {
+                // Modern API çalışmazsa recreation gerekiyor
+            }
+        }
+        
+        // Fallback: Manual olarak configuration'ı güncelle
+        forceUpdateLanguage(activity, languageCode)
+        
+        // Callback'i çağır (state güncellemesi için)
+        onComplete()
+        
+        // Activity'yi recreate et (eski Android sürümleri için)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            activity.recreate()
+        }
+    }
+    
     fun forceUpdateLanguage(context: Context, languageCode: String) {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)

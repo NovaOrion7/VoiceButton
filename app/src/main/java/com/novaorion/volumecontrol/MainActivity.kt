@@ -253,6 +253,11 @@ fun VolumeControlScreen() {
         }
     }
     
+    // Dil değişikliği takibi için LaunchedEffect
+    LaunchedEffect(context) {
+        selectedLanguage = LanguageHelper.getLanguage(context)
+    }
+    
     // Session bitişini kaydet
     DisposableEffect(Unit) {
         onDispose {
@@ -978,7 +983,10 @@ fun VolumeControlScreen() {
                     Column {
                         TextButton(
                             onClick = {
-                                LanguageHelper.changeLanguageAndRestart(context as MainActivity, "tr")
+                                showLanguageDialog = false
+                                LanguageHelper.changeLanguageInstantly(context as MainActivity, "tr") {
+                                    selectedLanguage = "tr"
+                                }
                             }
                         ) {
                             Text(
@@ -992,7 +1000,10 @@ fun VolumeControlScreen() {
                         
                         TextButton(
                             onClick = {
-                                LanguageHelper.changeLanguageAndRestart(context as MainActivity, "en")
+                                showLanguageDialog = false
+                                LanguageHelper.changeLanguageInstantly(context as MainActivity, "en") {
+                                    selectedLanguage = "en"
+                                }
                             }
                         ) {
                             Text(
