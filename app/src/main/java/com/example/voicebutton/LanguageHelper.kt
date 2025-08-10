@@ -6,6 +6,8 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.preference.PreferenceManager
 import java.util.Locale
 
@@ -59,7 +61,19 @@ object LanguageHelper {
         // Dili kaydet
         setLanguage(activity, languageCode)
         
-        // Manual olarak configuration'ı güncelle
+        // Modern API ile dil değiştir (Play Store için)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            try {
+                val locale = Locale(languageCode)
+                val localeList = LocaleListCompat.create(locale)
+                AppCompatDelegate.setApplicationLocales(localeList)
+                return // Modern API kullanıldı, restart gerekmez
+            } catch (e: Exception) {
+                // Modern API çalışmazsa eski yönteme devam et
+            }
+        }
+        
+        // Manual olarak configuration'ı güncelle (fallback)
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
         
@@ -96,5 +110,24 @@ object LanguageHelper {
         
         @Suppress("DEPRECATION")
         resources.updateConfiguration(config, resources.displayMetrics)
+    }
+    
+    fun initializeAppLanguage(context: Context) {
+        val languageCode = getLanguage(context)
+        
+        // Modern API'yi dene (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            try {
+                val locale = Locale(languageCode)
+                val localeList = LocaleListCompat.create(locale)
+                AppCompatDelegate.setApplicationLocales(localeList)
+                return
+            } catch (e: Exception) {
+                // Modern API çalışmazsa eski yönteme devam et
+            }
+        }
+        
+        // Fallback olarak manual güncelleme
+        forceUpdateLanguage(context, languageCode)
     }
 }

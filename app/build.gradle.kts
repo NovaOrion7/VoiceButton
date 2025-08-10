@@ -12,8 +12,8 @@ android {
         applicationId = "com.novaorion.volumecontrol"
         minSdk = 24
         targetSdk = 35
-        versionCode = 5
-        versionName = "1.4"
+        versionCode = 6
+        versionName = "1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -62,7 +62,7 @@ android {
     
     bundle {
         language {
-            enableSplit = true
+            enableSplit = false  // Dil değiştirme için tüm dilleri AAB'ye dahil et
         }
         density {
             enableSplit = true
