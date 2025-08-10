@@ -9,13 +9,26 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.novaorion.volumecontrol"
+        defaultConfig {
+        applicationId = "com.example.voicebutton"
         minSdk = 24
         targetSdk = 35
-        versionCode = 6
+        versionCode = 7
         versionName = "1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+        
+        // NDK konfigürasyonu debug symboller için
+        ndk {
+            debugSymbolLevel = "FULL"
+        }
+        
+        // Locale config
+        resourceConfigurations.addAll(listOf("en", "tr"))
+    }
     }
 
     signingConfigs {
@@ -42,6 +55,12 @@ android {
             ndk {
                 debugSymbolLevel = "FULL"
             }
+            
+            // Native crash reporting için ek ayarlar
+            packagingOptions {
+                pickFirst("**/libc++_shared.so")
+                pickFirst("**/libjsc.so")
+            }
         }
         
         debug {
@@ -58,6 +77,13 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    
+    // Native debug metadata konfigürasyonu
+    androidComponents {
+        onVariants(selector().withBuildType("release")) { variant ->
+            variant.packaging.jniLibs.useLegacyPackaging = true
+        }
     }
     
     bundle {
