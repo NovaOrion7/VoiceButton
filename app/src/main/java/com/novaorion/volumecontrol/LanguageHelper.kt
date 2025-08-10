@@ -1,4 +1,4 @@
-package com.example.voicebutton
+package com.novaorion.volumecontrol
 
 import android.app.Activity
 import android.content.Context

@@ -1,4 +1,4 @@
-package com.example.voicebutton
+package com.novaorion.volumecontrol
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

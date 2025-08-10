@@ -5,12 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.voicebutton"
+    namespace = "com.novaorion.volumecontrol"
     compileSdk = 35
 
     defaultConfig {
-        defaultConfig {
-        applicationId = "com.example.voicebutton"
+        applicationId = "com.novaorion.volumecontrol"
         minSdk = 24
         targetSdk = 35
         versionCode = 8
@@ -28,7 +27,6 @@ android {
         
         // Locale config
         resourceConfigurations.addAll(listOf("en", "tr"))
-    }
     }
 
     signingConfigs {

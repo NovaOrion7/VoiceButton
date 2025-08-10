@@ -1,4 +1,4 @@
-package com.example.voicebutton
+package com.novaorion.volumecontrol
 
 import android.Manifest
 import android.appwidget.AppWidgetManager
@@ -43,7 +43,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import kotlinx.coroutines.delay
-import com.example.voicebutton.ui.theme.VoiceButtonTheme
+import com.novaorion.volumecontrol.ui.theme.VoiceButtonTheme
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.example.voicebutton.ui.theme
+package com.novaorion.volumecontrol.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -10,7 +10,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.example.voicebutton.PreferencesHelper
+import com.novaorion.volumecontrol.PreferencesHelper
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

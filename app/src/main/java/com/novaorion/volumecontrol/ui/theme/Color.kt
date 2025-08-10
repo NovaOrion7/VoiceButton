@@ -1,4 +1,4 @@
-package com.example.voicebutton.ui.theme
+package com.novaorion.volumecontrol.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
