@@ -105,7 +105,8 @@ object LanguageHelper {
                 val localeList = LocaleListCompat.create(locale)
                 AppCompatDelegate.setApplicationLocales(localeList)
                 
-                // Callback'i çağır ve return et
+                // Modern API kullanıldığında UI'yi yenile
+                forceUpdateLanguage(activity, languageCode)
                 onComplete()
                 return // Modern API kullanıldı, restart gerekmez
             } catch (e: Exception) {
@@ -121,6 +122,9 @@ object LanguageHelper {
         
         // Activity'yi recreate et (eski Android sürümleri için)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            activity.recreate()
+        } else {
+            // Android 13+ için de recreate et ki değişiklikler uygulansın
             activity.recreate()
         }
     }
