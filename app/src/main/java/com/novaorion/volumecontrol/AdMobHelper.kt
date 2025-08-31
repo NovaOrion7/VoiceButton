@@ -21,6 +21,7 @@ object AdMobHelper {
     
     private var interstitialAd: InterstitialAd? = null
     private var isLoadingInterstitial = false
+    private var interstitialCounter = 0
     
     fun initializeAds(context: Context) {
         MobileAds.initialize(context) { initializationStatus ->
@@ -73,6 +74,13 @@ object AdMobHelper {
     }
     
     fun showInterstitialAd(activity: Activity): Boolean {
+        interstitialCounter++
+        
+        // Only show ad every 3rd time
+        if (interstitialCounter % 2 != 0) {
+            return false
+        }
+        
         return if (interstitialAd != null) {
             interstitialAd?.show(activity)
             true

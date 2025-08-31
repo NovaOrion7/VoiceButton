@@ -176,6 +176,8 @@ fun VolumeControlScreen() {
     var allVolumeInfo by remember { mutableStateOf(emptyMap<String, AdvancedVolumeHelper.VolumeInfo>()) }
     var currentProfile by remember { mutableStateOf("varsayilan") }
     var statsData by remember { mutableStateOf(emptyMap<String, Any>()) }
+    // Interstitial ad counter
+    var adCounter by remember { mutableIntStateOf(0) }
     
     val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     val scrollState = rememberScrollState()
@@ -310,30 +312,35 @@ fun VolumeControlScreen() {
         vibrate()
     }
     
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp)
             .navigationBarsPadding()
-            .statusBarsPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .statusBarsPadding()
     ) {
-        // Dil seçimi butonu
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(16.dp)
+                .padding(bottom = 70.dp), // Make space for the banner ad
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            OutlinedButton(
-                onClick = { showLanguageDialog = true },
-                modifier = Modifier.size(width = 120.dp, height = 40.dp)
+            // Dil seçimi butonu
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
             ) {
-                Text(
-                    text = "🌐 ${context.getString(R.string.language)}",
-                    fontSize = 12.sp
-                )
+                OutlinedButton(
+                    onClick = { showLanguageDialog = true },
+                    modifier = Modifier.size(width = 120.dp, height = 40.dp)
+                ) {
+                    Text(
+                        text = "🌐 ${context.getString(R.string.language)}",
+                        fontSize = 12.sp
+                    )
+                }
             }
-        }
         
         Spacer(modifier = Modifier.height(16.dp))
         
@@ -999,15 +1006,20 @@ fun VolumeControlScreen() {
                 textAlign = TextAlign.Center
             )
         }
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        // Banner Reklam
+    }
+    
+    // Banner Reklam (fixed at bottom)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.BottomCenter)
+            .padding(horizontal = 16.dp)
+            .padding(bottom = 8.dp)
+    ) {
         BannerAdView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+            modifier = Modifier.fillMaxWidth()
         )
+    }
         
         // Dil seçimi dialog'u
         if (showLanguageDialog) {
