@@ -175,4 +175,7 @@
     <string name="small_button">Küçük</string>
     <string name="medium_button">Orta</string>
     <string name="large_button">Büyük</string>
+    
+    <!-- Widget Controls -->
+    <string name="refresh">Yenile</string>
 </resources>

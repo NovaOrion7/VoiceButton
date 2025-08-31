@@ -162,4 +162,7 @@
     <string name="small_button">Small</string>
     <string name="medium_button">Medium</string>
     <string name="large_button">Large</string>
+    
+    <!-- Widget Controls -->
+    <string name="refresh">Refresh</string>
 </resources>
