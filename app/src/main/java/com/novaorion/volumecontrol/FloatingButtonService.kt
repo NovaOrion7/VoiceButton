@@ -103,6 +103,14 @@ class FloatingButtonService : Service() {
         val closeButton = view.findViewById<ImageButton>(R.id.close_button)
         val volumeText = view.findViewById<TextView>(R.id.volume_text)
         
+        // Set the floating button size based on preference
+        val buttonSize = PreferencesHelper.getFloatingButtonSize(this)
+        val buttonSizePx = (buttonSize * resources.displayMetrics.density).toInt()
+        val layoutParams = mainButton.layoutParams
+        layoutParams.width = buttonSizePx
+        layoutParams.height = buttonSizePx
+        mainButton.layoutParams = layoutParams
+        
         // Ses seviyesini güncelle
         updateVolumeText(volumeText)
         

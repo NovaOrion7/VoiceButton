@@ -166,11 +166,13 @@ fun VolumeControlScreen() {
     var showProfileDialog by remember { mutableStateOf(false) }
     var showStatsDialog by remember { mutableStateOf(false) }
     var showFloatingDialog by remember { mutableStateOf(false) }
+    var showFloatingSizeDialog by remember { mutableStateOf(false) }
     var showPercentage by remember { mutableStateOf(true) }
     var vibrationEnabled by remember { mutableStateOf(true) }
     var volumeStep by remember { mutableIntStateOf(1) }
     var currentTheme by remember { mutableIntStateOf(PreferencesHelper.THEME_AUTO) }
     var scheduledVolumeEnabled by remember { mutableStateOf(false) }
+    var floatingButtonSize by remember { mutableIntStateOf(PreferencesHelper.FLOATING_BUTTON_SIZE_LARGE) }
     var allVolumeInfo by remember { mutableStateOf(emptyMap<String, AdvancedVolumeHelper.VolumeInfo>()) }
     var currentProfile by remember { mutableStateOf("varsayilan") }
     var statsData by remember { mutableStateOf(emptyMap<String, Any>()) }
@@ -207,6 +209,7 @@ fun VolumeControlScreen() {
                     val volStep = PreferencesHelper.getVolumeStep(context)
                     val theme = PreferencesHelper.getTheme(context)
                     val schedEnabled = PreferencesHelper.isScheduledVolumeEnabled(context)
+                    val floatButtonSize = PreferencesHelper.getFloatingButtonSize(context)
                     val volumeInfo = AdvancedVolumeHelper.getAllVolumeInfo(context)
                     
                     // UI güncellemelerini Main dispatcher'da yap
@@ -219,6 +222,7 @@ fun VolumeControlScreen() {
                         volumeStep = volStep
                         currentTheme = theme
                         scheduledVolumeEnabled = schedEnabled
+                        floatingButtonSize = floatButtonSize
                         allVolumeInfo = volumeInfo
                     }
                 } catch (e: Exception) {
@@ -232,6 +236,7 @@ fun VolumeControlScreen() {
                         volumeStep = 1
                         currentTheme = PreferencesHelper.THEME_AUTO
                         scheduledVolumeEnabled = false
+                        floatingButtonSize = PreferencesHelper.FLOATING_BUTTON_SIZE_LARGE
                         allVolumeInfo = emptyMap()
                     }
                 }
@@ -626,6 +631,38 @@ fun VolumeControlScreen() {
                             if (it) vibrate()
                         }
                     )
+                }
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                
+                // Floating button size
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = context.getString(R.string.floating_button_size),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = context.getString(R.string.floating_button_size_description),
+                            fontSize = 12.sp,
+                            color = getSecondaryTextColor()
+                        )
+                    }
+                    TextButton(onClick = { showFloatingSizeDialog = true }) {
+                        Text(
+                            text = when(floatingButtonSize) {
+                                PreferencesHelper.FLOATING_BUTTON_SIZE_SMALL -> context.getString(R.string.small_button)
+                                PreferencesHelper.FLOATING_BUTTON_SIZE_MEDIUM -> context.getString(R.string.medium_button)
+                                PreferencesHelper.FLOATING_BUTTON_SIZE_LARGE -> context.getString(R.string.large_button)
+                                else -> context.getString(R.string.large_button)
+                            }
+                        )
+                    }
                 }
                 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
@@ -1374,6 +1411,120 @@ fun VolumeControlScreen() {
                 },
                 confirmButton = {
                     TextButton(onClick = { showFloatingDialog = false }) {
+                        Text("OK")
+                    }
+                }
+            )
+        }
+        
+        // Floating Button size dialog'u
+        if (showFloatingSizeDialog) {
+            AlertDialog(
+                onDismissRequest = { showFloatingSizeDialog = false },
+                title = {
+                    Text(text = context.getString(R.string.floating_button_size))
+                },
+                text = {
+                    Column {
+                        TextButton(
+                            onClick = {
+                                floatingButtonSize = PreferencesHelper.FLOATING_BUTTON_SIZE_SMALL
+                                PreferencesHelper.setFloatingButtonSize(context, PreferencesHelper.FLOATING_BUTTON_SIZE_SMALL)
+                                showFloatingSizeDialog = false
+                                // If floating button is active, restart it to apply the new size
+                                if (FloatingButtonService.isFloatingActive()) {
+                                    val stopIntent = Intent(context, FloatingButtonService::class.java).apply {
+                                        action = FloatingButtonService.ACTION_STOP_FLOATING
+                                    }
+                                    context.startService(stopIntent)
+                                    
+                                    // Small delay to ensure the service is stopped
+                                    kotlinx.coroutines.MainScope().launch {
+                                        delay(100)
+                                        val startIntent = Intent(context, FloatingButtonService::class.java).apply {
+                                            action = FloatingButtonService.ACTION_START_FLOATING
+                                        }
+                                        context.startService(startIntent)
+                                    }
+                                }
+                            }
+                        ) {
+                            Text(
+                                text = context.getString(R.string.small_button) + " (${PreferencesHelper.FLOATING_BUTTON_SIZE_SMALL}dp)",
+                                color = if (floatingButtonSize == PreferencesHelper.FLOATING_BUTTON_SIZE_SMALL) 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                floatingButtonSize = PreferencesHelper.FLOATING_BUTTON_SIZE_MEDIUM
+                                PreferencesHelper.setFloatingButtonSize(context, PreferencesHelper.FLOATING_BUTTON_SIZE_MEDIUM)
+                                showFloatingSizeDialog = false
+                                // If floating button is active, restart it to apply the new size
+                                if (FloatingButtonService.isFloatingActive()) {
+                                    val stopIntent = Intent(context, FloatingButtonService::class.java).apply {
+                                        action = FloatingButtonService.ACTION_STOP_FLOATING
+                                    }
+                                    context.startService(stopIntent)
+                                    
+                                    // Small delay to ensure the service is stopped
+                                    kotlinx.coroutines.MainScope().launch {
+                                        delay(100)
+                                        val startIntent = Intent(context, FloatingButtonService::class.java).apply {
+                                            action = FloatingButtonService.ACTION_START_FLOATING
+                                        }
+                                        context.startService(startIntent)
+                                    }
+                                }
+                            }
+                        ) {
+                            Text(
+                                text = context.getString(R.string.medium_button) + " (${PreferencesHelper.FLOATING_BUTTON_SIZE_MEDIUM}dp)",
+                                color = if (floatingButtonSize == PreferencesHelper.FLOATING_BUTTON_SIZE_MEDIUM) 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                floatingButtonSize = PreferencesHelper.FLOATING_BUTTON_SIZE_LARGE
+                                PreferencesHelper.setFloatingButtonSize(context, PreferencesHelper.FLOATING_BUTTON_SIZE_LARGE)
+                                showFloatingSizeDialog = false
+                                // If floating button is active, restart it to apply the new size
+                                if (FloatingButtonService.isFloatingActive()) {
+                                    val stopIntent = Intent(context, FloatingButtonService::class.java).apply {
+                                        action = FloatingButtonService.ACTION_STOP_FLOATING
+                                    }
+                                    context.startService(stopIntent)
+                                    
+                                    // Small delay to ensure the service is stopped
+                                    kotlinx.coroutines.MainScope().launch {
+                                        delay(100)
+                                        val startIntent = Intent(context, FloatingButtonService::class.java).apply {
+                                            action = FloatingButtonService.ACTION_START_FLOATING
+                                        }
+                                        context.startService(startIntent)
+                                    }
+                                }
+                            }
+                        ) {
+                            Text(
+                                text = context.getString(R.string.large_button) + " (${PreferencesHelper.FLOATING_BUTTON_SIZE_LARGE}dp)",
+                                color = if (floatingButtonSize == PreferencesHelper.FLOATING_BUTTON_SIZE_LARGE) 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showFloatingSizeDialog = false }) {
                         Text("OK")
                     }
                 }

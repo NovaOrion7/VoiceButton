@@ -155,4 +155,11 @@
     <string name="floating_button_active">Screen Button Active</string>
     <string name="start_floating_button">Start Screen Button</string>
     <string name="stop_floating_button">Stop Screen Button</string>
+    
+    <!-- Floating Button Size -->
+    <string name="floating_button_size">Button Size</string>
+    <string name="floating_button_size_description">Set the size of the floating button</string>
+    <string name="small_button">Small</string>
+    <string name="medium_button">Medium</string>
+    <string name="large_button">Large</string>
 </resources>

@@ -168,4 +168,11 @@
     <string name="permission_denied">İzin reddedildi</string>
     <string name="floating_controls_started">Ekran kontrolleri başlatıldı</string>
     <string name="floating_controls_stopped">Ekran kontrolleri durduruldu</string>
+    
+    <!-- Floating Button Size -->
+    <string name="floating_button_size">Buton Boyutu</string>
+    <string name="floating_button_size_description">Ekran üstü butonun boyutunu ayarlayın</string>
+    <string name="small_button">Küçük</string>
+    <string name="medium_button">Orta</string>
+    <string name="large_button">Büyük</string>
 </resources>

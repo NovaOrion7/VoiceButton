@@ -13,11 +13,17 @@ object PreferencesHelper {
     private const val MORNING_VOLUME_KEY = "morning_volume"
     private const val EVENING_VOLUME_KEY = "evening_volume"
     private const val NIGHT_VOLUME_KEY = "night_volume"
+    private const val FLOATING_BUTTON_SIZE_KEY = "floating_button_size"
     
     // Tema modları
     const val THEME_LIGHT = 0
     const val THEME_DARK = 1
     const val THEME_AUTO = 2
+    
+    // Floating button sizes (in dp)
+    const val FLOATING_BUTTON_SIZE_SMALL = 25
+    const val FLOATING_BUTTON_SIZE_MEDIUM = 40
+    const val FLOATING_BUTTON_SIZE_LARGE = 56
     
     fun getVolumeStep(context: Context): Int {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -109,5 +115,16 @@ object PreferencesHelper {
     fun setNightVolume(context: Context, volume: Int) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit().putInt(NIGHT_VOLUME_KEY, volume).apply()
+    }
+    
+    // Floating button size
+    fun getFloatingButtonSize(context: Context): Int {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getInt(FLOATING_BUTTON_SIZE_KEY, FLOATING_BUTTON_SIZE_LARGE)
+    }
+    
+    fun setFloatingButtonSize(context: Context, size: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit().putInt(FLOATING_BUTTON_SIZE_KEY, size).apply()
     }
 }
