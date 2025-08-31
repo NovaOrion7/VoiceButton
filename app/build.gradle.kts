@@ -12,8 +12,8 @@ android {
         applicationId = "com.novaorion.volumecontrol"
         minSdk = 25
         targetSdk = 35
-        versionCode = 11
-        versionName = "1.9"
+        versionCode = 12
+        versionName = "1.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -27,6 +27,26 @@ android {
         
         // Locale config
         resourceConfigurations.addAll(listOf("en", "tr"))
+        
+        // Manifest placeholders for AdMob IDs
+        manifestPlaceholders["adMobAppId"] = "ca-app-pub-3940256099942544~3347511713"
+    }
+    
+    // Flavor dimensions for different ad configurations
+    flavorDimensions += "version"
+    productFlavors {
+        create("apk") {
+            dimension = "version"
+            // Test AdMob App ID for APK builds
+            manifestPlaceholders["adMobAppId"] = "ca-app-pub-3940256099942544~3347511713"
+            buildConfigField("boolean", "USE_REAL_ADS", "false")
+        }
+        create("aab") {
+            dimension = "version"
+            // Real AdMob App ID for AAB builds
+            manifestPlaceholders["adMobAppId"] = "ca-app-pub-2239637684721708~3562790073"
+            buildConfigField("boolean", "USE_REAL_ADS", "true")
+        }
     }
 
     signingConfigs {
@@ -75,6 +95,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     
     // Native debug metadata konfigürasyonu

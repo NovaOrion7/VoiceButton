@@ -84,6 +84,8 @@ class MainActivity : ComponentActivity() {
         // AdMob'u başlat
         AdMobHelper.initializeAds(this)
         AdMobHelper.loadInterstitialAd(this)
+        // Test ad configuration
+        AdMobHelper.testAdConfiguration()
         
         // Edge-to-edge ve sistem UI ayarları
         enableEdgeToEdge()
@@ -312,18 +314,27 @@ fun VolumeControlScreen() {
         vibrate()
     }
     
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .navigationBarsPadding()
-            .statusBarsPadding()
-    ) {
+    Scaffold(
+        bottomBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp)
+            ) {
+                BannerAdView(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(16.dp)
-                .padding(bottom = 70.dp), // Make space for the banner ad
+                .padding(innerPadding)
+                .padding(16.dp), // Removed the bottom padding that was pushing content up
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Dil seçimi butonu
@@ -1006,19 +1017,6 @@ fun VolumeControlScreen() {
                 textAlign = TextAlign.Center
             )
         }
-    }
-    
-    // Banner Reklam (fixed at bottom)
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .align(Alignment.BottomCenter)
-            .padding(horizontal = 16.dp)
-            .padding(bottom = 8.dp)
-    ) {
-        BannerAdView(
-            modifier = Modifier.fillMaxWidth()
-        )
     }
         
         // Dil seçimi dialog'u

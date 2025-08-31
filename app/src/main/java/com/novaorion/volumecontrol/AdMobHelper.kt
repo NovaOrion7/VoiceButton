@@ -15,17 +15,50 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 object AdMobHelper {
     
-    // Test reklam ID'leri
-    const val BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/6300978111"
-    const val INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
+    // Test reklam ID'leri (Debug/APK)
+    private const val TEST_BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/6000978111"
+    private const val TEST_INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
+    
+    // Gerçek reklam ID'leri (Release/AAB)
+    private const val REAL_BANNER_AD_UNIT_ID = "ca-app-pub-2239637684721708/1666826847"
+    private const val REAL_INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-2239637684721708/8040663505"
+    
+    // Default to test ads
+    var BANNER_AD_UNIT_ID = TEST_BANNER_AD_UNIT_ID
+    var INTERSTITIAL_AD_UNIT_ID = TEST_INTERSTITIAL_AD_UNIT_ID
     
     private var interstitialAd: InterstitialAd? = null
     private var isLoadingInterstitial = false
     private var interstitialCounter = 0
     
     fun initializeAds(context: Context) {
+        // Set the ad IDs based on build config field
+        setUseRealAds(getUseRealAdsFromBuildConfig())
+        
         MobileAds.initialize(context) { initializationStatus ->
             Log.d("AdMob", "AdMob başlatıldı: ${initializationStatus.adapterStatusMap}")
+        }
+    }
+    
+    fun setUseRealAds(useReal: Boolean) {
+        BANNER_AD_UNIT_ID = if (useReal) REAL_BANNER_AD_UNIT_ID else TEST_BANNER_AD_UNIT_ID
+        INTERSTITIAL_AD_UNIT_ID = if (useReal) REAL_INTERSTITIAL_AD_UNIT_ID else TEST_INTERSTITIAL_AD_UNIT_ID
+        Log.d("AdMob", "AdMobHelper: Using ${if (useReal) "REAL" else "TEST"} ads")
+    }
+    
+    fun getUseRealAdsFromBuildConfig(): Boolean {
+        // Default to false (test ads) to be safe
+        return try {
+            // Try to get the build config field
+            val buildConfigClass = Class.forName("com.novaorion.volumecontrol.BuildConfig")
+            val field = buildConfigClass.getField("USE_REAL_ADS")
+            val useRealAds = field.getBoolean(null)
+            Log.d("AdMob", "BuildConfig.USE_REAL_ADS = $useRealAds")
+            useRealAds
+        } catch (e: Exception) {
+            // If we can't determine, default to false (use test ads) to avoid ban risk
+            Log.e("AdMob", "Could not read BuildConfig.USE_REAL_ADS, defaulting to false", e)
+            false
         }
     }
     
@@ -77,7 +110,7 @@ object AdMobHelper {
         interstitialCounter++
         
         // Only show ad every 3rd time
-        if (interstitialCounter % 2 != 0) {
+        if (interstitialCounter % 3 != 0) {
             return false
         }
         
@@ -94,6 +127,24 @@ object AdMobHelper {
     fun isInterstitialReady(): Boolean {
         return interstitialAd != null
     }
+    
+    // Test method for debugging
+    fun testAdConfiguration() {
+        try {
+            val useRealAds = getUseRealAdsFromBuildConfig()
+            Log.d("AdMobTest", "USE_REAL_ADS = $useRealAds")
+            Log.d("AdMobTest", "BANNER_AD_UNIT_ID = $BANNER_AD_UNIT_ID")
+            Log.d("AdMobTest", "INTERSTITIAL_AD_UNIT_ID = $INTERSTITIAL_AD_UNIT_ID")
+            
+            if (useRealAds) {
+                Log.d("AdMobTest", "SUCCESS: Using REAL ads for AAB build")
+            } else {
+                Log.d("AdMobTest", "SUCCESS: Using TEST ads for APK build")
+            }
+        } catch (e: Exception) {
+            Log.e("AdMobTest", "Error testing ad configuration", e)
+        }
+    }
 }
 
 @Composable
@@ -101,6 +152,11 @@ fun BannerAdView(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    
+    // Log that we're trying to show the banner
+    LaunchedEffect(Unit) {
+        Log.d("AdMob", "Attempting to show banner ad with ID: ${AdMobHelper.BANNER_AD_UNIT_ID}")
+    }
     
     AndroidView(
         modifier = modifier
@@ -116,11 +172,14 @@ fun BannerAdView(
                 
                 adListener = object : AdListener() {
                     override fun onAdLoaded() {
-                        Log.d("AdMob", "Banner reklam yüklendi")
+                        Log.d("AdMob", "Banner reklam yüklendi successfully")
                     }
                     
                     override fun onAdFailedToLoad(adError: LoadAdError) {
                         Log.e("AdMob", "Banner reklam yüklenemedi: ${adError.message}")
+                        Log.e("AdMob", "Banner ad unit ID: ${AdMobHelper.BANNER_AD_UNIT_ID}")
+                        Log.e("AdMob", "Error code: ${adError.code}")
+                        Log.e("AdMob", "Error domain: ${adError.domain}")
                     }
                     
                     override fun onAdClicked() {

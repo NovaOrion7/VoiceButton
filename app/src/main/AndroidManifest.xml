@@ -30,10 +30,10 @@
         android:localeConfig="@xml/locales_config"
         tools:targetApi="31">
         
-        <!-- AdMob Test App ID -->
+        <!-- AdMob App ID (set via build.gradle) -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="${adMobAppId}"/>
             
         <activity
             android:name=".MainActivity"
