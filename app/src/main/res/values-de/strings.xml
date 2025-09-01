@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lautstärkeregelung</string>
+    <string name="volume_control_active">Lautstärkeregelung aktiv</string>
+    <string name="volume_up">Lautstärke +</string>
+    <string name="volume_down">Lautstärke -</string>
+    <string name="stop_service">Schließen</string>
+    <string name="volume_control_title">Lautstärkeregelung</string>
+    <string name="volume_control_subtitle">Dauerhafte Lautstärkeregelung für Telefone mit defekten Lautstärketasten</string>
+    <string name="current_volume_level">Aktuelle Lautstärke</string>
+    <string name="persistent_notification">Dauerhafte Benachrichtigung</string>
+    <string name="notification_active">Aktiv</string>
+    <string name="notification_inactive">Inaktiv</string>
+    <string name="start_service">Starten</string>
+    <string name="stop_service_button">Stoppen</string>
+    <string name="notification_description">Immer sichtbare + und - Tasten in Benachrichtigungen</string>
+    <string name="language">Sprache</string>
+    <string name="turkish">Türkisch</string>
+    <string name="english">Englisch</string>
+    <string name="hindi">Hindi</string>
+    <string name="german">Deutsch</string>
+    <string name="arabic">Arabisch</string>
+    <string name="spanish">Spanisch</string>
+    <string name="bengali">Bengali</string>
+    <string name="settings">Einstellungen</string>
+    <string name="volume_step">Lautstärke-Schrittgröße</string>
+    <string name="volume_step_description">Legen Sie fest, wie stark sich die Lautstärke bei jedem Druck ändert</string>
+    <string name="small_step">Klein (1)</string>
+    <string name="medium_step">Mittel (2)</string>
+    <string name="large_step">Groß (3)</string>
+    <string name="show_percentage">Prozent anzeigen</string>
+    <string name="show_percentage_description">Lautstärke als Prozentsatz anzeigen</string>
+    <string name="vibration">Vibration</string>
+    <string name="vibration_description">Vibrieren bei Lautstärkeänderung</string>
+    <string name="auto_start">Automatischer Start</string>
+    <string name="auto_start_description">Automatisch beim Telefon-Start starten</string>
+    <string name="about">Über</string>
+    <string name="app_version">App-Version</string>
+    <string name="developer">Entwickler: VoiceButton Team</string>
+    <string name="mute">Stumm</string>
+    <string name="unmute">Ton an</string>
+    <string name="reset_volume">Lautstärke zurücksetzen</string>
+    <string name="reset_volume_description">Lautstärke auf Standardwert zurücksetzen</string>
+    <string name="quick_settings">Schnelleinstellungen</string>
+    <string name="max_volume">Maximale Lautstärke</string>
+    <string name="half_volume">Halbe Lautstärke</string>
+    <string name="min_volume">Minimale Lautstärke</string>
+    <string name="theme">Design</string>
+    <string name="light_theme">Helles Design</string>
+    <string name="dark_theme">Dunkles Design</string>
+    <string name="auto_theme">Automatisch</string>
+    <string name="scheduled_volume">Geplante Lautstärke</string>
+    <string name="morning_volume">Morgenlautstärke</string>
+    <string name="evening_volume">Abendlautstärke</string>
+    <string name="night_volume">Nachtlautstärke</string>
+    <string name="enable_schedule">Zeitplan aktivieren</string>
+    <string name="morning_time">Morgenzeit (06:00)</string>
+    <string name="evening_time">Abendzeit (18:00)</string>
+    <string name="night_time">Nachtzeit (22:00)</string>
+    
+    <!-- Widget -->
+    <string name="widget_description">Schnelle Lautstärkeregelung über Homescreen-Widget</string>
+    <string name="widget_name">Lautstärkeregelung</string>
+    <string name="add_widget">Widget zum Homescreen hinzufügen</string>
+    
+    <!-- Advanced Sound Controls -->
+    <string name="sound_types">Tonarten</string>
+    <string name="media_volume">Medienlautstärke</string>
+    <string name="ring_volume">Klingeltonlautstärke</string>
+    <string name="notification_volume">Benachrichtigungslautstärke</string>
+    <string name="alarm_volume">Weckerlautstärke</string>
+    <string name="call_volume">Anruflautstärke</string>
+    <string name="system_volume">Systemlautstärke</string>
+    
+    <!-- Profiles -->
+    <string name="profiles">Profile</string>
+    <string name="gaming_profile">Gaming-Profil</string>
+    <string name="work_profile">Arbeitsprofil</string>
+    <string name="sleep_profile">Schlafprofil</string>
+    <string name="home_profile">Heimprofil</string>
+    <string name="current_profile">Aktuelles Profil</string>
+    <string name="apply_profile">Profil anwenden</string>
+    
+    <!-- Statistics -->
+    <string name="statistics">Statistiken</string>
+    <string name="daily_stats">Tägliche Statistiken</string>
+    <string name="weekly_stats">Wöchentliche Statistiken</string>
+    <string name="volume_changes">Lautstärkeänderungen</string>
+    <string name="average_volume">Durchschnittliche Lautstärke</string>
+    <string name="usage_time">Nutzungszeit</string>
+    <string name="favorite_profile">Meist genutztes Profil</string>
+    
+    <!-- Audio Effects -->
+    <string name="audio_effects">Audio-Effekte</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="bass_boost">Bass-Verstärkung</string>
+    <string name="virtualizer">3D-Virtualizer</string>
+    <string name="presets">Voreinstellungen</string>
+    <string name="normal_preset">Normal</string>
+    <string name="rock_preset">Rock</string>
+    <string name="pop_preset">Pop</string>
+    <string name="classical_preset">Klassisch</string>
+    <string name="jazz_preset">Jazz</string>
+    <string name="electronic_preset">Elektronisch</string>
+    <string name="custom_preset">Benutzerdefiniert</string>
+    <string name="effects_disabled">Audio-Effekte deaktiviert</string>
+    
+    <!-- Additional Features -->
+    <string name="select_profile">Profil auswählen</string>
+    <string name="close">Schließen</string>
+    
+    <!-- Profile Names -->
+    <string name="profile_gaming">Gaming</string>
+    <string name="profile_work">Arbeit</string>
+    <string name="profile_sleep">Schlaf</string>
+    <string name="profile_home">Zuhause</string>
+    
+    <!-- Profile Descriptions -->
+    <string name="profile_gaming_desc">Optimiert für Gaming und Medien</string>
+    <string name="profile_work_desc">Für Konzentration und Meetings</string>
+    <string name="profile_sleep_desc">Leiser Modus für Nachtstunden</string>
+    <string name="profile_home_desc">Ausgewogenes Audio für Zuhause</string>
+    
+    <!-- Audio Preset Descriptions -->
+    <string name="preset_rock_desc">Starke Bässe und Höhen</string>
+    <string name="preset_pop_desc">Ausgewogener und lebendiger Klang</string>
+    <string name="preset_classical_desc">Natürlich und detailreich</string>
+    <string name="preset_jazz_desc">Warme und weiche Töne</string>
+    <string name="preset_electronic_desc">Schwere Bässe und heller Klang</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">Lautstärke-Limit überschreiten</string>
+    <string name="volume_boost_desc">Lautstärke über dem normalen Limit</string>
+    <string name="volume_boost_warning">⚠️ WARNUNG: Diese Funktion kann die Tonqualität beeinträchtigen und den Lautsprecher beschädigen!</string>
+    <string name="boost_level">Verstärkungsstufe</string>
+    <string name="boost_apply">Anwenden</string>
+    <string name="boost_active">Verstärkung aktiv - Hohe Lautstärke</string>
+    <string name="boost_tip_title">💡 Tipp:</string>
+    <string name="boost_tip_1">• 25-50% reichen aus, um Videoton zu verstärken</string>
+    <string name="boost_tip_2">• Bei 75%+ vorsichtig sein zum Schutz der Ohren</string>
+    <string name="boost_tip_3">• Bei Kopfhörernutzung besonders vorsichtig sein</string>
+    <string name="cancel">Abbrechen</string>
+    
+    <!-- Additional translations for UI elements -->
+    <string name="today">Heute</string>
+    <string name="this_week">Diese Woche</string>
+    <string name="currently">Aktuell</string>
+    <string name="apply_now">Jetzt anwenden</string>
+    <string name="daily_average">Tagesdurchschnitt</string>
+    <string name="times">mal</string>
+    <string name="total_changes">Gesamte Änderungen</string>
+    <string name="session_time">Sitzungszeit</string>
+    <string name="minutes">Minuten</string>
+    <string name="closed">Geschlossen</string>
+    <string name="changes">Änderungen</string>
+    
+    <!-- Floating Button -->
+    <string name="floating_button">Schwebende Taste</string>
+    <string name="floating_button_active">Bildschirm-Taste aktiv</string>
+    <string name="floating_button_description">Ziehbare Lautstärkeregelung auf dem Bildschirm</string>
+    <string name="floating_button_permission_info">Berechtigung erforderlich, um Taste auf dem Bildschirm anzuzeigen</string>
+    <string name="floating_button_active_description">Bildschirm-Lautstärketaste ist derzeit aktiv</string>
+    <string name="start_floating_button">Bildschirm-Taste starten</string>
+    <string name="stop_floating_button">Bildschirm-Taste stoppen</string>
+    <string name="enable_floating_button">Bildschirm-Taste aktivieren</string>
+    <string name="floating_active">Bildschirm-Taste aktiv</string>
+    <string name="floating_inactive">Bildschirm-Taste inaktiv</string>
+    <string name="start_floating">Bildschirmsteuerung starten</string>
+    <string name="stop_floating">Bildschirmsteuerung stoppen</string>
+    <string name="permission_overlay">Overlay-Berechtigung</string>
+    <string name="permission_overlay_description">Berechtigung erforderlich, um schwebende Steuerung auf dem Bildschirm anzuzeigen</string>
+    <string name="grant_permission">Berechtigung erteilen</string>
+    <string name="permission_granted">Berechtigung erteilt</string>
+    <string name="permission_denied">Berechtigung verweigert</string>
+    <string name="floating_controls_started">Schwebende Steuerung gestartet</string>
+    <string name="floating_controls_stopped">Schwebende Steuerung gestoppt</string>
+    
+    <!-- Floating Button Size -->
+    <string name="floating_button_size">Tastengröße</string>
+    <string name="floating_button_size_description">Größe der schwebenden Taste einstellen</string>
+    <string name="small_button">Klein</string>
+    <string name="medium_button">Mittel</string>
+    <string name="large_button">Groß</string>
+    
+    <!-- Widget Controls -->
+    <string name="refresh">Aktualisieren</string>
+</resources>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Control de Volumen</string>
+    <string name="volume_control_active">Control de Volumen Activo</string>
+    <string name="volume_up">Volumen +</string>
+    <string name="volume_down">Volumen -</string>
+    <string name="stop_service">Cerrar</string>
+    <string name="volume_control_title">Control de Volumen</string>
+    <string name="volume_control_subtitle">Control de volumen persistente para teléfonos con botones de volumen rotos</string>
+    <string name="current_volume_level">Nivel de Volumen Actual</string>
+    <string name="persistent_notification">Notificación Persistente</string>
+    <string name="notification_active">Activo</string>
+    <string name="notification_inactive">Inactivo</string>
+    <string name="start_service">Iniciar</string>
+    <string name="stop_service_button">Detener</string>
+    <string name="notification_description">Botones + y - siempre visibles en notificaciones</string>
+    <string name="language">Idioma</string>
+    <string name="turkish">Turco</string>
+    <string name="english">Inglés</string>
+    <string name="hindi">Hindi</string>
+    <string name="german">Alemán</string>
+    <string name="arabic">Árabe</string>
+    <string name="spanish">Español</string>
+    <string name="bengali">Bengalí</string>
+    <string name="settings">Configuración</string>
+    <string name="volume_step">Tamaño de Paso de Volumen</string>
+    <string name="volume_step_description">Establece cuánto cambia el volumen con cada toque</string>
+    <string name="small_step">Pequeño (1)</string>
+    <string name="medium_step">Mediano (2)</string>
+    <string name="large_step">Grande (3)</string>
+    <string name="show_percentage">Mostrar Porcentaje</string>
+    <string name="show_percentage_description">Mostrar nivel de volumen como porcentaje</string>
+    <string name="vibration">Vibración</string>
+    <string name="vibration_description">Vibrar cuando el volumen cambie</string>
+    <string name="auto_start">Inicio Automático</string>
+    <string name="auto_start_description">Iniciar automáticamente al encender el teléfono</string>
+    <string name="about">Acerca de</string>
+    <string name="app_version">Versión de la App</string>
+    <string name="developer">Desarrollador: Equipo VoiceButton</string>
+    <string name="mute">Silenciar</string>
+    <string name="unmute">Activar Sonido</string>
+    <string name="reset_volume">Restablecer Volumen</string>
+    <string name="reset_volume_description">Restablecer volumen al nivel predeterminado</string>
+    <string name="quick_settings">Configuración Rápida</string>
+    <string name="max_volume">Volumen Máximo</string>
+    <string name="half_volume">Medio Volumen</string>
+    <string name="min_volume">Volumen Mínimo</string>
+    <string name="theme">Tema</string>
+    <string name="light_theme">Tema Claro</string>
+    <string name="dark_theme">Tema Oscuro</string>
+    <string name="auto_theme">Automático</string>
+    <string name="scheduled_volume">Volumen Programado</string>
+    <string name="morning_volume">Volumen de Mañana</string>
+    <string name="evening_volume">Volumen de Tarde</string>
+    <string name="night_volume">Volumen de Noche</string>
+    <string name="enable_schedule">Habilitar Programa</string>
+    <string name="morning_time">Hora de la Mañana (06:00)</string>
+    <string name="evening_time">Hora de la Tarde (18:00)</string>
+    <string name="night_time">Hora de la Noche (22:00)</string>
+    
+    <!-- Widget -->
+    <string name="widget_description">Control rápido de volumen a través del widget de pantalla principal</string>
+    <string name="widget_name">Control de Volumen</string>
+    <string name="add_widget">Agregar Widget a la Pantalla Principal</string>
+    
+    <!-- Advanced Sound Controls -->
+    <string name="sound_types">Tipos de Sonido</string>
+    <string name="media_volume">Volumen de Medios</string>
+    <string name="ring_volume">Volumen de Timbre</string>
+    <string name="notification_volume">Volumen de Notificaciones</string>
+    <string name="alarm_volume">Volumen de Alarma</string>
+    <string name="call_volume">Volumen de Llamadas</string>
+    <string name="system_volume">Volumen del Sistema</string>
+    
+    <!-- Profiles -->
+    <string name="profiles">Perfiles</string>
+    <string name="gaming_profile">Perfil de Juegos</string>
+    <string name="work_profile">Perfil de Trabajo</string>
+    <string name="sleep_profile">Perfil de Sueño</string>
+    <string name="home_profile">Perfil de Casa</string>
+    <string name="current_profile">Perfil Actual</string>
+    <string name="apply_profile">Aplicar Perfil</string>
+    
+    <!-- Statistics -->
+    <string name="statistics">Estadísticas</string>
+    <string name="daily_stats">Estadísticas Diarias</string>
+    <string name="weekly_stats">Estadísticas Semanales</string>
+    <string name="volume_changes">Cambios de Volumen</string>
+    <string name="average_volume">Volumen Promedio</string>
+    <string name="usage_time">Tiempo de Uso</string>
+    <string name="favorite_profile">Perfil Más Usado</string>
+    
+    <!-- Audio Effects -->
+    <string name="audio_effects">Efectos de Audio</string>
+    <string name="equalizer">Ecualizador</string>
+    <string name="bass_boost">Refuerzo de Graves</string>
+    <string name="virtualizer">Virtualizador 3D</string>
+    <string name="presets">Preajustes</string>
+    <string name="normal_preset">Normal</string>
+    <string name="rock_preset">Rock</string>
+    <string name="pop_preset">Pop</string>
+    <string name="classical_preset">Clásico</string>
+    <string name="jazz_preset">Jazz</string>
+    <string name="electronic_preset">Electrónico</string>
+    <string name="custom_preset">Personalizado</string>
+    <string name="effects_disabled">Efectos de audio deshabilitados</string>
+    
+    <!-- Additional Features -->
+    <string name="select_profile">Seleccionar Perfil</string>
+    <string name="close">Cerrar</string>
+    
+    <!-- Profile Names -->
+    <string name="profile_gaming">Juegos</string>
+    <string name="profile_work">Trabajo</string>
+    <string name="profile_sleep">Sueño</string>
+    <string name="profile_home">Casa</string>
+    
+    <!-- Profile Descriptions -->
+    <string name="profile_gaming_desc">Optimizado para juegos y medios</string>
+    <string name="profile_work_desc">Para concentración y reuniones</string>
+    <string name="profile_sleep_desc">Modo silencioso para horas nocturnas</string>
+    <string name="profile_home_desc">Audio equilibrado para entorno doméstico</string>
+    
+    <!-- Audio Preset Descriptions -->
+    <string name="preset_rock_desc">Graves y agudos fuertes</string>
+    <string name="preset_pop_desc">Sonido equilibrado y vibrante</string>
+    <string name="preset_classical_desc">Natural y detallado</string>
+    <string name="preset_jazz_desc">Tonos cálidos y suaves</string>
+    <string name="preset_electronic_desc">Graves pesados y sonido brillante</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">Superar Límite de Volumen</string>
+    <string name="volume_boost_desc">Nivel de volumen por encima del límite normal</string>
+    <string name="volume_boost_warning">⚠️ ADVERTENCIA: ¡Esta función puede dañar la calidad del sonido y dañar el altavoz!</string>
+    <string name="boost_level">Nivel de Refuerzo</string>
+    <string name="boost_apply">Aplicar</string>
+    <string name="boost_active">Refuerzo Activo - Volumen Alto</string>
+    <string name="boost_tip_title">💡 Consejo:</string>
+    <string name="boost_tip_1">• 25-50% es suficiente para aumentar el audio del video</string>
+    <string name="boost_tip_2">• Ten cuidado con 75%+ para proteger los oídos</string>
+    <string name="boost_tip_3">• Ten más cuidado al usar auriculares</string>
+    <string name="cancel">Cancelar</string>
+    
+    <!-- Additional translations for UI elements -->
+    <string name="today">Hoy</string>
+    <string name="this_week">Esta Semana</string>
+    <string name="currently">Actualmente</string>
+    <string name="apply_now">Aplicar Ahora</string>
+    <string name="daily_average">Promedio Diario</string>
+    <string name="times">veces</string>
+    <string name="total_changes">Cambios Totales</string>
+    <string name="session_time">Tiempo de Sesión</string>
+    <string name="minutes">minutos</string>
+    <string name="closed">Cerrado</string>
+    <string name="changes">cambios</string>
+    
+    <!-- Floating Button -->
+    <string name="floating_button">Botón Flotante</string>
+    <string name="floating_button_active">Botón de Pantalla Activo</string>
+    <string name="floating_button_description">Controles de volumen arrastrables en pantalla</string>
+    <string name="floating_button_permission_info">Se requiere permiso para mostrar el botón en pantalla</string>
+    <string name="floating_button_active_description">El botón de volumen en pantalla está actualmente activo</string>
+    <string name="start_floating_button">Iniciar Botón de Pantalla</string>
+    <string name="stop_floating_button">Detener Botón de Pantalla</string>
+    <string name="enable_floating_button">Habilitar Botón de Pantalla</string>
+    <string name="floating_active">Botón de pantalla activo</string>
+    <string name="floating_inactive">Botón de pantalla inactivo</string>
+    <string name="start_floating">Iniciar Control de Pantalla</string>
+    <string name="stop_floating">Detener Control de Pantalla</string>
+    <string name="permission_overlay">Permiso de Superposición</string>
+    <string name="permission_overlay_description">Se requiere permiso para mostrar controles flotantes en pantalla</string>
+    <string name="grant_permission">Conceder Permiso</string>
+    <string name="permission_granted">Permiso concedido</string>
+    <string name="permission_denied">Permiso denegado</string>
+    <string name="floating_controls_started">Controles flotantes iniciados</string>
+    <string name="floating_controls_stopped">Controles flotantes detenidos</string>
+    
+    <!-- Floating Button Size -->
+    <string name="floating_button_size">Tamaño del Botón</string>
+    <string name="floating_button_size_description">Establecer el tamaño del botón flotante</string>
+    <string name="small_button">Pequeño</string>
+    <string name="medium_button">Mediano</string>
+    <string name="large_button">Grande</string>
+    
+    <!-- Widget Controls -->
+    <string name="refresh">Actualizar</string>
+</resources>

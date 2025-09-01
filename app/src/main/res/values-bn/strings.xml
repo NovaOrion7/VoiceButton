@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ভলিউম নিয়ন্ত্রণ</string>
+    <string name="volume_control_active">ভলিউম নিয়ন্ত্রণ সক্রিয়</string>
+    <string name="volume_up">ভলিউম +</string>
+    <string name="volume_down">ভলিউম -</string>
+    <string name="stop_service">বন্ধ করুন</string>
+    <string name="volume_control_title">ভলিউম নিয়ন্ত্রণ</string>
+    <string name="volume_control_subtitle">ভাঙা ভলিউম বোতাম সহ ফোনের জন্য স্থায়ী ভলিউম নিয়ন্ত্রণ</string>
+    <string name="current_volume_level">বর্তমান ভলিউম স্তর</string>
+    <string name="persistent_notification">স্থায়ী বিজ্ঞপ্তি</string>
+    <string name="notification_active">সক্রিয়</string>
+    <string name="notification_inactive">নিষ্ক্রিয়</string>
+    <string name="start_service">শুরু করুন</string>
+    <string name="stop_service_button">বন্ধ করুন</string>
+    <string name="notification_description">বিজ্ঞপ্তিতে সর্বদা + এবং - বোতাম দৃশ্যমান</string>
+    <string name="language">ভাষা</string>
+    <string name="turkish">তুর্কি</string>
+    <string name="english">ইংরেজি</string>
+    <string name="hindi">হিন্দি</string>
+    <string name="german">জার্মান</string>
+    <string name="arabic">আরবি</string>
+    <string name="spanish">স্প্যানিশ</string>
+    <string name="bengali">বাংলা</string>
+    <string name="settings">সেটিংস</string>
+    <string name="volume_step">ভলিউম ধাপের আকার</string>
+    <string name="volume_step_description">প্রতিটি চাপে কত ভলিউম পরিবর্তন হবে তা সেট করুন</string>
+    <string name="small_step">ছোট (১)</string>
+    <string name="medium_step">মধ্যম (২)</string>
+    <string name="large_step">বড় (৩)</string>
+    <string name="show_percentage">শতাংশ দেখান</string>
+    <string name="show_percentage_description">ভলিউম স্তর শতাংশ হিসেবে দেখান</string>
+    <string name="vibration">কম্পন</string>
+    <string name="vibration_description">ভলিউম পরিবর্তনের সময় কম্পন করুন</string>
+    <string name="auto_start">স্বয়ংক্রিয় শুরু</string>
+    <string name="auto_start_description">ফোন চালু হওয়ার সময় স্বয়ংক্রিয়ভাবে শুরু করুন</string>
+    <string name="about">সম্পর্কে</string>
+    <string name="app_version">অ্যাপ সংস্করণ</string>
+    <string name="developer">ডেভেলপার: VoiceButton টিম</string>
+    <string name="mute">নীরব</string>
+    <string name="unmute">শব্দ চালু করুন</string>
+    <string name="reset_volume">ভলিউম রিসেট করুন</string>
+    <string name="reset_volume_description">ভলিউম ডিফল্ট স্তরে ফিরিয়ে আনুন</string>
+    <string name="quick_settings">দ্রুত সেটিংস</string>
+    <string name="max_volume">সর্বোচ্চ ভলিউম</string>
+    <string name="half_volume">অর্ধেক ভলিউম</string>
+    <string name="min_volume">সর্বনিম্ন ভলিউম</string>
+    <string name="theme">থিম</string>
+    <string name="light_theme">হালকা থিম</string>
+    <string name="dark_theme">গাঢ় থিম</string>
+    <string name="auto_theme">স্বয়ংক্রিয়</string>
+    <string name="scheduled_volume">নির্ধারিত ভলিউম</string>
+    <string name="morning_volume">সকালের ভলিউম</string>
+    <string name="evening_volume">সন্ধ্যার ভলিউম</string>
+    <string name="night_volume">রাতের ভলিউম</string>
+    <string name="enable_schedule">সময়সূচী সক্ষম করুন</string>
+    <string name="morning_time">সকালের সময় (০৬:০০)</string>
+    <string name="evening_time">সন্ধ্যার সময় (১৮:০০)</string>
+    <string name="night_time">রাতের সময় (২২:০০)</string>
+    
+    <!-- Widget -->
+    <string name="widget_description">হোম স্ক্রিন উইজেটের মাধ্যমে দ্রুত ভলিউম নিয়ন্ত্রণ</string>
+    <string name="widget_name">ভলিউম নিয়ন্ত্রণ</string>
+    <string name="add_widget">হোম স্ক্রিনে উইজেট যোগ করুন</string>
+    
+    <!-- Advanced Sound Controls -->
+    <string name="sound_types">শব্দের ধরন</string>
+    <string name="media_volume">মিডিয়া ভলিউম</string>
+    <string name="ring_volume">রিং ভলিউম</string>
+    <string name="notification_volume">বিজ্ঞপ্তি ভলিউম</string>
+    <string name="alarm_volume">অ্যালার্ম ভলিউম</string>
+    <string name="call_volume">কল ভলিউম</string>
+    <string name="system_volume">সিস্টেম ভলিউম</string>
+    
+    <!-- Profiles -->
+    <string name="profiles">প্রোফাইল</string>
+    <string name="gaming_profile">গেমিং প্রোফাইল</string>
+    <string name="work_profile">কাজের প্রোফাইল</string>
+    <string name="sleep_profile">ঘুমের প্রোফাইল</string>
+    <string name="home_profile">বাড়ির প্রোফাইল</string>
+    <string name="current_profile">বর্তমান প্রোফাইল</string>
+    <string name="apply_profile">প্রোফাইল প্রয়োগ করুন</string>
+    
+    <!-- Statistics -->
+    <string name="statistics">পরিসংখ্যান</string>
+    <string name="daily_stats">দৈনিক পরিসংখ্যান</string>
+    <string name="weekly_stats">সাপ্তাহিক পরিসংখ্যান</string>
+    <string name="volume_changes">ভলিউম পরিবর্তন</string>
+    <string name="average_volume">গড় ভলিউম</string>
+    <string name="usage_time">ব্যবহারের সময়</string>
+    <string name="favorite_profile">সর্বাধিক ব্যবহৃত প্রোফাইল</string>
+    
+    <!-- Audio Effects -->
+    <string name="audio_effects">অডিও এফেক্ট</string>
+    <string name="equalizer">ইকুয়ালাইজার</string>
+    <string name="bass_boost">বেস বুস্ট</string>
+    <string name="virtualizer">৩ডি ভার্চুয়ালাইজার</string>
+    <string name="presets">প্রিসেট</string>
+    <string name="normal_preset">সাধারণ</string>
+    <string name="rock_preset">রক</string>
+    <string name="pop_preset">পপ</string>
+    <string name="classical_preset">শাস্ত্রীয়</string>
+    <string name="jazz_preset">জ্যাজ</string>
+    <string name="electronic_preset">ইলেকট্রনিক</string>
+    <string name="custom_preset">কাস্টম</string>
+    <string name="effects_disabled">অডিও এফেক্ট নিষ্ক্রিয়</string>
+    
+    <!-- Additional Features -->
+    <string name="select_profile">প্রোফাইল নির্বাচন করুন</string>
+    <string name="close">বন্ধ করুন</string>
+    
+    <!-- Profile Names -->
+    <string name="profile_gaming">গেমিং</string>
+    <string name="profile_work">কাজ</string>
+    <string name="profile_sleep">ঘুম</string>
+    <string name="profile_home">বাড়ি</string>
+    
+    <!-- Profile Descriptions -->
+    <string name="profile_gaming_desc">গেমিং এবং মিডিয়ার জন্য অনুকূলিত</string>
+    <string name="profile_work_desc">মনোযোগ এবং মিটিংয়ের জন্য</string>
+    <string name="profile_sleep_desc">রাতের সময়ের জন্য নীরব মোড</string>
+    <string name="profile_home_desc">বাড়ির পরিবেশের জন্য সুষম অডিও</string>
+    
+    <!-- Audio Preset Descriptions -->
+    <string name="preset_rock_desc">শক্তিশালী বেস এবং ট্রেবল</string>
+    <string name="preset_pop_desc">সুষম এবং প্রাণবন্ত শব্দ</string>
+    <string name="preset_classical_desc">প্রাকৃতিক এবং বিস্তারিত</string>
+    <string name="preset_jazz_desc">উষ্ণ এবং মৃদু টোন</string>
+    <string name="preset_electronic_desc">ভারী বেস এবং উজ্জ্বল শব্দ</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">ভলিউম সীমা অতিক্রম</string>
+    <string name="volume_boost_desc">সাধারণ সীমার চেয়ে বেশি ভলিউম স্তর</string>
+    <string name="volume_boost_warning">⚠️ সতর্কতা: এই বৈশিষ্ট্যটি শব্দের মান নষ্ট করতে পারে এবং স্পিকারের ক্ষতি করতে পারে!</string>
+    <string name="boost_level">বুস্ট স্তর</string>
+    <string name="boost_apply">প্রয়োগ করুন</string>
+    <string name="boost_active">বুস্ট সক্রিয় - উচ্চ শব্দ</string>
+    <string name="boost_tip_title">💡 টিপ:</string>
+    <string name="boost_tip_1">• ভিডিওর শব্দ বাড়ানোর জন্য ২৫-৫০% যথেষ্ট</string>
+    <string name="boost_tip_2">• কান রক্ষার জন্য ৭৫%+ এর সাথে সাবধান থাকুন</string>
+    <string name="boost_tip_3">• হেডফোন ব্যবহারের সময় আরও সতর্ক থাকুন</string>
+    <string name="cancel">বাতিল</string>
+    
+    <!-- Additional translations for UI elements -->
+    <string name="today">আজ</string>
+    <string name="this_week">এই সপ্তাহ</string>
+    <string name="currently">বর্তমানে</string>
+    <string name="apply_now">এখনই প্রয়োগ করুন</string>
+    <string name="daily_average">দৈনিক গড়</string>
+    <string name="times">বার</string>
+    <string name="total_changes">মোট পরিবর্তন</string>
+    <string name="session_time">সেশনের সময়</string>
+    <string name="minutes">মিনিট</string>
+    <string name="closed">বন্ধ</string>
+    <string name="changes">পরিবর্তন</string>
+    
+    <!-- Floating Button -->
+    <string name="floating_button">ভাসমান বোতাম</string>
+    <string name="floating_button_active">স্ক্রিন বোতাম সক্রিয়</string>
+    <string name="floating_button_description">স্ক্রিনে টেনে আনার যোগ্য ভলিউম নিয়ন্ত্রণ বোতাম</string>
+    <string name="floating_button_permission_info">স্ক্রিনে বোতাম দেখানোর জন্য অনুমতি প্রয়োজন</string>
+    <string name="floating_button_active_description">স্ক্রিনে ভলিউম বোতাম বর্তমানে সক্রিয়</string>
+    <string name="start_floating_button">স্ক্রিন বোতাম শুরু করুন</string>
+    <string name="stop_floating_button">স্ক্রিন বোতাম বন্ধ করুন</string>
+    <string name="enable_floating_button">স্ক্রিন বোতাম সক্ষম করুন</string>
+    <string name="floating_active">স্ক্রিন বোতাম সক্রিয়</string>
+    <string name="floating_inactive">স্ক্রিন বোতাম নিষ্ক্রিয়</string>
+    <string name="start_floating">স্ক্রিন নিয়ন্ত্রণ শুরু করুন</string>
+    <string name="stop_floating">স্ক্রিন নিয়ন্ত্রণ বন্ধ করুন</string>
+    <string name="permission_overlay">ওভারলে অনুমতি</string>
+    <string name="permission_overlay_description">স্ক্রিনে ভাসমান নিয়ন্ত্রণ দেখানোর জন্য অনুমতি প্রয়োজন</string>
+    <string name="grant_permission">অনুমতি দিন</string>
+    <string name="permission_granted">অনুমতি দেওয়া হয়েছে</string>
+    <string name="permission_denied">অনুমতি প্রত্যাখ্যান</string>
+    <string name="floating_controls_started">ভাসমান নিয়ন্ত্রণ শুরু হয়েছে</string>
+    <string name="floating_controls_stopped">ভাসমান নিয়ন্ত্রণ বন্ধ হয়েছে</string>
+    
+    <!-- Floating Button Size -->
+    <string name="floating_button_size">বোতামের আকার</string>
+    <string name="floating_button_size_description">ভাসমান বোতামের আকার নির্ধারণ করুন</string>
+    <string name="small_button">ছোট</string>
+    <string name="medium_button">মধ্যম</string>
+    <string name="large_button">বড়</string>
+    
+    <!-- Widget Controls -->
+    <string name="refresh">রিফ্রেশ</string>
+</resources>

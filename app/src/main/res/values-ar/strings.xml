@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">التحكم في الصوت</string>
+    <string name="volume_control_active">التحكم في الصوت نشط</string>
+    <string name="volume_up">رفع الصوت +</string>
+    <string name="volume_down">خفض الصوت -</string>
+    <string name="stop_service">إغلاق</string>
+    <string name="volume_control_title">التحكم في الصوت</string>
+    <string name="volume_control_subtitle">تحكم دائم في الصوت للهواتف ذات أزرار الصوت المكسورة</string>
+    <string name="current_volume_level">مستوى الصوت الحالي</string>
+    <string name="persistent_notification">إشعار دائم</string>
+    <string name="notification_active">نشط</string>
+    <string name="notification_inactive">غير نشط</string>
+    <string name="start_service">بدء</string>
+    <string name="stop_service_button">إيقاف</string>
+    <string name="notification_description">أزرار + و - مرئية دائماً في الإشعارات</string>
+    <string name="language">اللغة</string>
+    <string name="turkish">التركية</string>
+    <string name="english">الإنجليزية</string>
+    <string name="hindi">الهندية</string>
+    <string name="german">الألمانية</string>
+    <string name="arabic">العربية</string>
+    <string name="spanish">الإسبانية</string>
+    <string name="bengali">البنغالية</string>
+    <string name="settings">الإعدادات</string>
+    <string name="volume_step">حجم خطوة الصوت</string>
+    <string name="volume_step_description">تعيين مقدار تغيير الصوت مع كل ضغطة</string>
+    <string name="small_step">صغير (1)</string>
+    <string name="medium_step">متوسط (2)</string>
+    <string name="large_step">كبير (3)</string>
+    <string name="show_percentage">إظهار النسبة المئوية</string>
+    <string name="show_percentage_description">عرض مستوى الصوت كنسبة مئوية</string>
+    <string name="vibration">الاهتزاز</string>
+    <string name="vibration_description">اهتزاز عند تغيير الصوت</string>
+    <string name="auto_start">البدء التلقائي</string>
+    <string name="auto_start_description">البدء تلقائياً عند تشغيل الهاتف</string>
+    <string name="about">حول</string>
+    <string name="app_version">إصدار التطبيق</string>
+    <string name="developer">المطور: فريق VoiceButton</string>
+    <string name="mute">كتم الصوت</string>
+    <string name="unmute">إلغاء كتم الصوت</string>
+    <string name="reset_volume">إعادة تعيين الصوت</string>
+    <string name="reset_volume_description">إعادة الصوت إلى المستوى الافتراضي</string>
+    <string name="quick_settings">الإعدادات السريعة</string>
+    <string name="max_volume">الصوت الأقصى</string>
+    <string name="half_volume">نصف الصوت</string>
+    <string name="min_volume">الصوت الأدنى</string>
+    <string name="theme">السمة</string>
+    <string name="light_theme">السمة الفاتحة</string>
+    <string name="dark_theme">السمة الداكنة</string>
+    <string name="auto_theme">تلقائي</string>
+    <string name="scheduled_volume">الصوت المجدول</string>
+    <string name="morning_volume">صوت الصباح</string>
+    <string name="evening_volume">صوت المساء</string>
+    <string name="night_volume">صوت الليل</string>
+    <string name="enable_schedule">تمكين الجدولة</string>
+    <string name="morning_time">وقت الصباح (06:00)</string>
+    <string name="evening_time">وقت المساء (18:00)</string>
+    <string name="night_time">وقت الليل (22:00)</string>
+    
+    <!-- Widget -->
+    <string name="widget_description">تحكم سريع في الصوت عبر عنصر الشاشة الرئيسية</string>
+    <string name="widget_name">التحكم في الصوت</string>
+    <string name="add_widget">إضافة عنصر إلى الشاشة الرئيسية</string>
+    
+    <!-- Advanced Sound Controls -->
+    <string name="sound_types">أنواع الصوت</string>
+    <string name="media_volume">صوت الوسائط</string>
+    <string name="ring_volume">صوت الرنين</string>
+    <string name="notification_volume">صوت الإشعارات</string>
+    <string name="alarm_volume">صوت المنبه</string>
+    <string name="call_volume">صوت المكالمات</string>
+    <string name="system_volume">صوت النظام</string>
+    
+    <!-- Profiles -->
+    <string name="profiles">الملفات الشخصية</string>
+    <string name="gaming_profile">ملف الألعاب</string>
+    <string name="work_profile">ملف العمل</string>
+    <string name="sleep_profile">ملف النوم</string>
+    <string name="home_profile">ملف المنزل</string>
+    <string name="current_profile">الملف الحالي</string>
+    <string name="apply_profile">تطبيق الملف</string>
+    
+    <!-- Statistics -->
+    <string name="statistics">الإحصائيات</string>
+    <string name="daily_stats">الإحصائيات اليومية</string>
+    <string name="weekly_stats">الإحصائيات الأسبوعية</string>
+    <string name="volume_changes">تغييرات الصوت</string>
+    <string name="average_volume">متوسط الصوت</string>
+    <string name="usage_time">وقت الاستخدام</string>
+    <string name="favorite_profile">الملف الأكثر استخداماً</string>
+    
+    <!-- Audio Effects -->
+    <string name="audio_effects">تأثيرات الصوت</string>
+    <string name="equalizer">المعادل</string>
+    <string name="bass_boost">تعزيز الجهير</string>
+    <string name="virtualizer">المحاكي ثلاثي الأبعاد</string>
+    <string name="presets">الإعدادات المسبقة</string>
+    <string name="normal_preset">عادي</string>
+    <string name="rock_preset">روك</string>
+    <string name="pop_preset">بوب</string>
+    <string name="classical_preset">كلاسيكي</string>
+    <string name="jazz_preset">جاز</string>
+    <string name="electronic_preset">إلكتروني</string>
+    <string name="custom_preset">مخصص</string>
+    <string name="effects_disabled">تأثيرات الصوت معطلة</string>
+    
+    <!-- Additional Features -->
+    <string name="select_profile">اختيار الملف</string>
+    <string name="close">إغلاق</string>
+    
+    <!-- Profile Names -->
+    <string name="profile_gaming">الألعاب</string>
+    <string name="profile_work">العمل</string>
+    <string name="profile_sleep">النوم</string>
+    <string name="profile_home">المنزل</string>
+    
+    <!-- Profile Descriptions -->
+    <string name="profile_gaming_desc">محسن للألعاب والوسائط</string>
+    <string name="profile_work_desc">للتركيز والاجتماعات</string>
+    <string name="profile_sleep_desc">وضع هادئ لساعات الليل</string>
+    <string name="profile_home_desc">صوت متوازن لبيئة المنزل</string>
+    
+    <!-- Audio Preset Descriptions -->
+    <string name="preset_rock_desc">جهير وحدة عالية قوية</string>
+    <string name="preset_pop_desc">صوت متوازن وحيوي</string>
+    <string name="preset_classical_desc">طبيعي ومفصل</string>
+    <string name="preset_jazz_desc">نغمات دافئة وناعمة</string>
+    <string name="preset_electronic_desc">جهير ثقيل وصوت مشرق</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">تجاوز حد الصوت</string>
+    <string name="volume_boost_desc">مستوى صوت أعلى من الحد الطبيعي</string>
+    <string name="volume_boost_warning">⚠️ تحذير: هذه الميزة قد تضر بجودة الصوت وتلحق الضرر بمكبر الصوت!</string>
+    <string name="boost_level">مستوى التعزيز</string>
+    <string name="boost_apply">تطبيق</string>
+    <string name="boost_active">التعزيز نشط - صوت عالي</string>
+    <string name="boost_tip_title">💡 نصيحة:</string>
+    <string name="boost_tip_1">• 25-50% كافية لزيادة صوت الفيديو</string>
+    <string name="boost_tip_2">• كن حذراً مع 75%+ لحماية الأذنين</string>
+    <string name="boost_tip_3">• كن أكثر حذراً عند استخدام سماعات الرأس</string>
+    <string name="cancel">إلغاء</string>
+    
+    <!-- Additional translations for UI elements -->
+    <string name="today">اليوم</string>
+    <string name="this_week">هذا الأسبوع</string>
+    <string name="currently">حالياً</string>
+    <string name="apply_now">تطبيق الآن</string>
+    <string name="daily_average">المتوسط اليومي</string>
+    <string name="times">مرات</string>
+    <string name="total_changes">إجمالي التغييرات</string>
+    <string name="session_time">وقت الجلسة</string>
+    <string name="minutes">دقائق</string>
+    <string name="closed">مغلق</string>
+    <string name="changes">تغييرات</string>
+    
+    <!-- Floating Button -->
+    <string name="floating_button">الزر العائم</string>
+    <string name="floating_button_active">زر الشاشة نشط</string>
+    <string name="floating_button_description">أزرار تحكم قابلة للسحب على الشاشة</string>
+    <string name="floating_button_permission_info">مطلوب إذن لإظهار الزر على الشاشة</string>
+    <string name="floating_button_active_description">زر الصوت على الشاشة نشط حالياً</string>
+    <string name="start_floating_button">بدء زر الشاشة</string>
+    <string name="stop_floating_button">إيقاف زر الشاشة</string>
+    <string name="enable_floating_button">تمكين زر الشاشة</string>
+    <string name="floating_active">زر الشاشة نشط</string>
+    <string name="floating_inactive">زر الشاشة غير نشط</string>
+    <string name="start_floating">بدء تحكم الشاشة</string>
+    <string name="stop_floating">إيقاف تحكم الشاشة</string>
+    <string name="permission_overlay">إذن التراكب</string>
+    <string name="permission_overlay_description">مطلوب إذن لإظهار عناصر التحكم العائمة على الشاشة</string>
+    <string name="grant_permission">منح الإذن</string>
+    <string name="permission_granted">تم منح الإذن</string>
+    <string name="permission_denied">تم رفض الإذن</string>
+    <string name="floating_controls_started">تم بدء عناصر التحكم العائمة</string>
+    <string name="floating_controls_stopped">تم إيقاف عناصر التحكم العائمة</string>
+    
+    <!-- Floating Button Size -->
+    <string name="floating_button_size">حجم الزر</string>
+    <string name="floating_button_size_description">تعيين حجم الزر العائم</string>
+    <string name="small_button">صغير</string>
+    <string name="medium_button">متوسط</string>
+    <string name="large_button">كبير</string>
+    
+    <!-- Widget Controls -->
+    <string name="refresh">تحديث</string>
+</resources>

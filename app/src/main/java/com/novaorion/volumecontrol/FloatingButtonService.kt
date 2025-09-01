@@ -34,6 +34,11 @@ class FloatingButtonService : Service() {
         fun isFloatingActive(): Boolean = isRunning
     }
     
+    override fun attachBaseContext(base: Context?) {
+        val context = base?.let { LanguageHelper.updateBaseContextLanguage(it) } ?: base
+        super.attachBaseContext(context)
+    }
+    
     override fun onBind(intent: Intent?): IBinder? = null
     
     override fun onCreate() {

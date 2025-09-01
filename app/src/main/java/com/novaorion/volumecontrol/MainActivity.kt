@@ -156,7 +156,7 @@ fun VolumeControlScreen() {
     var isServiceRunning by remember { mutableStateOf(false) }
     var currentVolume by remember { mutableStateOf(0) }
     var maxVolume by remember { mutableStateOf(0) }
-    var selectedLanguage by remember { mutableStateOf("tr") }
+    var selectedLanguage by remember { mutableStateOf(LanguageHelper.getLanguage(context)) }
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showVolumeStepDialog by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
@@ -1036,13 +1036,24 @@ fun VolumeControlScreen() {
                                 }
                             }
                         ) {
-                            Text(
-                                text = context.getString(R.string.turkish),
-                                color = if (selectedLanguage == "tr") 
-                                    MaterialTheme.colorScheme.primary 
-                                else 
-                                    MaterialTheme.colorScheme.onSurface
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🇹🇷",
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Text(
+                                    text = context.getString(R.string.turkish),
+                                    color = if (selectedLanguage == "tr") 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
                         }
                         
                         TextButton(
@@ -1053,13 +1064,164 @@ fun VolumeControlScreen() {
                                 }
                             }
                         ) {
-                            Text(
-                                text = context.getString(R.string.english),
-                                color = if (selectedLanguage == "en") 
-                                    MaterialTheme.colorScheme.primary 
-                                else 
-                                    MaterialTheme.colorScheme.onSurface
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🇺🇸",
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Text(
+                                    text = context.getString(R.string.english),
+                                    color = if (selectedLanguage == "en") 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                showLanguageDialog = false
+                                LanguageHelper.changeLanguageInstantly(context as MainActivity, "hi") {
+                                    selectedLanguage = "hi"
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🇮🇳",
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Text(
+                                    text = context.getString(R.string.hindi),
+                                    color = if (selectedLanguage == "hi") 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                showLanguageDialog = false
+                                LanguageHelper.changeLanguageInstantly(context as MainActivity, "de") {
+                                    selectedLanguage = "de"
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🇩🇪",
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Text(
+                                    text = context.getString(R.string.german),
+                                    color = if (selectedLanguage == "de") 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                showLanguageDialog = false
+                                LanguageHelper.changeLanguageInstantly(context as MainActivity, "ar") {
+                                    selectedLanguage = "ar"
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🇸🇦",
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Text(
+                                    text = context.getString(R.string.arabic),
+                                    color = if (selectedLanguage == "ar") 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                showLanguageDialog = false
+                                LanguageHelper.changeLanguageInstantly(context as MainActivity, "es") {
+                                    selectedLanguage = "es"
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🇪🇸",
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Text(
+                                    text = context.getString(R.string.spanish),
+                                    color = if (selectedLanguage == "es") 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        
+                        TextButton(
+                            onClick = {
+                                showLanguageDialog = false
+                                LanguageHelper.changeLanguageInstantly(context as MainActivity, "bn") {
+                                    selectedLanguage = "bn"
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🇧🇩",
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Text(
+                                    text = context.getString(R.string.bengali),
+                                    color = if (selectedLanguage == "bn") 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
                         }
                     }
                 },

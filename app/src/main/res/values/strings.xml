@@ -16,6 +16,11 @@
     <string name="language">Dil</string>
     <string name="turkish">Türkçe</string>
     <string name="english">İngilizce</string>
+    <string name="hindi">Hintçe</string>
+    <string name="german">Almanca</string>
+    <string name="arabic">Arapça</string>
+    <string name="spanish">İspanyolca</string>
+    <string name="bengali">Bengalce</string>
     <string name="settings">Ayarlar</string>
     <string name="volume_step">Ses Adım Boyutu</string>
     <string name="volume_step_description">Her basışta ne kadar ses değişimi olacağını ayarlayın</string>

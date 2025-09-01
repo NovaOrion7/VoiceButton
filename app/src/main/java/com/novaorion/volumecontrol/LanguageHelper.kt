@@ -2,12 +2,11 @@ package com.novaorion.volumecontrol
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
 import androidx.preference.PreferenceManager
 import java.util.Locale
 
@@ -61,34 +60,8 @@ object LanguageHelper {
         // Dili kaydet
         setLanguage(activity, languageCode)
         
-        // Modern API ile dil değiştir (Play Store için)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            try {
-                val locale = Locale(languageCode)
-                val localeList = LocaleListCompat.create(locale)
-                AppCompatDelegate.setApplicationLocales(localeList)
-                return // Modern API kullanıldı, restart gerekmez
-            } catch (e: Exception) {
-                // Modern API çalışmazsa eski yönteme devam et
-            }
-        }
-        
-        // Manual olarak configuration'ı güncelle (fallback)
-        val locale = Locale(languageCode)
-        Locale.setDefault(locale)
-        
-        val resources: Resources = activity.resources
-        val config: Configuration = resources.configuration
-        
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            config.setLocales(LocaleList(locale))
-        } else {
-            @Suppress("DEPRECATION")
-            config.locale = locale
-        }
-        
-        @Suppress("DEPRECATION")
-        resources.updateConfiguration(config, resources.displayMetrics)
+        // Configuration'ı güncelle
+        forceUpdateLanguage(activity, languageCode)
         
         // Activity'yi recreate et
         activity.recreate()
@@ -98,35 +71,17 @@ object LanguageHelper {
         // Dili kaydet
         setLanguage(activity, languageCode)
         
-        // Modern API ile dil değiştir (Play Store için)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            try {
-                val locale = Locale(languageCode)
-                val localeList = LocaleListCompat.create(locale)
-                AppCompatDelegate.setApplicationLocales(localeList)
-                
-                // Modern API kullanıldığında UI'yi yenile
-                forceUpdateLanguage(activity, languageCode)
-                onComplete()
-                return // Modern API kullanıldı, restart gerekmez
-            } catch (e: Exception) {
-                // Modern API çalışmazsa recreation gerekiyor
-            }
-        }
-        
-        // Fallback: Manual olarak configuration'ı güncelle
+        // Güvenilir metod: Manual olarak configuration'ı güncelle
         forceUpdateLanguage(activity, languageCode)
+        
+        // Service'leri yeniden başlat (bildirimler için)
+        restartActiveServices(activity)
         
         // Callback'i çağır (state güncellemesi için)
         onComplete()
         
-        // Activity'yi recreate et (eski Android sürümleri için)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            activity.recreate()
-        } else {
-            // Android 13+ için de recreate et ki değişiklikler uygulansın
-            activity.recreate()
-        }
+        // Activity'yi recreate et
+        activity.recreate()
     }
     
     fun forceUpdateLanguage(context: Context, languageCode: String) {
@@ -147,22 +102,41 @@ object LanguageHelper {
         resources.updateConfiguration(config, resources.displayMetrics)
     }
     
-    fun initializeAppLanguage(context: Context) {
-        val languageCode = getLanguage(context)
-        
-        // Modern API'yi dene (Android 13+)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            try {
-                val locale = Locale(languageCode)
-                val localeList = LocaleListCompat.create(locale)
-                AppCompatDelegate.setApplicationLocales(localeList)
-                return
-            } catch (e: Exception) {
-                // Modern API çalışmazsa eski yönteme devam et
+    private fun restartActiveServices(context: Context) {
+        try {
+            // VolumeControlService yeniden başlat
+            val volumeServiceIntent = Intent(context, VolumeControlService::class.java)
+            context.stopService(volumeServiceIntent)
+            
+            // Kısa bekleme sonrası yeniden başlat
+            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        context.startForegroundService(volumeServiceIntent)
+                    } else {
+                        context.startService(volumeServiceIntent)
+                    }
+                } catch (e: Exception) {
+                    // Service başlatılamadıysa görmezden gel
+                }
+            }, 100)
+            
+            // FloatingButtonService yeniden başlat (eğer aktifse)
+            if (FloatingButtonService.isFloatingActive()) {
+                val floatingServiceIntent = Intent(context, FloatingButtonService::class.java)
+                context.stopService(floatingServiceIntent)
+                
+                android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                    try {
+                        floatingServiceIntent.action = FloatingButtonService.ACTION_START_FLOATING
+                        context.startService(floatingServiceIntent)
+                    } catch (e: Exception) {
+                        // Service başlatılamadıysa görmezden gel
+                    }
+                }, 150)
             }
+        } catch (e: Exception) {
+            // Service yeniden başlatma hatası - görmezden gel
         }
-        
-        // Fallback olarak manual güncelleme
-        forceUpdateLanguage(context, languageCode)
     }
 }

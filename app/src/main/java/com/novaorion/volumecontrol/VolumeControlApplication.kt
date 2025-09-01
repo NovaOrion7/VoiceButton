@@ -7,8 +7,9 @@ class VolumeControlApplication : Application() {
     
     override fun onCreate() {
         super.onCreate()
-        // Modern API ile dil ayarlarını başlat
-        LanguageHelper.initializeAppLanguage(this)
+        // Klasik metod ile dil ayarlarını başlat
+        val languageCode = LanguageHelper.getLanguage(this)
+        LanguageHelper.forceUpdateLanguage(this, languageCode)
     }
     
     override fun attachBaseContext(base: Context?) {

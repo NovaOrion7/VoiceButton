@@ -23,6 +23,11 @@ class VolumeControlService : Service() {
     private lateinit var audioManager: AudioManager
     private lateinit var vibrator: Vibrator
     
+    override fun attachBaseContext(base: Context?) {
+        val context = base?.let { LanguageHelper.updateBaseContextLanguage(it) } ?: base
+        super.attachBaseContext(context)
+    }
+    
     override fun onCreate() {
         super.onCreate()
         // Dil ayarını uygula

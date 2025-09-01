@@ -12,8 +12,8 @@ android {
         applicationId = "com.novaorion.volumecontrol"
         minSdk = 25
         targetSdk = 35
-        versionCode = 12
-        versionName = "1.10"
+        versionCode = 13
+        versionName = "1.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -26,7 +26,7 @@ android {
         }
         
         // Locale config
-        resourceConfigurations.addAll(listOf("en", "tr"))
+        resourceConfigurations.addAll(listOf("en", "tr", "hi", "de", "ar", "es", "bn"))
         
         // Manifest placeholders for AdMob IDs
         manifestPlaceholders["adMobAppId"] = "ca-app-pub-3940256099942544~3347511713"
