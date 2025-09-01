@@ -8,6 +8,7 @@ import android.media.audiofx.Virtualizer
 import android.media.audiofx.Equalizer
 import android.util.Log
 
+@Suppress("DEPRECATION")
 object AudioEffectsHelper {
     
     private var bassBoost: BassBoost? = null

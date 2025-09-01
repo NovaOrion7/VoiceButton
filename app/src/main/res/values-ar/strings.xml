@@ -129,7 +129,7 @@
     <string name="preset_electronic_desc">جهير ثقيل وصوت مشرق</string>
     
     <!-- Volume Boost -->
-    <string name="volume_boost">تجاوز حد الصوت</string>
+    <string name="volume_boost">تعزيز الصوت</string>
     <string name="volume_boost_desc">مستوى صوت أعلى من الحد الطبيعي</string>
     <string name="volume_boost_warning">⚠️ تحذير: هذه الميزة قد تضر بجودة الصوت وتلحق الضرر بمكبر الصوت!</string>
     <string name="boost_level">مستوى التعزيز</string>
@@ -140,6 +140,28 @@
     <string name="boost_tip_2">• كن حذراً مع 75%+ لحماية الأذنين</string>
     <string name="boost_tip_3">• كن أكثر حذراً عند استخدام سماعات الرأس</string>
     <string name="cancel">إلغاء</string>
+    <string name="volume_boost_title">تعزيز الصوت</string>
+    <string name="volume_boost_description">زيادة صوت النظام فوق 100%%</string>
+    <string name="volume_boost_level">مستوى التعزيز</string>
+    <string name="volume_boost_enabled">تعزيز الصوت نشط</string>
+    <string name="volume_boost_disabled">تعزيز الصوت مغلق</string>
+    <string name="boost_level_low">تعزيز منخفض</string>
+    <string name="boost_level_medium">تعزيز متوسط</string>
+    <string name="boost_level_high">تعزيز عالي</string>
+    <string name="boost_level_maximum">أقصى تعزيز</string>
+    <string name="emergency_boost">تعزيز طارئ</string>
+    <string name="emergency_boost_description">أقصى مستوى آمن لتعزيز الصوت</string>
+    <string name="warning_high_volume">⚠️ المستويات العالية للصوت قد تسبب فقدان السمع</string>
+    <string name="boost_warning">تحذير: مستويات الصوت العالية يمكن أن تكون خطيرة</string>
+    <string name="safe_level_warning">هذا المستوى يعتبر آمناً</string>
+    <string name="unsafe_level_warning">هذا المستوى قد يكون خطيراً - استخدم بحذر</string>
+    <string name="maximum_level_warning">ننصح بتجنب هذا المستوى إلا في الضرورة القصوى</string>
+    <string name="boost_not_supported">تعزيز الصوت المتقدم غير مدعوم على هذا الجهاز</string>
+    <string name="low">منخفض</string>
+    <string name="medium">متوسط</string>
+    <string name="high">عالي</string>
+    <string name="maximum">أقصى</string>
+    <string name="disabled">معطل</string>
     
     <!-- Additional translations for UI elements -->
     <string name="today">اليوم</string>
@@ -181,7 +203,4 @@
     <string name="small_button">صغير</string>
     <string name="medium_button">متوسط</string>
     <string name="large_button">كبير</string>
-    
-    <!-- Widget Controls -->
-    <string name="refresh">تحديث</string>
 </resources>

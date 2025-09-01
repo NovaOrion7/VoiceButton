@@ -128,19 +128,6 @@
     <string name="preset_jazz_desc">गर्म और मुलायम टोन</string>
     <string name="preset_electronic_desc">भारी बास और चमकदार ध्वनि</string>
     
-    <!-- Volume Boost -->
-    <string name="volume_boost">वॉल्यूम सीमा पार करें</string>
-    <string name="volume_boost_desc">सामान्य सीमा से अधिक वॉल्यूम स्तर</string>
-    <string name="volume_boost_warning">⚠️ चेतावनी: यह सुविधा ध्वनि की गुणवत्ता को खराब कर सकती है और स्पीकर को नुकसान पहुंचा सकती है!</string>
-    <string name="boost_level">बूस्ट स्तर</string>
-    <string name="boost_apply">लागू करें</string>
-    <string name="boost_active">बूस्ट सक्रिय - तेज़ आवाज़</string>
-    <string name="boost_tip_title">💡 सुझाव:</string>
-    <string name="boost_tip_1">• वीडियो की आवाज़ बढ़ाने के लिए 25-50% पर्याप्त है</string>
-    <string name="boost_tip_2">• 75%+ कानों की सुरक्षा के लिए सावधान रहें</string>
-    <string name="boost_tip_3">• हेडफोन का उपयोग करते समय अधिक सावधान रहें</string>
-    <string name="cancel">रद्द करें</string>
-    
     <!-- Additional translations for UI elements -->
     <string name="today">आज</string>
     <string name="this_week">इस सप्ताह</string>
@@ -184,4 +171,29 @@
     
     <!-- Widget Controls -->
     <string name="refresh">रीफ्रेश</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">वॉल्यूम बूस्ट</string>
+    <string name="volume_boost_title">वॉल्यूम बूस्ट</string>
+    <string name="volume_boost_description">सिस्टम वॉल्यूम को 100%% से अधिक बढ़ाएं</string>
+    <string name="volume_boost_level">बूस्ट स्तर</string>
+    <string name="volume_boost_enabled">वॉल्यूम बूस्ट सक्रिय</string>
+    <string name="volume_boost_disabled">वॉल्यूम बूस्ट बंद</string>
+    <string name="boost_level_low">कम बूस्ट</string>
+    <string name="boost_level_medium">मध्यम बूस्ट</string>
+    <string name="boost_level_high">उच्च बूस्ट</string>
+    <string name="boost_level_maximum">अधिकतम बूस्ट</string>
+    <string name="emergency_boost">आपातकालीन बूस्ट</string>
+    <string name="emergency_boost_description">अधिकतम सुरक्षित स्तर वॉल्यूम बूस्ट</string>
+    <string name="warning_high_volume">⚠️ उच्च वॉल्यूम स्तर सुनने की हानि का कारण बन सकते हैं</string>
+    <string name="boost_warning">चेतावनी: उच्च वॉल्यूम स्तर खतरनाक हो सकते हैं</string>
+    <string name="safe_level_warning">यह स्तर सुरक्षित माना जाता है</string>
+    <string name="unsafe_level_warning">यह स्तर खतरनाक हो सकता है - सावधानी से उपयोग करें</string>
+    <string name="maximum_level_warning">हम सलाह देते हैं कि बिल्कुल आवश्यक न हो तो इस स्तर से बचें</string>
+    <string name="boost_not_supported">इस डिवाइस पर उन्नत वॉल्यूम बूस्ट समर्थित नहीं है</string>
+    <string name="low">कम</string>
+    <string name="medium">मध्यम</string>
+    <string name="high">उच्च</string>
+    <string name="maximum">अधिकतम</string>
+    <string name="disabled">निष्क्रिय</string>
 </resources>

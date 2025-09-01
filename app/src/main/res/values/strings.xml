@@ -126,19 +126,18 @@
     <string name="preset_classical_desc">Doğal ve ayrıntılı</string>
     <string name="preset_jazz_desc">Sıcak ve yumuşak tonlar</string>
     <string name="preset_electronic_desc">Yoğun bas ve parlak ses</string>
-    
-    <!-- Volume Boost -->
-    <string name="volume_boost">Ses Limitini Aş</string>
-    <string name="volume_boost_desc">Normal limitin üzerinde ses seviyesi</string>
-    <string name="volume_boost_warning">⚠️ DİKKAT: Bu özellik ses kalitesini bozabilir ve hoparlöre zarar verebilir!</string>
-    <string name="boost_level">Boost Seviyesi</string>
-    <string name="boost_apply">Uygula</string>
-    <string name="boost_active">Boost Aktif - Yüksek Ses</string>
-    <string name="boost_tip_title">💡 İpucu:</string>
-    <string name="boost_tip_1">• Video sesini artırmak için %25-50 yeterli</string>
-    <string name="boost_tip_2">• %75+ kulakları korumak için dikkatli olun</string>
-    <string name="boost_tip_3">• Kulaklık kullanırken daha dikkatli olun</string>
     <string name="cancel">İptal</string>
+    
+    <!-- Volume Boost (Legacy - Eski volume boost string'leri) -->
+    <string name="volume_boost_desc">Normal sınırın üzerinde ses seviyesi</string>
+    <string name="volume_boost_warning">⚠️ UYARI: Bu özellik ses kalitesini bozabilir ve hoparlöre zarar verebilir!</string>
+    <string name="boost_level">Artırma Seviyesi</string>
+    <string name="boost_apply">Uygula</string>
+    <string name="boost_active">Artırma aktif - Yüksek ses</string>
+    <string name="boost_tip_title">💡 İpucu:</string>
+    <string name="boost_tip_1">• Video sesini artırmak için %25-50 yeterlidir</string>
+    <string name="boost_tip_2">• %75+ ile kulakları korumak için dikkatli olun</string>
+    <string name="boost_tip_3">• Kulaklık kullanırken daha dikkatli olun</string>
     
     <!-- Additional translations for UI elements -->
     <string name="today">Bugün</string>
@@ -183,4 +182,29 @@
     
     <!-- Widget Controls -->
     <string name="refresh">Yenile</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">Ses Artırma</string>
+    <string name="volume_boost_title">Ses Artırma (Volume Boost)</string>
+    <string name="volume_boost_description">Sistem sesini %100\'ün üzerine çıkarır</string>
+    <string name="volume_boost_level">Artırma Seviyesi</string>
+    <string name="volume_boost_enabled">Ses Artırma Aktif</string>
+    <string name="volume_boost_disabled">Ses Artırma Kapalı</string>
+    <string name="boost_level_low">Düşük Artırma</string>
+    <string name="boost_level_medium">Orta Artırma</string>
+    <string name="boost_level_high">Yüksek Artırma</string>
+    <string name="boost_level_maximum">Maksimum Artırma</string>
+    <string name="emergency_boost">Acil Durum Artırma</string>
+    <string name="emergency_boost_description">Maksimum güvenli seviyede ses artırma</string>
+    <string name="warning_high_volume">⚠️ Yüksek ses seviyesi işitme kaybına neden olabilir</string>
+    <string name="boost_warning">Dikkat: Yüksek ses seviyeleri tehlikeli olabilir</string>
+    <string name="safe_level_warning">Bu seviye güvenli kabul edilir</string>
+    <string name="unsafe_level_warning">Bu seviye tehlikeli olabilir - dikkatli kullanın</string>
+    <string name="maximum_level_warning">Çok mecbur kalmadıkça bu seviyeyi kullanmamanızı öneririz</string>
+    <string name="boost_not_supported">Bu cihazda gelişmiş ses artırma desteklenmiyor</string>
+    <string name="low">Düşük</string>
+    <string name="medium">Orta</string>
+    <string name="high">Yüksek</string>
+    <string name="maximum">Maksimum</string>
+    <string name="disabled">Kapalı</string>
 </resources>

@@ -128,19 +128,6 @@
     <string name="preset_jazz_desc">Warme und weiche Töne</string>
     <string name="preset_electronic_desc">Schwere Bässe und heller Klang</string>
     
-    <!-- Volume Boost -->
-    <string name="volume_boost">Lautstärke-Limit überschreiten</string>
-    <string name="volume_boost_desc">Lautstärke über dem normalen Limit</string>
-    <string name="volume_boost_warning">⚠️ WARNUNG: Diese Funktion kann die Tonqualität beeinträchtigen und den Lautsprecher beschädigen!</string>
-    <string name="boost_level">Verstärkungsstufe</string>
-    <string name="boost_apply">Anwenden</string>
-    <string name="boost_active">Verstärkung aktiv - Hohe Lautstärke</string>
-    <string name="boost_tip_title">💡 Tipp:</string>
-    <string name="boost_tip_1">• 25-50% reichen aus, um Videoton zu verstärken</string>
-    <string name="boost_tip_2">• Bei 75%+ vorsichtig sein zum Schutz der Ohren</string>
-    <string name="boost_tip_3">• Bei Kopfhörernutzung besonders vorsichtig sein</string>
-    <string name="cancel">Abbrechen</string>
-    
     <!-- Additional translations for UI elements -->
     <string name="today">Heute</string>
     <string name="this_week">Diese Woche</string>
@@ -184,4 +171,29 @@
     
     <!-- Widget Controls -->
     <string name="refresh">Aktualisieren</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">Lautstärke-Boost</string>
+    <string name="volume_boost_title">Lautstärke-Boost</string>
+    <string name="volume_boost_description">Systemlautstärke über 100%% hinaus verstärken</string>
+    <string name="volume_boost_level">Boost-Stufe</string>
+    <string name="volume_boost_enabled">Lautstärke-Boost aktiv</string>
+    <string name="volume_boost_disabled">Lautstärke-Boost aus</string>
+    <string name="boost_level_low">Niedriger Boost</string>
+    <string name="boost_level_medium">Mittlerer Boost</string>
+    <string name="boost_level_high">Hoher Boost</string>
+    <string name="boost_level_maximum">Maximaler Boost</string>
+    <string name="emergency_boost">Notfall-Boost</string>
+    <string name="emergency_boost_description">Maximale sichere Lautstärke-Verstärkung</string>
+    <string name="warning_high_volume">⚠️ Hohe Lautstärke kann zu Hörschäden führen</string>
+    <string name="boost_warning">Warnung: Hohe Lautstärkepegel können gefährlich sein</string>
+    <string name="safe_level_warning">Diese Stufe gilt als sicher</string>
+    <string name="unsafe_level_warning">Diese Stufe kann gefährlich sein - vorsichtig verwenden</string>
+    <string name="maximum_level_warning">Wir empfehlen, diese Stufe nur im absoluten Notfall zu verwenden</string>
+    <string name="boost_not_supported">Erweiterte Lautstärke-Verstärkung auf diesem Gerät nicht unterstützt</string>
+    <string name="low">Niedrig</string>
+    <string name="medium">Mittel</string>
+    <string name="high">Hoch</string>
+    <string name="maximum">Maximum</string>
+    <string name="disabled">Deaktiviert</string>
 </resources>

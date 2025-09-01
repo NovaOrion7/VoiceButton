@@ -128,19 +128,6 @@
     <string name="preset_jazz_desc">Tonos cálidos y suaves</string>
     <string name="preset_electronic_desc">Graves pesados y sonido brillante</string>
     
-    <!-- Volume Boost -->
-    <string name="volume_boost">Superar Límite de Volumen</string>
-    <string name="volume_boost_desc">Nivel de volumen por encima del límite normal</string>
-    <string name="volume_boost_warning">⚠️ ADVERTENCIA: ¡Esta función puede dañar la calidad del sonido y dañar el altavoz!</string>
-    <string name="boost_level">Nivel de Refuerzo</string>
-    <string name="boost_apply">Aplicar</string>
-    <string name="boost_active">Refuerzo Activo - Volumen Alto</string>
-    <string name="boost_tip_title">💡 Consejo:</string>
-    <string name="boost_tip_1">• 25-50% es suficiente para aumentar el audio del video</string>
-    <string name="boost_tip_2">• Ten cuidado con 75%+ para proteger los oídos</string>
-    <string name="boost_tip_3">• Ten más cuidado al usar auriculares</string>
-    <string name="cancel">Cancelar</string>
-    
     <!-- Additional translations for UI elements -->
     <string name="today">Hoy</string>
     <string name="this_week">Esta Semana</string>
@@ -184,4 +171,29 @@
     
     <!-- Widget Controls -->
     <string name="refresh">Actualizar</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">Amplificador de Volumen</string>
+    <string name="volume_boost_title">Amplificador de Volumen</string>
+    <string name="volume_boost_description">Amplificar el volumen del sistema más allá del 100%%</string>
+    <string name="volume_boost_level">Nivel de Amplificación</string>
+    <string name="volume_boost_enabled">Amplificador de Volumen Activo</string>
+    <string name="volume_boost_disabled">Amplificador de Volumen Desactivado</string>
+    <string name="boost_level_low">Amplificación Baja</string>
+    <string name="boost_level_medium">Amplificación Media</string>
+    <string name="boost_level_high">Amplificación Alta</string>
+    <string name="boost_level_maximum">Amplificación Máxima</string>
+    <string name="emergency_boost">Amplificación de Emergencia</string>
+    <string name="emergency_boost_description">Amplificación máxima de nivel seguro</string>
+    <string name="warning_high_volume">⚠️ Los niveles altos de volumen pueden causar pérdida auditiva</string>
+    <string name="boost_warning">Advertencia: Los niveles altos de volumen pueden ser peligrosos</string>
+    <string name="safe_level_warning">Este nivel se considera seguro</string>
+    <string name="unsafe_level_warning">Este nivel puede ser peligroso - usar con cuidado</string>
+    <string name="maximum_level_warning">Recomendamos evitar este nivel a menos que sea absolutamente necesario</string>
+    <string name="boost_not_supported">Amplificación avanzada de volumen no compatible en este dispositivo</string>
+    <string name="low">Bajo</string>
+    <string name="medium">Medio</string>
+    <string name="high">Alto</string>
+    <string name="maximum">Máximo</string>
+    <string name="disabled">Desactivado</string>
 </resources>

@@ -170,4 +170,29 @@
     
     <!-- Widget Controls -->
     <string name="refresh">Refresh</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">Volume Boost</string>
+    <string name="volume_boost_title">Volume Boost</string>
+    <string name="volume_boost_description">Amplify sound beyond 100%% system volume</string>
+    <string name="volume_boost_level">Boost Level</string>
+    <string name="volume_boost_enabled">Volume Boost Active</string>
+    <string name="volume_boost_disabled">Volume Boost Off</string>
+    <string name="boost_level_low">Low Boost</string>
+    <string name="boost_level_medium">Medium Boost</string>
+    <string name="boost_level_high">High Boost</string>
+    <string name="boost_level_maximum">Maximum Boost</string>
+    <string name="emergency_boost">Emergency Boost</string>
+    <string name="emergency_boost_description">Maximum safe level volume boost</string>
+    <string name="warning_high_volume">⚠️ High volume levels may cause hearing damage</string>
+    <string name="boost_warning">Warning: High volume levels can be dangerous</string>
+    <string name="safe_level_warning">This level is considered safe</string>
+    <string name="unsafe_level_warning">This level may be dangerous - use carefully</string>
+    <string name="maximum_level_warning">We recommend avoiding this level unless absolutely necessary</string>
+    <string name="boost_not_supported">Advanced volume boost not supported on this device</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="maximum">Maximum</string>
+    <string name="disabled">Disabled</string>
 </resources>

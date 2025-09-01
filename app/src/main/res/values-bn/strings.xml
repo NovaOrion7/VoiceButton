@@ -128,19 +128,6 @@
     <string name="preset_jazz_desc">উষ্ণ এবং মৃদু টোন</string>
     <string name="preset_electronic_desc">ভারী বেস এবং উজ্জ্বল শব্দ</string>
     
-    <!-- Volume Boost -->
-    <string name="volume_boost">ভলিউম সীমা অতিক্রম</string>
-    <string name="volume_boost_desc">সাধারণ সীমার চেয়ে বেশি ভলিউম স্তর</string>
-    <string name="volume_boost_warning">⚠️ সতর্কতা: এই বৈশিষ্ট্যটি শব্দের মান নষ্ট করতে পারে এবং স্পিকারের ক্ষতি করতে পারে!</string>
-    <string name="boost_level">বুস্ট স্তর</string>
-    <string name="boost_apply">প্রয়োগ করুন</string>
-    <string name="boost_active">বুস্ট সক্রিয় - উচ্চ শব্দ</string>
-    <string name="boost_tip_title">💡 টিপ:</string>
-    <string name="boost_tip_1">• ভিডিওর শব্দ বাড়ানোর জন্য ২৫-৫০% যথেষ্ট</string>
-    <string name="boost_tip_2">• কান রক্ষার জন্য ৭৫%+ এর সাথে সাবধান থাকুন</string>
-    <string name="boost_tip_3">• হেডফোন ব্যবহারের সময় আরও সতর্ক থাকুন</string>
-    <string name="cancel">বাতিল</string>
-    
     <!-- Additional translations for UI elements -->
     <string name="today">আজ</string>
     <string name="this_week">এই সপ্তাহ</string>
@@ -184,4 +171,29 @@
     
     <!-- Widget Controls -->
     <string name="refresh">রিফ্রেশ</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">ভলিউম বুস্টার</string>
+    <string name="volume_boost_title">ভলিউম বুস্টার</string>
+    <string name="volume_boost_description">সিস্টেম ভলিউম ১০০%%-এর বেশি বাড়ান</string>
+    <string name="volume_boost_level">বুস্ট লেভেল</string>
+    <string name="volume_boost_enabled">ভলিউম বুস্ট চালু</string>
+    <string name="volume_boost_disabled">ভলিউম বুস্ট বন্ধ</string>
+    <string name="boost_level_low">কম বুস্ট</string>
+    <string name="boost_level_medium">মাঝারি বুস্ট</string>
+    <string name="boost_level_high">উচ্চ বুস্ট</string>
+    <string name="boost_level_maximum">সর্বোচ্চ বুস্ট</string>
+    <string name="emergency_boost">জরুরি বুস্ট</string>
+    <string name="emergency_boost_description">সর্বোচ্চ নিরাপদ লেভেল বুস্ট</string>
+    <string name="warning_high_volume">⚠️ উচ্চ ভলিউম শ্রবণশক্তি হ্রাস করতে পারে</string>
+    <string name="boost_warning">সতর্কতা: উচ্চ ভলিউম লেভেল বিপজ্জনক হতে পারে</string>
+    <string name="safe_level_warning">এই লেভেল নিরাপদ বলে বিবেচিত</string>
+    <string name="unsafe_level_warning">এই লেভেল বিপজ্জনক হতে পারে - সাবধানে ব্যবহার করুন</string>
+    <string name="maximum_level_warning">একান্ত প্রয়োজন না হলে এই লেভেল এড়িয়ে চলার পরামর্শ দিই</string>
+    <string name="boost_not_supported">এই ডিভাইসে উন্নত ভলিউম বুস্ট সমর্থিত নয়</string>
+    <string name="low">কম</string>
+    <string name="medium">মাঝারি</string>
+    <string name="high">উচ্চ</string>
+    <string name="maximum">সর্বোচ্চ</string>
+    <string name="disabled">বন্ধ</string>
 </resources>

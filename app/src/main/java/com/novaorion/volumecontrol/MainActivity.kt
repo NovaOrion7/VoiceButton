@@ -169,12 +169,14 @@ fun VolumeControlScreen() {
     var showStatsDialog by remember { mutableStateOf(false) }
     var showFloatingDialog by remember { mutableStateOf(false) }
     var showFloatingSizeDialog by remember { mutableStateOf(false) }
+    var showVolumeBoostDialog by remember { mutableStateOf(false) }
     var showPercentage by remember { mutableStateOf(true) }
     var vibrationEnabled by remember { mutableStateOf(true) }
     var volumeStep by remember { mutableIntStateOf(1) }
     var currentTheme by remember { mutableIntStateOf(PreferencesHelper.THEME_AUTO) }
     var scheduledVolumeEnabled by remember { mutableStateOf(false) }
     var floatingButtonSize by remember { mutableIntStateOf(PreferencesHelper.FLOATING_BUTTON_SIZE_LARGE) }
+    var volumeBoostLevel by remember { mutableIntStateOf(AdvancedVolumeHelper.getVolumeBoostLevel(context)) }
     var allVolumeInfo by remember { mutableStateOf(emptyMap<String, AdvancedVolumeHelper.VolumeInfo>()) }
     var currentProfile by remember { mutableStateOf("varsayilan") }
     var statsData by remember { mutableStateOf(emptyMap<String, Any>()) }
@@ -183,7 +185,13 @@ fun VolumeControlScreen() {
     
     val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     val scrollState = rememberScrollState()
-    val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    val vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as android.os.VibratorManager
+        vibratorManager.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        context.getSystemService(Context.VIBRATOR_SERVICE) as android.os.Vibrator
+    }
     
     // Ses seviyesini güncelle
     LaunchedEffect(Unit) {
@@ -985,6 +993,37 @@ fun VolumeControlScreen() {
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 4.dp)
                 )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Volume Boost kontrolü
+                OutlinedButton(
+                    onClick = { showVolumeBoostDialog = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text("🔊")
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = if (AdvancedVolumeHelper.isVolumeBoostEnabled(context)) 
+                                "${context.getString(R.string.volume_boost_enabled)} (${volumeBoostLevel}%)"
+                            else 
+                                context.getString(R.string.volume_boost),
+                            fontSize = 14.sp
+                        )
+                    }
+                }
+                
+                Text(
+                    text = context.getString(R.string.volume_boost_description),
+                    fontSize = 12.sp,
+                    color = getSecondaryTextColor(),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
             }
         }
         
@@ -1703,6 +1742,117 @@ fun VolumeControlScreen() {
             )
         }
         
+        // Volume Boost dialog'u
+        if (showVolumeBoostDialog) {
+            AlertDialog(
+                onDismissRequest = { showVolumeBoostDialog = false },
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("🔊")
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = context.getString(R.string.volume_boost_title))
+                    }
+                },
+                text = {
+                    Column {
+                        // Mevcut seviye göstergesi
+                        Text(
+                            text = "${context.getString(R.string.volume_boost_level)}: ${volumeBoostLevel}%",
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
+                        
+                        // Güvenlik uyarısı
+                        if (volumeBoostLevel > 75) {
+                            Text(
+                                text = context.getString(R.string.warning_high_volume),
+                                color = MaterialTheme.colorScheme.error,
+                                fontSize = 12.sp,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                        }
+                        
+                        // Seviye butonları
+                        val levels = listOf(
+                            0 to context.getString(R.string.disabled),
+                            25 to context.getString(R.string.low),
+                            50 to context.getString(R.string.medium),
+                            75 to context.getString(R.string.high),
+                            90 to context.getString(R.string.maximum)
+                        )
+                        
+                        levels.forEach { (level, label) ->
+                            TextButton(
+                                onClick = {
+                                    volumeBoostLevel = level
+                                    AdvancedVolumeHelper.applyLoudnessBoost(context, level)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "$label ($level%)",
+                                        color = if (volumeBoostLevel == level) 
+                                            MaterialTheme.colorScheme.primary 
+                                        else 
+                                            MaterialTheme.colorScheme.onSurface
+                                    )
+                                    if (level > 75) {
+                                        Text("⚠️", fontSize = 16.sp)
+                                    }
+                                }
+                            }
+                            
+                            // Maximum seviye için özel uyarı
+                            if (level == 90) {
+                                Text(
+                                    text = context.getString(R.string.maximum_level_warning),
+                                    color = MaterialTheme.colorScheme.error,
+                                    fontSize = 11.sp,
+                                    modifier = Modifier.padding(start = 16.dp, bottom = 4.dp),
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                )
+                            }
+                        }
+                        
+                        // Acil durum butonu
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedButton(
+                            onClick = {
+                                AdvancedVolumeHelper.emergencyVolumeBoost(context)
+                                volumeBoostLevel = 75
+                                showVolumeBoostDialog = false
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("🚨 ${context.getString(R.string.emergency_boost)}")
+                        }
+                        
+                        // Cihaz desteği bilgisi
+                        if (!AdvancedVolumeHelper.isLoudnessEnhancerSupported()) {
+                            Text(
+                                text = context.getString(R.string.boost_not_supported),
+                                fontSize = 11.sp,
+                                color = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showVolumeBoostDialog = false }) {
+                        Text("OK")
+                    }
+                }
+            )
+        }
+        
     }
 }
 
@@ -1968,89 +2118,6 @@ fun AudioEffectsDialog(
         confirmButton = {
             TextButton(onClick = onDismiss) {
                 Text(stringResource(R.string.close))
-            }
-        }
-    )
-}
-
-@Composable
-fun VolumeBoostDialog(
-    onDismiss: () -> Unit,
-    onBoostApplied: (Int) -> Unit
-) {
-    var boostLevel by remember { mutableStateOf(25) }
-    
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { 
-            Text(
-                text = stringResource(R.string.volume_boost),
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-        },
-        text = {
-            Column(
-                modifier = Modifier.padding(8.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.volume_boost_warning),
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.error,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-                
-                Text(
-                    text = "${stringResource(R.string.boost_level)}: +%$boostLevel",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("0%", fontSize = 12.sp)
-                    Slider(
-                        value = boostLevel.toFloat(),
-                        onValueChange = { boostLevel = it.toInt() },
-                        valueRange = 0f..100f,
-                        modifier = Modifier.weight(1f).padding(horizontal = 8.dp)
-                    )
-                    Text("100%", fontSize = 12.sp)
-                }
-                
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier.padding(12.dp)
-                    ) {
-                        Text(stringResource(R.string.boost_tip_title), fontWeight = FontWeight.Medium, fontSize = 14.sp)
-                        Text(stringResource(R.string.boost_tip_1), fontSize = 12.sp)
-                        Text(stringResource(R.string.boost_tip_2), fontSize = 12.sp)
-                        Text(stringResource(R.string.boost_tip_3), fontSize = 12.sp)
-                    }
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(
-                onClick = { onBoostApplied(boostLevel) }
-            ) {
-                Text("⚡ ${stringResource(R.string.boost_apply)}")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
             }
         }
     )

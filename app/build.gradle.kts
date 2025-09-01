@@ -12,7 +12,7 @@ android {
         applicationId = "com.novaorion.volumecontrol"
         minSdk = 25
         targetSdk = 35
-        versionCode = 13
+    versionCode = 14
         versionName = "1.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

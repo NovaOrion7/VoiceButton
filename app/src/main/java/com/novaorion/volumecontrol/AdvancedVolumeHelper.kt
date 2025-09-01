@@ -2,8 +2,16 @@ package com.novaorion.volumecontrol
 
 import android.content.Context
 import android.media.AudioManager
+import android.media.audiofx.LoudnessEnhancer
+import android.util.Log
+import androidx.preference.PreferenceManager
 
 object AdvancedVolumeHelper {
+    
+    // LoudnessEnhancer için değişkenler
+    private var loudnessEnhancer: LoudnessEnhancer? = null
+    private const val VOLUME_BOOST_KEY = "volume_boost_level"
+    private const val VOLUME_BOOST_ENABLED_KEY = "volume_boost_enabled"
     
     // Ses türleri için sabitler
     object StreamTypes {
@@ -178,6 +186,126 @@ object AdvancedVolumeHelper {
             val normalVolume = (maxVolume * 0.7).toInt() // %70 seviyesine düşür
             
             audioManager.setStreamVolume(streamType, normalVolume, 0)
+        }
+        
+        // LoudnessEnhancer'ı da temizle
+        clearLoudnessBoost()
+    }
+    
+    // ========== Yeni LoudnessEnhancer Tabanlı Volume Boost ==========
+    
+    // Volume boost seviyesini kaydet
+    fun setVolumeBoostLevel(context: Context, level: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs.edit()
+            .putInt(VOLUME_BOOST_KEY, level)
+            .putBoolean(VOLUME_BOOST_ENABLED_KEY, level > 0)
+            .apply()
+    }
+    
+    // Volume boost seviyesini al
+    fun getVolumeBoostLevel(context: Context): Int {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getInt(VOLUME_BOOST_KEY, 0)
+    }
+    
+    // Volume boost aktif mi?
+    fun isVolumeBoostEnabled(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(VOLUME_BOOST_ENABLED_KEY, false)
+    }
+    
+    // LoudnessEnhancer ile gerçek ses artırma
+    fun applyLoudnessBoost(context: Context, boostLevel: Int = -1) {
+        try {
+            val level = if (boostLevel >= 0) boostLevel else getVolumeBoostLevel(context)
+            
+            // Mevcut LoudnessEnhancer'ı temizle
+            clearLoudnessBoost()
+            
+            if (level > 0) {
+                // LoudnessEnhancer oluştur (global session ID ile)
+                loudnessEnhancer = LoudnessEnhancer(0).apply {
+                    // Seviye 0-100 arası, LoudnessEnhancer millibell cinsinden çalışır
+                    // 1000 millibell = 1 decibel, maksimum 2000 millibell (2dB) güvenli
+                    val targetGain = (level * 20).toFloat() // 0-2000 millibell arası
+                    setTargetGain(targetGain.toInt())
+                    enabled = true
+                    Log.d("VolumeBoost", "Applied loudness boost: ${targetGain}mB (${level}%)")
+                }
+                
+                // Ayarı kaydet
+                setVolumeBoostLevel(context, level)
+            } else {
+                // Volume boost kapalı
+                setVolumeBoostLevel(context, 0)
+                Log.d("VolumeBoost", "Loudness boost disabled")
+            }
+            
+        } catch (e: Exception) {
+            Log.e("VolumeBoost", "Error applying loudness boost: ${e.message}")
+            // LoudnessEnhancer desteklenmiyorsa normal volume boost yap
+            applyVolumeBoost(context, boostLevel)
+        }
+    }
+    
+    // LoudnessEnhancer'ı temizle
+    fun clearLoudnessBoost() {
+        try {
+            loudnessEnhancer?.apply {
+                enabled = false
+                release()
+            }
+            loudnessEnhancer = null
+            Log.d("VolumeBoost", "LoudnessEnhancer cleared")
+        } catch (e: Exception) {
+            Log.e("VolumeBoost", "Error clearing LoudnessEnhancer: ${e.message}")
+        }
+    }
+    
+    // Volume boost durumunu al
+    fun getVolumeBoostStatus(context: Context): String {
+        val level = getVolumeBoostLevel(context)
+        return when {
+            level == 0 -> context.getString(R.string.disabled)
+            level <= 30 -> context.getString(R.string.low)
+            level <= 60 -> context.getString(R.string.medium)
+            level <= 85 -> context.getString(R.string.high)
+            else -> context.getString(R.string.maximum)
+        }
+    }
+    
+    // Güvenli seviye kontrolü
+    fun isSafeLevel(level: Int): Boolean {
+        return level <= 75 // %75'ten sonra tehlikeli kabul et
+    }
+    
+    // LoudnessEnhancer desteği kontrolü
+    fun isLoudnessEnhancerSupported(): Boolean {
+        return try {
+            val test = LoudnessEnhancer(0)
+            test.release()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+    
+    // Acil durum volume boost (maksimum güvenli seviye)
+    fun emergencyVolumeBoost(context: Context) {
+        try {
+            // Önce sistem sesini maksimuma çıkar
+            val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, AudioManager.FLAG_SHOW_UI)
+            
+            // Sonra LoudnessEnhancer ile boost ekle
+            applyLoudnessBoost(context, 75) // Güvenli maksimum
+            
+            Log.d("VolumeBoost", "Emergency volume boost applied")
+            
+        } catch (e: Exception) {
+            Log.e("VolumeBoost", "Error in emergency volume boost: ${e.message}")
         }
     }
 }
