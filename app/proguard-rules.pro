@@ -29,6 +29,13 @@
 
 # Keep our main classes
 -keep class com.example.voicebutton.** { *; }
+-keep class com.novaorion.volumecontrol.** { *; }
+
+# Keep BuildConfig fields
+-keep class com.novaorion.volumecontrol.BuildConfig { *; }
+-keepclassmembers class com.novaorion.volumecontrol.BuildConfig {
+    public static final boolean USE_REAL_ADS;
+}
 
 # Keep Service classes
 -keep class * extends android.app.Service

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,8 +16,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 object AdMobHelper {
     
-    // Test reklam ID'leri (Debug/APK)
-    private const val TEST_BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/6000978111"
+    // Test reklam ID'leri (Debug/APK) - Google'ın güncel test ID'leri
+    private const val TEST_BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741"
     private const val TEST_INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
     
     // Gerçek reklam ID'leri (Release/AAB)
@@ -34,6 +35,12 @@ object AdMobHelper {
     fun initializeAds(context: Context) {
         // Set the ad IDs based on build config field
         setUseRealAds(getUseRealAdsFromBuildConfig())
+        
+        // Test device configuration for development
+        val configuration = RequestConfiguration.Builder()
+            .setTestDeviceIds(listOf(AdRequest.DEVICE_ID_EMULATOR, "YOUR_DEVICE_ID"))
+            .build()
+        MobileAds.setRequestConfiguration(configuration)
         
         MobileAds.initialize(context) { initializationStatus ->
             Log.d("AdMob", "AdMob başlatıldı: ${initializationStatus.adapterStatusMap}")
@@ -161,18 +168,28 @@ fun BannerAdView(
     AndroidView(
         modifier = modifier
             .fillMaxWidth()
-            .height(60.dp), // Banner reklam standart yüksekliği
+            .height(60.dp) // Banner reklam standart yüksekliği
+            .background(androidx.compose.ui.graphics.Color.LightGray), // Debug için arka plan
         factory = { ctx ->
             AdView(ctx).apply {
                 setAdSize(AdSize.BANNER)
                 adUnitId = AdMobHelper.BANNER_AD_UNIT_ID
                 
-                val adRequest = AdRequest.Builder().build()
+                // Force test ads for APK builds - modern approach
+                val adRequest = if (!AdMobHelper.getUseRealAdsFromBuildConfig()) {
+                    AdRequest.Builder()
+                        .build() // Test device configuration is handled globally
+                } else {
+                    AdRequest.Builder().build()
+                }
+                
                 loadAd(adRequest)
                 
                 adListener = object : AdListener() {
                     override fun onAdLoaded() {
                         Log.d("AdMob", "Banner reklam yüklendi successfully")
+                        Log.d("AdMob", "Banner ad unit ID used: ${AdMobHelper.BANNER_AD_UNIT_ID}")
+                        Log.d("AdMob", "USE_REAL_ADS: ${AdMobHelper.getUseRealAdsFromBuildConfig()}")
                     }
                     
                     override fun onAdFailedToLoad(adError: LoadAdError) {
