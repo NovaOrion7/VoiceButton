@@ -2,6 +2,9 @@ package com.novaorion.volumecontrol
 
 import android.content.Context
 import android.media.AudioManager
+import android.os.Build
+import android.app.NotificationManager
+import android.util.Log
 
 class ProfileHelper(private val context: Context) {
     
@@ -16,6 +19,8 @@ class ProfileHelper(private val context: Context) {
     )
     
     companion object {
+        private const val TAG = "ProfileHelper"
+        
         fun getDefaultProfiles(context: Context): Map<String, VolumeProfile> {
             return mapOf(
                 "gaming" to VolumeProfile(
@@ -57,21 +62,63 @@ class ProfileHelper(private val context: Context) {
             )
         }
         
+        private fun hasNotificationPolicyAccess(context: Context): Boolean {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.isNotificationPolicyAccessGranted
+            } else {
+                true
+            }
+        }
+        
+        private fun setVolumeStreamSafely(audioManager: AudioManager, streamType: Int, volume: Int) {
+            try {
+                val maxVolume = audioManager.getStreamMaxVolume(streamType)
+                val targetVolume = (volume * maxVolume / 100).coerceIn(0, maxVolume)
+                
+                // Check if the stream is adjustable
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    if (!audioManager.isVolumeFixed) {
+                        audioManager.setStreamVolume(streamType, targetVolume, 0)
+                    }
+                } else {
+                    audioManager.setStreamVolume(streamType, targetVolume, 0)
+                }
+            } catch (e: SecurityException) {
+                Log.w(TAG, "Security exception when setting volume for stream $streamType: ${e.message}")
+                // Ignore security exceptions - user doesn't have DND permission
+            } catch (e: Exception) {
+                Log.e(TAG, "Error setting volume for stream $streamType", e)
+            }
+        }
+        
         fun applyProfile(context: Context, profileId: String, onVolumeChanged: (Int) -> Unit = {}) {
             val profiles = getDefaultProfiles(context)
             val profile = profiles[profileId] ?: return
             
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             
-            // Apply volume settings
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 
-                (profile.mediaVolume * audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 100), 0)
-            audioManager.setStreamVolume(AudioManager.STREAM_RING, 
-                (profile.ringVolume * audioManager.getStreamMaxVolume(AudioManager.STREAM_RING) / 100), 0)
-            audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 
-                (profile.notificationVolume * audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION) / 100), 0)
-            audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 
-                (profile.alarmVolume * audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM) / 100), 0)
+            // Check notification policy access for ring and notification volumes
+            val hasNotificationAccess = hasNotificationPolicyAccess(context)
+            
+            try {
+                // Media volume - usually safe to change
+                setVolumeStreamSafely(audioManager, AudioManager.STREAM_MUSIC, profile.mediaVolume)
+                
+                // Ring and notification volumes - require DND permission on modern Android
+                if (hasNotificationAccess) {
+                    setVolumeStreamSafely(audioManager, AudioManager.STREAM_RING, profile.ringVolume)
+                    setVolumeStreamSafely(audioManager, AudioManager.STREAM_NOTIFICATION, profile.notificationVolume)
+                } else {
+                    Log.w(TAG, "No notification policy access - skipping ring/notification volume changes")
+                }
+                
+                // Alarm volume - usually safe to change
+                setVolumeStreamSafely(audioManager, AudioManager.STREAM_ALARM, profile.alarmVolume)
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Error applying profile $profileId", e)
+            }
             
             // Save current profile
             val prefs = context.getSharedPreferences("volume_profiles", Context.MODE_PRIVATE)
@@ -89,6 +136,27 @@ class ProfileHelper(private val context: Context) {
         fun getCurrentProfile(context: Context): String {
             val prefs = context.getSharedPreferences("volume_profiles", Context.MODE_PRIVATE)
             return prefs.getString("current_profile", "home") ?: "home"
+        }
+        
+        fun requestNotificationPolicyAccess(context: Context): Boolean {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                if (!notificationManager.isNotificationPolicyAccessGranted) {
+                    try {
+                        val intent = android.content.Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
+                        intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                        context.startActivity(intent)
+                        false
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error opening notification policy settings", e)
+                        false
+                    }
+                } else {
+                    true
+                }
+            } else {
+                true
+            }
         }
     }
 }

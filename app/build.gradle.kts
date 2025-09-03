@@ -12,8 +12,8 @@ android {
         applicationId = "com.novaorion.volumecontrol"
         minSdk = 25
         targetSdk = 35
-    versionCode = 15
-        versionName = "1.12"
+    versionCode = 17
+        versionName = "1.13"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

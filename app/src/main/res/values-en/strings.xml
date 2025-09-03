@@ -195,4 +195,11 @@
     <string name="high">High</string>
     <string name="maximum">Maximum</string>
     <string name="disabled">Disabled</string>
+    
+    <!-- DND Permission -->
+    <string name="dnd_permission_required">Do Not Disturb Permission Required</string>
+    <string name="dnd_permission_description">Permission required to change ring and notification volumes</string>
+    <string name="dnd_permission_grant">Grant Permission</string>
+    <string name="dnd_permission_skip">Skip</string>
+    <string name="profile_applied_partial">Profile partially applied (only media volume changed)</string>
 </resources>

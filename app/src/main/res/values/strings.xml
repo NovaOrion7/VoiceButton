@@ -207,4 +207,11 @@
     <string name="high">Yüksek</string>
     <string name="maximum">Maksimum</string>
     <string name="disabled">Kapalı</string>
+    
+    <!-- DND Permission -->
+    <string name="dnd_permission_required">Rahatsız Etme İzni Gerekli</string>
+    <string name="dnd_permission_description">Zil ve bildirim seslerini değiştirmek için Rahatsız Etme izni gerekiyor</string>
+    <string name="dnd_permission_grant">İzin Ver</string>
+    <string name="dnd_permission_skip">Atla</string>
+    <string name="profile_applied_partial">Profil kısmen uygulandı (sadece medya sesi değiştirildi)</string>
 </resources>

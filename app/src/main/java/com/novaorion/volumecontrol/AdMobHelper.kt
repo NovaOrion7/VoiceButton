@@ -36,11 +36,18 @@ object AdMobHelper {
         // Set the ad IDs based on build config field
         setUseRealAds(getUseRealAdsFromBuildConfig())
         
-        // Test device configuration for development
-        val configuration = RequestConfiguration.Builder()
-            .setTestDeviceIds(listOf(AdRequest.DEVICE_ID_EMULATOR, "YOUR_DEVICE_ID"))
-            .build()
-        MobileAds.setRequestConfiguration(configuration)
+        // Test device configuration SADECE test reklamları için
+        val useRealAds = getUseRealAdsFromBuildConfig()
+        if (!useRealAds) {
+            // Sadece APK/test builds için test device configuration
+            val configuration = RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf(AdRequest.DEVICE_ID_EMULATOR, "YOUR_DEVICE_ID"))
+                .build()
+            MobileAds.setRequestConfiguration(configuration)
+            Log.d("AdMob", "Test device configuration enabled for APK build")
+        } else {
+            Log.d("AdMob", "Production mode - no test device configuration for AAB build")
+        }
         
         MobileAds.initialize(context) { initializationStatus ->
             Log.d("AdMob", "AdMob başlatıldı: ${initializationStatus.adapterStatusMap}")
