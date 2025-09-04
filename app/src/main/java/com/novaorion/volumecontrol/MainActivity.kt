@@ -1262,6 +1262,34 @@ fun VolumeControlScreen() {
                                 )
                             }
                         }
+                        
+                        TextButton(
+                            onClick = {
+                                showLanguageDialog = false
+                                LanguageHelper.changeLanguageInstantly(context as MainActivity, "ja") {
+                                    selectedLanguage = "ja"
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🇯🇵",
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Text(
+                                    text = context.getString(R.string.japanese),
+                                    color = if (selectedLanguage == "ja") 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
                     }
                 },
                 confirmButton = {

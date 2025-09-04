@@ -21,6 +21,7 @@
     <string name="arabic">Arapça</string>
     <string name="spanish">İspanyolca</string>
     <string name="bengali">Bengalce</string>
+    <string name="japanese">Japonca</string>
     <string name="settings">Ayarlar</string>
     <string name="volume_step">Ses Adım Boyutu</string>
     <string name="volume_step_description">Her basışta ne kadar ses değişimi olacağını ayarlayın</string>

@@ -26,7 +26,7 @@ android {
         }
         
         // Locale config
-        resourceConfigurations.addAll(listOf("en", "tr", "hi", "de", "ar", "es", "bn"))
+        resourceConfigurations.addAll(listOf("en", "tr", "hi", "de", "ar", "es", "bn", "ja"))
         
         // Manifest placeholders for AdMob IDs
         manifestPlaceholders["adMobAppId"] = "ca-app-pub-3940256099942544~3347511713"

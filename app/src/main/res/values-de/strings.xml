@@ -22,6 +22,7 @@
     <string name="arabic">Arabisch</string>
     <string name="spanish">Spanisch</string>
     <string name="bengali">Bengali</string>
+    <string name="japanese">Japanisch</string>
     <string name="settings">Einstellungen</string>
     <string name="volume_step">Lautstärke-Schrittgröße</string>
     <string name="volume_step_description">Legen Sie fest, wie stark sich die Lautstärke bei jedem Druck ändert</string>

@@ -22,6 +22,7 @@
     <string name="arabic">अरबी</string>
     <string name="spanish">स्पेनिश</string>
     <string name="bengali">बंगाली</string>
+    <string name="japanese">जापानी</string>
     <string name="settings">सेटिंग्स</string>
     <string name="volume_step">वॉल्यूम चरण आकार</string>
     <string name="volume_step_description">प्रत्येक दबाने पर कितना वॉल्यूम बदलेगा सेट करें</string>

@@ -22,6 +22,7 @@
     <string name="arabic">العربية</string>
     <string name="spanish">الإسبانية</string>
     <string name="bengali">البنغالية</string>
+    <string name="japanese">اليابانية</string>
     <string name="settings">الإعدادات</string>
     <string name="volume_step">حجم خطوة الصوت</string>
     <string name="volume_step_description">تعيين مقدار تغيير الصوت مع كل ضغطة</string>

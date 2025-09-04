@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">音量制御</string>
+    <string name="volume_control_active">音量制御アクティブ</string>
+    <string name="volume_up">音量 +</string>
+    <string name="volume_down">音量 -</string>
+    <string name="stop_service">閉じる</string>
+    <string name="volume_control_title">音量制御</string>
+    <string name="volume_control_subtitle">壊れた音量ボタンの電話用の永続的な音量制御</string>
+    <string name="current_volume_level">現在の音量レベル</string>
+    <string name="persistent_notification">永続通知</string>
+    <string name="notification_active">アクティブ</string>
+    <string name="notification_inactive">オフ</string>
+    <string name="start_service">開始</string>
+    <string name="stop_service_button">閉じる</string>
+    <string name="notification_description">通知に常に + と - ボタンが表示されます</string>
+    <string name="language">言語</string>
+    <string name="turkish">トルコ語</string>
+    <string name="english">英語</string>
+    <string name="hindi">ヒンディー語</string>
+    <string name="german">ドイツ語</string>
+    <string name="arabic">アラビア語</string>
+    <string name="spanish">スペイン語</string>
+    <string name="bengali">ベンガル語</string>
+    <string name="japanese">日本語</string>
+    <string name="settings">設定</string>
+    <string name="volume_step">音量ステップサイズ</string>
+    <string name="volume_step_description">各押下で音量がどの程度変化するかを設定</string>
+    <string name="small_step">小 (1)</string>
+    <string name="medium_step">中 (2)</string>
+    <string name="large_step">大 (3)</string>
+    <string name="show_percentage">パーセント表示</string>
+    <string name="show_percentage_description">音量レベルをパーセントで表示</string>
+    <string name="vibration">バイブレーション</string>
+    <string name="vibration_description">音量変更時にバイブレーション</string>
+    <string name="auto_start">自動開始</string>
+    <string name="auto_start_description">電話の起動時に自動的に開始</string>
+    <string name="about">について</string>
+    <string name="app_version">アプリバージョン</string>
+    <string name="developer">開発者: VoiceButton Team</string>
+    <string name="mute">ミュート</string>
+    <string name="unmute">音声オン</string>
+    <string name="reset_volume">音量リセット</string>
+    <string name="reset_volume_description">音量レベルをデフォルト値に戻す</string>
+    <string name="quick_settings">クイック設定</string>
+    <string name="max_volume">最大音量</string>
+    <string name="half_volume">音量半分</string>
+    <string name="min_volume">最小音量</string>
+    <string name="theme">テーマ</string>
+    <string name="light_theme">ライトテーマ</string>
+    <string name="dark_theme">ダークテーマ</string>
+    <string name="auto_theme">自動</string>
+    <string name="scheduled_volume">スケジュール音量</string>
+    <string name="morning_volume">朝の音量</string>
+    <string name="evening_volume">夕方の音量</string>
+    <string name="night_volume">夜の音量</string>
+    <string name="enable_schedule">スケジュールを有効にする</string>
+    <string name="morning_time">朝の時間 (06:00)</string>
+    <string name="evening_time">夕方の時間 (18:00)</string>
+    <string name="night_time">夜の時間 (22:00)</string>
+    
+    <!-- Widget -->
+    <string name="widget_description">ホーム画面ウィジェットで素早い音量制御</string>
+    <string name="widget_name">音量制御</string>
+    <string name="add_widget">ホーム画面にウィジェットを追加</string>
+    
+    <!-- Gelişmiş Ses Kontrolleri -->
+    <string name="sound_types">音の種類</string>
+    <string name="media_volume">メディア音量</string>
+    <string name="ring_volume">着信音量</string>
+    <string name="notification_volume">通知音量</string>
+    <string name="alarm_volume">アラーム音量</string>
+    <string name="call_volume">通話音量</string>
+    <string name="system_volume">システム音量</string>
+    
+    <!-- Profiller -->
+    <string name="profiles">プロファイル</string>
+    <string name="gaming_profile">ゲームプロファイル</string>
+    <string name="work_profile">作業プロファイル</string>
+    <string name="sleep_profile">睡眠プロファイル</string>
+    <string name="home_profile">ホームプロファイル</string>
+    <string name="current_profile">現在のプロファイル</string>
+    <string name="apply_profile">プロファイルを適用</string>
+    
+    <!-- İstatistikler -->
+    <string name="statistics">統計</string>
+    <string name="daily_stats">日次統計</string>
+    <string name="weekly_stats">週次統計</string>
+    <string name="volume_changes">音量変更</string>
+    <string name="average_volume">平均音量</string>
+    <string name="usage_time">使用時間</string>
+    <string name="favorite_profile">最も使用されたプロファイル</string>
+    
+    <!-- Ses Efektleri -->
+    <string name="audio_effects">オーディオエフェクト</string>
+    <string name="equalizer">イコライザー</string>
+    <string name="bass_boost">ベースブースト</string>
+    <string name="virtualizer">3Dバーチャライザー</string>
+    <string name="presets">プリセット</string>
+    <string name="normal_preset">ノーマル</string>
+    <string name="rock_preset">ロック</string>
+    <string name="pop_preset">ポップ</string>
+    <string name="classical_preset">クラシック</string>
+    <string name="jazz_preset">ジャズ</string>
+    <string name="electronic_preset">エレクトロニック</string>
+    <string name="custom_preset">カスタム</string>
+    <string name="effects_disabled">オーディオエフェクトオフ</string>
+    
+    <!-- Additional Features -->
+    <string name="select_profile">プロファイル選択</string>
+    <string name="close">閉じる</string>
+    
+    <!-- Profile Names -->
+    <string name="profile_gaming">ゲーム</string>
+    <string name="profile_work">作業</string>
+    <string name="profile_sleep">睡眠</string>
+    <string name="profile_home">ホーム</string>
+    
+    <!-- Profile Descriptions -->
+    <string name="profile_gaming_desc">ゲームとメディア用に最適化</string>
+    <string name="profile_work_desc">集中と会議のため</string>
+    <string name="profile_sleep_desc">夜間用サイレントモード</string>
+    <string name="profile_home_desc">ホーム環境用バランス音声</string>
+    
+    <!-- Audio Preset Descriptions -->
+    <string name="preset_rock_desc">強力なベースと高音</string>
+    <string name="preset_pop_desc">バランスと鮮やかな音</string>
+    <string name="preset_classical_desc">自然で詳細</string>
+    <string name="preset_jazz_desc">暖かく柔らかいトーン</string>
+    <string name="preset_electronic_desc">強力なベースと明るい音</string>
+    <string name="cancel">キャンセル</string>
+    
+    <!-- Volume Boost (Legacy - Eski volume boost string'leri) -->
+    <string name="volume_boost_desc">通常の制限を超えた音量レベル</string>
+    <string name="volume_boost_warning">⚠️ 警告: この機能は音質を損ない、スピーカーを損傷する可能性があります！</string>
+    <string name="boost_level">ブーストレベル</string>
+    <string name="boost_apply">適用</string>
+    <string name="boost_active">ブーストアクティブ - 高音量</string>
+    <string name="boost_tip_title">💡 ヒント:</string>
+    <string name="boost_tip_1">• ビデオ音声を上げるには25-50%で十分です</string>
+    <string name="boost_tip_2">• 75%+では耳を保護するために注意してください</string>
+    <string name="boost_tip_3">• ヘッドフォン使用時はより注意してください</string>
+    
+    <!-- Additional translations for UI elements -->
+    <string name="today">今日</string>
+    <string name="this_week">今週</string>
+    <string name="currently">現在</string>
+    <string name="apply_now">今すぐ適用</string>
+    <string name="daily_average">日平均</string>
+    <string name="times">回</string>
+    <string name="total_changes">総変更数</string>
+    <string name="session_time">アプリ時間</string>
+    <string name="minutes">分</string>
+    <string name="closed">閉じた</string>
+    <string name="changes">変更</string>
+    
+    <!-- Floating Button -->
+    <string name="floating_button">画面上ボタン</string>
+    <string name="floating_button_active">画面ボタンアクティブ</string>
+    <string name="floating_button_description">画面上でドラッグ可能な音量制御ボタン</string>
+    <string name="floating_button_permission_info">画面上にボタンを表示するには許可が必要</string>
+    <string name="floating_button_active_description">画面上音量ボタンが現在アクティブ</string>
+    <string name="start_floating_button">画面ボタンを開始</string>
+    <string name="stop_floating_button">画面ボタンを閉じる</string>
+    <string name="enable_floating_button">画面ボタンをアクティブ化</string>
+    <string name="floating_active">画面ボタンアクティブ</string>
+    <string name="floating_inactive">画面ボタン非アクティブ</string>
+    <string name="start_floating">画面制御を開始</string>
+    <string name="stop_floating">画面制御を停止</string>
+    <string name="permission_overlay">画面オーバーレイ許可</string>
+    <string name="permission_overlay_description">画面上にフローティングコントローラーを表示するには許可が必要</string>
+    <string name="grant_permission">許可を与える</string>
+    <string name="permission_granted">許可が与えられました</string>
+    <string name="permission_denied">許可が拒否されました</string>
+    <string name="floating_controls_started">画面コントロールが開始されました</string>
+    <string name="floating_controls_stopped">画面コントロールが停止されました</string>
+    
+    <!-- Floating Button Size -->
+    <string name="floating_button_size">ボタンサイズ</string>
+    <string name="floating_button_size_description">画面上ボタンのサイズを調整</string>
+    <string name="small_button">小</string>
+    <string name="medium_button">中</string>
+    <string name="large_button">大</string>
+    
+    <!-- Widget Controls -->
+    <string name="refresh">更新</string>
+    
+    <!-- Volume Boost -->
+    <string name="volume_boost">音量ブースト</string>
+    <string name="volume_boost_title">音量ブースト</string>
+    <string name="volume_boost_description">システム音量を100%以上に上げる</string>
+    <string name="volume_boost_level">ブーストレベル</string>
+    <string name="volume_boost_enabled">音量ブーストアクティブ</string>
+    <string name="volume_boost_disabled">音量ブーストオフ</string>
+    <string name="boost_level_low">低ブースト</string>
+    <string name="boost_level_medium">中ブースト</string>
+    <string name="boost_level_high">高ブースト</string>
+    <string name="boost_level_maximum">最大ブースト</string>
+    <string name="emergency_boost">緊急ブースト</string>
+    <string name="emergency_boost_description">最大安全レベルでの音量ブースト</string>
+    <string name="warning_high_volume">⚠️ 高音量は聴力損失を引き起こす可能性があります</string>
+    <string name="boost_warning">注意: 高音量レベルは危険である可能性があります</string>
+    <string name="safe_level_warning">このレベルは安全と考えられます</string>
+    <string name="unsafe_level_warning">このレベルは危険である可能性があります - 注意して使用してください</string>
+    <string name="maximum_level_warning">絶対に必要でない限り、このレベルの使用はお勧めしません</string>
+    <string name="boost_not_supported">この端末では高度な音量ブーストはサポートされていません</string>
+    <string name="low">低</string>
+    <string name="medium">中</string>
+    <string name="high">高</string>
+    <string name="maximum">最大</string>
+    <string name="disabled">オフ</string>
+    
+    <!-- DND Permission -->
+    <string name="dnd_permission_required">おやすみモード許可が必要</string>
+    <string name="dnd_permission_description">着信音と通知音を変更するには、おやすみモード許可が必要です</string>
+    <string name="dnd_permission_grant">許可を与える</string>
+    <string name="dnd_permission_skip">スキップ</string>
+    <string name="profile_applied_partial">プロファイルが部分的に適用されました（メディア音量のみ変更）</string>
+</resources>

@@ -22,6 +22,7 @@
     <string name="arabic">আরবি</string>
     <string name="spanish">স্প্যানিশ</string>
     <string name="bengali">বাংলা</string>
+    <string name="japanese">জাপানি</string>
     <string name="settings">সেটিংস</string>
     <string name="volume_step">ভলিউম ধাপের আকার</string>
     <string name="volume_step_description">প্রতিটি চাপে কত ভলিউম পরিবর্তন হবে তা সেট করুন</string>
