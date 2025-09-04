@@ -9,7 +9,9 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.novaorion.volumecontrol.AppColors
 import com.novaorion.volumecontrol.PreferencesHelper
 
 private val DarkColorScheme = darkColorScheme(
@@ -34,6 +36,21 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+// Autumn theme color scheme - more distinctive orange/brown colors
+private val AutumnColorScheme = lightColorScheme(
+    primary = Color(0xFFD35400), // Rich pumpkin orange
+    onPrimary = Color.White,
+    secondary = Color(0xFFE67E22), // Light orange
+    onSecondary = Color.White,
+    tertiary = Color(0xFF8E44AD), // Deep purple for contrast
+    onTertiary = Color.White,
+    background = Color(0xFFFFE5B4), // Light peach background
+    onBackground = Color(0xFF3E2723), // Dark brown text
+    surface = Color(0xFFFFCC80), // Light orange surface
+    onSurface = Color(0xFF3E2723), // Dark brown text
+    onSurfaceVariant = Color(0xFF5D4037) // Medium brown
+)
+
 @Composable
 fun VoiceButtonTheme(
     darkTheme: Boolean? = null,
@@ -49,16 +66,21 @@ fun VoiceButtonTheme(
         when (themePreference) {
             PreferencesHelper.THEME_LIGHT -> false
             PreferencesHelper.THEME_DARK -> true
+            PreferencesHelper.THEME_AUTUMN -> false // Autumn theme is always light
             PreferencesHelper.THEME_AUTO -> isSystemInDarkTheme()
             else -> isSystemInDarkTheme()
         }
     }
     
+    // Check if autumn theme is selected
+    val isAutumnTheme = PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_AUTUMN
+    
     val colorScheme = when {
+        // If autumn theme, always use autumn color scheme regardless of dynamic color
+        isAutumnTheme -> AutumnColorScheme
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             if (shouldUseDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         shouldUseDarkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

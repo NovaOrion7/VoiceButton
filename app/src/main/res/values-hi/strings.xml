@@ -197,4 +197,16 @@
     <string name="high">उच्च</string>
     <string name="maximum">अधिकतम</string>
     <string name="disabled">निष्क्रिय</string>
+    
+    <!-- Autumn Theme Unlock -->
+    <string name="autumn_theme_locked">🔒 %d विज्ञापन देखकर अनलॉक करें</string>
+    <string name="autumn_unlock_title">शरद ऋतु थीम</string>
+    <string name="autumn_unlock_description">इस सुंदर शरद ऋतु थीम को अनलॉक करने के लिए विज्ञापन देखकर हमारा समर्थन करें!</string>
+    <string name="unlock_progress">प्रगति</string>
+    <string name="ads_remaining">शेष: %d विज्ञापन</string>
+    <string name="ads_loading">विज्ञापन लोड हो रहा है...</string>
+    <string name="watch_ad">विज्ञापन देखें</string>
+    <string name="loading_ad">लोड हो रहा है...</string>
+    <string name="theme_unlocked">🎉 बधाई हो! थीम अनलॉक हो गया!</string>
+    <string name="use_theme">थीम का उपयोग करें</string>
 </resources>

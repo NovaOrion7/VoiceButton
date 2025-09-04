@@ -216,4 +216,16 @@
     <string name="dnd_permission_grant">許可を与える</string>
     <string name="dnd_permission_skip">スキップ</string>
     <string name="profile_applied_partial">プロファイルが部分的に適用されました（メディア音量のみ変更）</string>
+    
+    <!-- Autumn Theme Unlock -->
+    <string name="autumn_theme_locked">🔒 %d個の広告を見てアンロック</string>
+    <string name="autumn_unlock_title">秋のテーマ</string>
+    <string name="autumn_unlock_description">この美しい秋のテーマをアンロックするために、広告を見てサポートしてください！</string>
+    <string name="unlock_progress">進歩</string>
+    <string name="ads_remaining">残り: %d個の広告</string>
+    <string name="ads_loading">広告を読み込んでいます...</string>
+    <string name="watch_ad">広告を見る</string>
+    <string name="loading_ad">読み込み中...</string>
+    <string name="theme_unlocked">🎉 おめでとうございます！テーマがアンロックされました！</string>
+    <string name="use_theme">テーマを使用</string>
 </resources>

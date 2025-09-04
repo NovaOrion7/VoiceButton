@@ -204,4 +204,16 @@
     <string name="small_button">صغير</string>
     <string name="medium_button">متوسط</string>
     <string name="large_button">كبير</string>
+    
+    <!-- Autumn Theme Unlock -->
+    <string name="autumn_theme_locked">🔒 إلغاء القفل بمشاهدة %d إعلانات</string>
+    <string name="autumn_unlock_title">موضوع الخريف</string>
+    <string name="autumn_unlock_description">ادعمنا من خلال مشاهدة الإعلانات لإلغاء قفل موضوع الخريف الجميل هذا!</string>
+    <string name="unlock_progress">التقدم</string>
+    <string name="ads_remaining">المتبقي: %d إعلانات</string>
+    <string name="ads_loading">تحميل الإعلان...</string>
+    <string name="watch_ad">مشاهدة الإعلان</string>
+    <string name="loading_ad">جارٍ التحميل...</string>
+    <string name="theme_unlocked">🎉 تهانينا! تم إلغاء قفل الموضوع!</string>
+    <string name="use_theme">استخدم الموضوع</string>
 </resources>

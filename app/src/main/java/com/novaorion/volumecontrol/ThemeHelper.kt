@@ -13,6 +13,7 @@ object ThemeHelper {
         return when (theme) {
             PreferencesHelper.THEME_LIGHT -> false
             PreferencesHelper.THEME_DARK -> true
+            PreferencesHelper.THEME_AUTUMN -> false // Autumn theme is light-based
             PreferencesHelper.THEME_AUTO -> isSystemInDarkTheme()
             else -> isSystemInDarkTheme()
         }
@@ -30,6 +31,7 @@ object ThemeHelper {
         return when (theme) {
             PreferencesHelper.THEME_LIGHT -> context.getString(R.string.light_theme)
             PreferencesHelper.THEME_DARK -> context.getString(R.string.dark_theme)
+            PreferencesHelper.THEME_AUTUMN -> context.getString(R.string.autumn_theme)
             PreferencesHelper.THEME_AUTO -> context.getString(R.string.auto_theme)
             else -> context.getString(R.string.auto_theme)
         }

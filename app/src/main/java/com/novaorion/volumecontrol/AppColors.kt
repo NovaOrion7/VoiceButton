@@ -20,6 +20,13 @@ object AppColors {
     val DarkSurface = Color(0xFF1E1E1E)
     val DarkBackground = Color(0xFF121212)
     
+    // Autumn theme colors - more distinctive
+    val AutumnPrimary = Color(0xFFD35400) // Rich pumpkin orange
+    val AutumnOnSurface = Color(0xFF3E2723) // Dark brown
+    val AutumnOnSurfaceVariant = Color(0xFF5D4037) // Medium brown
+    val AutumnSurface = Color(0xFFFFCC80) // Light orange
+    val AutumnBackground = Color(0xFFFFE5B4) // Light peach
+    
     // Common colors
     val Error = Color(0xFFCF6679)
     val Success = Color(0xFF4CAF50)

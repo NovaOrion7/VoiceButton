@@ -44,6 +44,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import kotlinx.coroutines.delay
 import com.novaorion.volumecontrol.ui.theme.VoiceButtonTheme
+import com.novaorion.volumecontrol.ui.FallingLeavesBackground
+import com.novaorion.volumecontrol.ui.TestAnimation
+import com.novaorion.volumecontrol.ui.SimpleAutumnAnimation
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -84,6 +87,8 @@ class MainActivity : ComponentActivity() {
         // AdMob'u başlat
         AdMobHelper.initializeAds(this)
         AdMobHelper.loadInterstitialAd(this)
+        // Ödüllü reklam yükle
+        AdMobHelper.loadRewardedAd(this)
         // Test ad configuration
         AdMobHelper.testAdConfiguration()
         
@@ -108,6 +113,7 @@ class MainActivity : ComponentActivity() {
         
         setContent {
             VoiceButtonTheme {
+                // Normal yapı geri
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -183,6 +189,13 @@ fun VolumeControlScreen() {
     // Interstitial ad counter
     var adCounter by remember { mutableIntStateOf(0) }
     
+    // Sonbahar teması unlock sistemi için state'ler
+    var showAutumnUnlockDialog by remember { mutableStateOf(false) }
+    var autumnAdsWatched by remember { mutableIntStateOf(0) }
+    var autumnAdsRemaining by remember { mutableIntStateOf(3) }
+    var isAutumnUnlocked by remember { mutableStateOf(false) }
+    var isRewardedAdReady by remember { mutableStateOf(false) }
+    
     val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     val scrollState = rememberScrollState()
     val vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
@@ -224,6 +237,11 @@ fun VolumeControlScreen() {
                     val floatButtonSize = PreferencesHelper.getFloatingButtonSize(context)
                     val volumeInfo = AdvancedVolumeHelper.getAllVolumeInfo(context)
                     
+                    // Sonbahar teması unlock durumunu kontrol et
+                    val autumnUnlocked = RewardedUnlockHelper.isAutumnThemeUnlocked(context)
+                    val adsWatched = RewardedUnlockHelper.getAutumnThemeAdsWatched(context)
+                    val adsRemaining = RewardedUnlockHelper.getRemainingAdsForAutumn(context)
+                    
                     // UI güncellemelerini Main dispatcher'da yap
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
                         statsData = stats
@@ -236,6 +254,11 @@ fun VolumeControlScreen() {
                         scheduledVolumeEnabled = schedEnabled
                         floatingButtonSize = floatButtonSize
                         allVolumeInfo = volumeInfo
+                        
+                        // Sonbahar teması unlock durumunu güncelle
+                        isAutumnUnlocked = autumnUnlocked
+                        autumnAdsWatched = adsWatched
+                        autumnAdsRemaining = adsRemaining
                     }
                 } catch (e: Exception) {
                     // Hata durumunda varsayılan değerleri kullan
@@ -263,10 +286,31 @@ fun VolumeControlScreen() {
             } catch (e: Exception) {
                 // Scheduled volume hatası önemli değil, devam et
             }
+            
+            // Ödüllü reklam yükle (eğer sonbahar unlock edilmemişse)
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                try {
+                    if (!RewardedUnlockHelper.isAutumnThemeUnlocked(context)) {
+                        AdMobHelper.loadRewardedAd(context)
+                    }
+                } catch (e: Exception) {
+                    // Reklam yükleme hatası önemli değil
+                }
+            }
         } catch (e: Exception) {
             // Genel hata durumunda temel değerleri ayarla
             currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
             maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        }
+    }
+    
+    // Reklam durumunu periyodik olarak kontrol et
+    LaunchedEffect(showAutumnUnlockDialog) {
+        if (showAutumnUnlockDialog) {
+            while (showAutumnUnlockDialog) {
+                isRewardedAdReady = AdMobHelper.isRewardedAdReady()
+                kotlinx.coroutines.delay(1000) // 1 saniyede bir kontrol et
+            }
         }
     }
     
@@ -337,12 +381,19 @@ fun VolumeControlScreen() {
             }
         }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(innerPadding)
-                .padding(16.dp), // Removed the bottom padding that was pushing content up
+        Box(modifier = Modifier.fillMaxSize()) {
+            // YAPRAK ANİMASYONU - Scaffold içinde
+            if (PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_AUTUMN) {
+                SimpleAutumnAnimation()
+            }
+            
+            // İçerik üstte
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(innerPadding)
+                    .padding(16.dp), // Removed the bottom padding that was pushing content up
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Dil seçimi butonu
@@ -709,6 +760,7 @@ fun VolumeControlScreen() {
                             text = when(currentTheme) {
                                 PreferencesHelper.THEME_LIGHT -> context.getString(R.string.light_theme)
                                 PreferencesHelper.THEME_DARK -> context.getString(R.string.dark_theme)
+                                PreferencesHelper.THEME_AUTUMN -> context.getString(R.string.autumn_theme)
                                 else -> context.getString(R.string.auto_theme)
                             } + " • ${ScheduledVolumeHelper.getScheduleStatus(context)}",
                             fontSize = 12.sp,
@@ -726,6 +778,7 @@ fun VolumeControlScreen() {
                             text = when(currentTheme) {
                                 PreferencesHelper.THEME_LIGHT -> "☀️"
                                 PreferencesHelper.THEME_DARK -> "🌙"
+                                PreferencesHelper.THEME_AUTUMN -> "🍂"
                                 else -> "🌙/☀️"
                             }
                         )
@@ -1057,6 +1110,7 @@ fun VolumeControlScreen() {
             )
         }
     }
+        } // Box kapanışı
         
         // Dil seçimi dialog'u
         if (showLanguageDialog) {
@@ -1434,6 +1488,63 @@ fun VolumeControlScreen() {
                                     else 
                                         MaterialTheme.colorScheme.onSurface
                                 )
+                            }
+                        }
+                        
+                        // Autumn theme option - Unlock sistemi ile
+                        TextButton(
+                            onClick = {
+                                if (isAutumnUnlocked) {
+                                    // Unlock edilmişse direkt değiştir
+                                    currentTheme = PreferencesHelper.THEME_AUTUMN
+                                    PreferencesHelper.setTheme(context, PreferencesHelper.THEME_AUTUMN)
+                                    showThemeDialog = false
+                                    (context as ComponentActivity).recreate()
+                                } else {
+                                    // Unlock edilmemişse unlock dialog'unu göster
+                                    showThemeDialog = false
+                                    showAutumnUnlockDialog = true
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🍂",
+                                    fontSize = 24.sp
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Column(
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(
+                                        text = context.getString(R.string.autumn_theme),
+                                        fontSize = 16.sp,
+                                        fontWeight = if (currentTheme == PreferencesHelper.THEME_AUTUMN) 
+                                            FontWeight.Bold else FontWeight.Normal,
+                                        color = if (currentTheme == PreferencesHelper.THEME_AUTUMN) 
+                                            MaterialTheme.colorScheme.primary 
+                                        else 
+                                            MaterialTheme.colorScheme.onSurface
+                                    )
+                                    if (!isAutumnUnlocked) {
+                                        Text(
+                                            text = context.getString(R.string.autumn_theme_locked, autumnAdsRemaining),
+                                            fontSize = 12.sp,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                }
+                                if (!isAutumnUnlocked) {
+                                    Icon(
+                                        imageVector = Icons.Default.Lock,
+                                        contentDescription = "Kilitli",
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
                             }
                         }
                         
@@ -1877,6 +1988,55 @@ fun VolumeControlScreen() {
                     TextButton(onClick = { showVolumeBoostDialog = false }) {
                         Text("OK")
                     }
+                }
+            )
+        }
+        
+        // Sonbahar teması unlock dialog'u
+        if (showAutumnUnlockDialog) {
+            AutumnUnlockDialog(
+                adsWatched = autumnAdsWatched,
+                adsRemaining = autumnAdsRemaining,
+                isAdReady = isRewardedAdReady,
+                onWatchAd = {
+                    // Ödüllü reklam göster
+                    AdMobHelper.showRewardedAdForAutumnTheme(
+                        activity = context as ComponentActivity,
+                        onProgress = { watched, remaining ->
+                            // Progress güncelle
+                            autumnAdsWatched = watched
+                            autumnAdsRemaining = remaining
+                        },
+                        onUnlocked = {
+                            // Tema unlock edildi
+                            isAutumnUnlocked = true
+                            autumnAdsRemaining = 0
+                            showAutumnUnlockDialog = false
+                            
+                            // Temayı direkt uygula
+                            currentTheme = PreferencesHelper.THEME_AUTUMN
+                            PreferencesHelper.setTheme(context, PreferencesHelper.THEME_AUTUMN)
+                            (context as ComponentActivity).recreate()
+                        },
+                        onAdDismissed = {
+                            // Reklam kapandı, durumu güncelle
+                            val newWatched = RewardedUnlockHelper.getAutumnThemeAdsWatched(context)
+                            val newRemaining = RewardedUnlockHelper.getRemainingAdsForAutumn(context)
+                            val newUnlocked = RewardedUnlockHelper.isAutumnThemeUnlocked(context)
+                            
+                            autumnAdsWatched = newWatched
+                            autumnAdsRemaining = newRemaining
+                            isAutumnUnlocked = newUnlocked
+                            
+                            // Eğer unlock olduysa dialog'u kapat
+                            if (newUnlocked) {
+                                showAutumnUnlockDialog = false
+                            }
+                        }
+                    )
+                },
+                onDismiss = { 
+                    showAutumnUnlockDialog = false
                 }
             )
         }

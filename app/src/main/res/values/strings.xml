@@ -48,6 +48,7 @@
     <string name="theme">Tema</string>
     <string name="light_theme">Açık Tema</string>
     <string name="dark_theme">Koyu Tema</string>
+    <string name="autumn_theme">Sonbahar Teması</string>
     <string name="auto_theme">Otomatik</string>
     <string name="scheduled_volume">Zamanlı Ses</string>
     <string name="morning_volume">Sabah Sesi</string>
@@ -215,4 +216,16 @@
     <string name="dnd_permission_grant">İzin Ver</string>
     <string name="dnd_permission_skip">Atla</string>
     <string name="profile_applied_partial">Profil kısmen uygulandı (sadece medya sesi değiştirildi)</string>
+    
+    <!-- Autumn Theme Unlock -->
+    <string name="autumn_theme_locked">🔒 %d reklam izleyerek aç</string>
+    <string name="autumn_unlock_title">Sonbahar Teması</string>
+    <string name="autumn_unlock_description">Bu güzel sonbahar temasını açmak için reklam izleyerek destek olun!</string>
+    <string name="unlock_progress">İlerleme</string>
+    <string name="ads_remaining">Kalan: %d reklam</string>
+    <string name="ads_loading">Reklam yükleniyor...</string>
+    <string name="watch_ad">Reklam İzle</string>
+    <string name="loading_ad">Yükleniyor...</string>
+    <string name="theme_unlocked">🎉 Tebrikler! Tema açıldı!</string>
+    <string name="use_theme">Tema\'yı Kullan</string>
 </resources>

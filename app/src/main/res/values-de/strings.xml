@@ -197,4 +197,16 @@
     <string name="high">Hoch</string>
     <string name="maximum">Maximum</string>
     <string name="disabled">Deaktiviert</string>
+    
+    <!-- Autumn Theme Unlock -->
+    <string name="autumn_theme_locked">🔒 Durch %d Werbung freischalten</string>
+    <string name="autumn_unlock_title">Herbst-Theme</string>
+    <string name="autumn_unlock_description">Unterstützen Sie uns durch das Ansehen von Werbung, um dieses schöne Herbst-Theme freizuschalten!</string>
+    <string name="unlock_progress">Fortschritt</string>
+    <string name="ads_remaining">Verbleibend: %d Werbung</string>
+    <string name="ads_loading">Werbung wird geladen...</string>
+    <string name="watch_ad">Werbung ansehen</string>
+    <string name="loading_ad">Wird geladen...</string>
+    <string name="theme_unlocked">🎉 Glückwunsch! Theme freigeschaltet!</string>
+    <string name="use_theme">Theme verwenden</string>
 </resources>

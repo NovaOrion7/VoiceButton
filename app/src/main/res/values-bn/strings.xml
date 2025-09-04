@@ -197,4 +197,16 @@
     <string name="high">উচ্চ</string>
     <string name="maximum">সর্বোচ্চ</string>
     <string name="disabled">বন্ধ</string>
+    
+    <!-- Autumn Theme Unlock -->
+    <string name="autumn_theme_locked">🔒 %d বিজ্ঞাপন দেখে আনলক করুন</string>
+    <string name="autumn_unlock_title">শরতের থিম</string>
+    <string name="autumn_unlock_description">এই সুন্দর শরতের থিম আনলক করতে বিজ্ঞাপন দেখে আমাদের সাহায্য করুন!</string>
+    <string name="unlock_progress">অগ্রগতি</string>
+    <string name="ads_remaining">বাকি: %d বিজ্ঞাপন</string>
+    <string name="ads_loading">বিজ্ঞাপন লোড হচ্ছে...</string>
+    <string name="watch_ad">বিজ্ঞাপন দেখুন</string>
+    <string name="loading_ad">লোড হচ্ছে...</string>
+    <string name="theme_unlocked">🎉 অভিনন্দন! থিম আনলক হয়েছে!</string>
+    <string name="use_theme">থিম ব্যবহার করুন</string>
 </resources>

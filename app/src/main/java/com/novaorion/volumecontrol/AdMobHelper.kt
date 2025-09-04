@@ -13,23 +13,30 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 
 object AdMobHelper {
     
     // Test reklam ID'leri (Debug/APK) - Google'ın güncel test ID'leri
     private const val TEST_BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741"
     private const val TEST_INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
+    private const val TEST_REWARDED_AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917" // Test rewarded ad
     
     // Gerçek reklam ID'leri (Release/AAB)
     private const val REAL_BANNER_AD_UNIT_ID = "ca-app-pub-2239637684721708/1666826847"
     private const val REAL_INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-2239637684721708/8040663505"
+    private const val REAL_REWARDED_AD_UNIT_ID = "ca-app-pub-2239637684721708/5527554922" // Gerçek ödüllü reklam ID
     
     // Default to test ads
     var BANNER_AD_UNIT_ID = TEST_BANNER_AD_UNIT_ID
     var INTERSTITIAL_AD_UNIT_ID = TEST_INTERSTITIAL_AD_UNIT_ID
+    var REWARDED_AD_UNIT_ID = TEST_REWARDED_AD_UNIT_ID
     
     private var interstitialAd: InterstitialAd? = null
+    private var rewardedAd: RewardedAd? = null
     private var isLoadingInterstitial = false
+    private var isLoadingRewarded = false
     private var interstitialCounter = 0
     
     fun initializeAds(context: Context) {
@@ -51,12 +58,15 @@ object AdMobHelper {
         
         MobileAds.initialize(context) { initializationStatus ->
             Log.d("AdMob", "AdMob başlatıldı: ${initializationStatus.adapterStatusMap}")
+            // AdMob initialize olduktan sonra rewarded ad yükle
+            loadRewardedAd(context)
         }
     }
     
     fun setUseRealAds(useReal: Boolean) {
         BANNER_AD_UNIT_ID = if (useReal) REAL_BANNER_AD_UNIT_ID else TEST_BANNER_AD_UNIT_ID
         INTERSTITIAL_AD_UNIT_ID = if (useReal) REAL_INTERSTITIAL_AD_UNIT_ID else TEST_INTERSTITIAL_AD_UNIT_ID
+        REWARDED_AD_UNIT_ID = if (useReal) REAL_REWARDED_AD_UNIT_ID else TEST_REWARDED_AD_UNIT_ID
         Log.d("AdMob", "AdMobHelper: Using ${if (useReal) "REAL" else "TEST"} ads")
     }
     
@@ -149,6 +159,7 @@ object AdMobHelper {
             Log.d("AdMobTest", "USE_REAL_ADS = $useRealAds")
             Log.d("AdMobTest", "BANNER_AD_UNIT_ID = $BANNER_AD_UNIT_ID")
             Log.d("AdMobTest", "INTERSTITIAL_AD_UNIT_ID = $INTERSTITIAL_AD_UNIT_ID")
+            Log.d("AdMobTest", "REWARDED_AD_UNIT_ID = $REWARDED_AD_UNIT_ID")
             
             if (useRealAds) {
                 Log.d("AdMobTest", "SUCCESS: Using REAL ads for AAB build")
@@ -158,6 +169,152 @@ object AdMobHelper {
         } catch (e: Exception) {
             Log.e("AdMobTest", "Error testing ad configuration", e)
         }
+    }
+    
+    // Ödüllü reklam yükleme
+    fun loadRewardedAd(context: Context) {
+        Log.d("AdMob", "loadRewardedAd çağrıldı")
+        
+        if (isLoadingRewarded) {
+            Log.d("AdMob", "Ödüllü reklam zaten yükleniyor")
+            return
+        }
+        
+        if (rewardedAd != null) {
+            Log.d("AdMob", "Ödüllü reklam zaten mevcut")
+            return
+        }
+        
+        Log.d("AdMob", "Ödüllü reklam yükleme başlatılıyor...")
+        Log.d("AdMob", "Kullanılacak Rewarded Ad Unit ID: $REWARDED_AD_UNIT_ID")
+        isLoadingRewarded = true
+        
+        val adRequest = if (!getUseRealAdsFromBuildConfig()) {
+            Log.d("AdMob", "Test reklamı yükleniyor...")
+            AdRequest.Builder().build() // Test configuration handled globally
+        } else {
+            Log.d("AdMob", "Gerçek reklam yükleniyor...")
+            AdRequest.Builder().build()
+        }
+        
+        RewardedAd.load(context, REWARDED_AD_UNIT_ID, adRequest, object : RewardedAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.e("AdMob", "Ödüllü reklam yüklenemedi!")
+                Log.e("AdMob", "Error message: ${adError.message}")
+                Log.e("AdMob", "Error code: ${adError.code}")
+                Log.e("AdMob", "Error domain: ${adError.domain}")
+                Log.e("AdMob", "Error cause: ${adError.cause}")
+                rewardedAd = null
+                isLoadingRewarded = false
+            }
+            
+            override fun onAdLoaded(ad: RewardedAd) {
+                Log.d("AdMob", "🎉 Ödüllü reklam başarıyla yüklendi!")
+                Log.d("AdMob", "Ad Unit ID: $REWARDED_AD_UNIT_ID")
+                rewardedAd = ad
+                isLoadingRewarded = false
+            }
+        })
+    }
+    
+    // Sonbahar teması için özel ödüllü reklam gösterme
+    fun showRewardedAdForAutumnTheme(activity: Activity, onProgress: (watched: Int, remaining: Int) -> Unit, onUnlocked: () -> Unit, onAdDismissed: () -> Unit = {}) {
+        if (rewardedAd != null) {
+            rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdClicked() {
+                    Log.d("AdMob", "Sonbahar teması ödüllü reklam tıklandı")
+                }
+                
+                override fun onAdDismissedFullScreenContent() {
+                    Log.d("AdMob", "Sonbahar teması ödüllü reklam kapatıldı")
+                    rewardedAd = null
+                    onAdDismissed()
+                    // Yeni reklam yükle
+                    loadRewardedAd(activity)
+                }
+                
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    Log.e("AdMob", "Sonbahar teması ödüllü reklam gösterilemedi: ${adError.message}")
+                    rewardedAd = null
+                    onAdDismissed()
+                }
+                
+                override fun onAdImpression() {
+                    Log.d("AdMob", "Sonbahar teması ödüllü reklam impression")
+                }
+                
+                override fun onAdShowedFullScreenContent() {
+                    Log.d("AdMob", "Sonbahar teması ödüllü reklam gösterildi")
+                }
+            }
+            
+            rewardedAd?.show(activity) { rewardItem ->
+                Log.d("AdMob", "Sonbahar teması için ödül kazanıldı: ${rewardItem.amount} ${rewardItem.type}")
+                
+                // Reklam sayısını artır
+                val watchedCount = RewardedUnlockHelper.incrementAutumnThemeAds(activity)
+                val remainingCount = RewardedUnlockHelper.getRemainingAdsForAutumn(activity)
+                
+                Log.d("AdMob", "Sonbahar teması: $watchedCount izlendi, $remainingCount kaldı")
+                
+                if (RewardedUnlockHelper.isAutumnThemeUnlocked(activity)) {
+                    onUnlocked()
+                } else {
+                    onProgress(watchedCount, remainingCount)
+                }
+            }
+        } else {
+            Log.e("AdMob", "Sonbahar teması için ödüllü reklam henüz yüklenmemiş")
+            onAdDismissed()
+        }
+    }
+    
+    // Genel ödüllü reklam gösterme
+    fun showRewardedAd(activity: Activity, onUserEarnedReward: () -> Unit, onAdDismissed: () -> Unit = {}) {
+        if (rewardedAd != null) {
+            rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdClicked() {
+                    Log.d("AdMob", "Ödüllü reklam tıklandı")
+                }
+                
+                override fun onAdDismissedFullScreenContent() {
+                    Log.d("AdMob", "Ödüllü reklam kapatıldı")
+                    rewardedAd = null
+                    onAdDismissed()
+                    // Yeni reklam yükle
+                    loadRewardedAd(activity)
+                }
+                
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    Log.e("AdMob", "Ödüllü reklam gösterilemedi: ${adError.message}")
+                    rewardedAd = null
+                    onAdDismissed()
+                }
+                
+                override fun onAdImpression() {
+                    Log.d("AdMob", "Ödüllü reklam impression")
+                }
+                
+                override fun onAdShowedFullScreenContent() {
+                    Log.d("AdMob", "Ödüllü reklam gösterildi")
+                }
+            }
+            
+            rewardedAd?.show(activity) { rewardItem ->
+                Log.d("AdMob", "Kullanıcı ödül kazandı: ${rewardItem.amount} ${rewardItem.type}")
+                onUserEarnedReward()
+            }
+        } else {
+            Log.e("AdMob", "Ödüllü reklam henüz yüklenmemiş")
+            onAdDismissed()
+        }
+    }
+    
+    // Ödüllü reklam hazır mı kontrol et
+    fun isRewardedAdReady(): Boolean {
+        val isReady = rewardedAd != null
+        Log.d("AdMob", "isRewardedAdReady: $isReady (isLoading: $isLoadingRewarded)")
+        return isReady
     }
 }
 

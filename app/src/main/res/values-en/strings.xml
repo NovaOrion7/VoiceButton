@@ -48,6 +48,7 @@
     <string name="theme">Theme</string>
     <string name="light_theme">Light Theme</string>
     <string name="dark_theme">Dark Theme</string>
+    <string name="autumn_theme">Autumn Theme</string>
     <string name="auto_theme">Auto</string>
     <string name="scheduled_volume">Scheduled Volume</string>
     <string name="morning_volume">Morning Volume</string>
@@ -203,4 +204,16 @@
     <string name="dnd_permission_grant">Grant Permission</string>
     <string name="dnd_permission_skip">Skip</string>
     <string name="profile_applied_partial">Profile partially applied (only media volume changed)</string>
+    
+    <!-- Autumn Theme Unlock -->
+    <string name="autumn_theme_locked">🔒 Unlock by watching %d ads</string>
+    <string name="autumn_unlock_title">Autumn Theme</string>
+    <string name="autumn_unlock_description">Support us by watching ads to unlock this beautiful autumn theme!</string>
+    <string name="unlock_progress">Progress</string>
+    <string name="ads_remaining">Remaining: %d ads</string>
+    <string name="ads_loading">Loading ad...</string>
+    <string name="watch_ad">Watch Ad</string>
+    <string name="loading_ad">Loading...</string>
+    <string name="theme_unlocked">🎉 Congratulations! Theme unlocked!</string>
+    <string name="use_theme">Use Theme</string>
 </resources>
