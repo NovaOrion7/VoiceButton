@@ -49,6 +49,7 @@
     <string name="theme">السمة</string>
     <string name="light_theme">السمة الفاتحة</string>
     <string name="dark_theme">السمة الداكنة</string>
+    <string name="autumn_theme">موضوع الخريف</string>
     <string name="auto_theme">تلقائي</string>
     <string name="scheduled_volume">الصوت المجدول</string>
     <string name="morning_volume">صوت الصباح</string>

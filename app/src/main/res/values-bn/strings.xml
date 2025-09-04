@@ -49,6 +49,7 @@
     <string name="theme">থিম</string>
     <string name="light_theme">হালকা থিম</string>
     <string name="dark_theme">গাঢ় থিম</string>
+    <string name="autumn_theme">শরতের থিম</string>
     <string name="auto_theme">স্বয়ংক্রিয়</string>
     <string name="scheduled_volume">নির্ধারিত ভলিউম</string>
     <string name="morning_volume">সকালের ভলিউম</string>

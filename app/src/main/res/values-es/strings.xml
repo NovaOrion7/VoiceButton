@@ -49,6 +49,7 @@
     <string name="theme">Tema</string>
     <string name="light_theme">Tema Claro</string>
     <string name="dark_theme">Tema Oscuro</string>
+    <string name="autumn_theme">Tema de Otoño</string>
     <string name="auto_theme">Automático</string>
     <string name="scheduled_volume">Volumen Programado</string>
     <string name="morning_volume">Volumen de Mañana</string>

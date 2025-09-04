@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="light_theme">हल्की थीम</string>
+    <string name="dark_theme">काली थीम</string>
+    <string name="autumn_theme">शरद ऋतु थीम</string>
+    <string name="auto_theme">स्वचालित</string>
     <string name="app_name">वॉल्यूम नियंत्रण</string>
     <string name="volume_control_active">वॉल्यूम नियंत्रण सक्रिय</string>
     <string name="volume_up">वॉल्यूम +</string>
@@ -47,9 +51,6 @@
     <string name="half_volume">आधा वॉल्यूम</string>
     <string name="min_volume">न्यूनतम वॉल्यूम</string>
     <string name="theme">थीम</string>
-    <string name="light_theme">हल्की थीम</string>
-    <string name="dark_theme">गहरी थीम</string>
-    <string name="auto_theme">स्वचालित</string>
     <string name="scheduled_volume">निर्धारित वॉल्यूम</string>
     <string name="morning_volume">सुबह का वॉल्यूम</string>
     <string name="evening_volume">शाम का वॉल्यूम</string>
