@@ -22,26 +22,6 @@ class BootReceiver : BroadcastReceiver() {
                     context.startService(volumeServiceIntent)
                 }
             }
-            
-            // Gece ışığı aktifse başlat (artık her zaman persistent)
-            if (PreferencesHelper.isNightLightEnabled(context)) {
-                
-                // Overlay iznini kontrol et
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || 
-                    Settings.canDrawOverlays(context)) {
-                    
-                    val nightLightIntent = Intent(context, NightLightService::class.java).apply {
-                        action = NightLightService.ACTION_START_NIGHT_LIGHT
-                        putExtra(NightLightService.EXTRA_INTENSITY, PreferencesHelper.getNightLightIntensity(context))
-                    }
-                    
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        context.startForegroundService(nightLightIntent)
-                    } else {
-                        context.startService(nightLightIntent)
-                    }
-                }
-            }
         }
     }
 }

@@ -60,13 +60,6 @@
             android:enabled="true"
             android:exported="false" />
             
-        <!-- Night Light Service -->
-        <service
-            android:name=".NightLightService"
-            android:enabled="true"
-            android:exported="false"
-            android:foregroundServiceType="mediaPlayback" />
-            
         <!-- Volume Change Receiver -->
         <receiver android:name=".VolumeChangeReceiver"
             android:exported="true">

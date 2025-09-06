@@ -14,8 +14,6 @@ object PreferencesHelper {
     private const val EVENING_VOLUME_KEY = "evening_volume"
     private const val NIGHT_VOLUME_KEY = "night_volume"
     private const val FLOATING_BUTTON_SIZE_KEY = "floating_button_size"
-    private const val NIGHT_LIGHT_ENABLED_KEY = "night_light_enabled"
-    private const val NIGHT_LIGHT_INTENSITY_KEY = "night_light_intensity"
     
     // Tema modları
     const val THEME_LIGHT = 0
@@ -29,12 +27,6 @@ object PreferencesHelper {
     const val FLOATING_BUTTON_SIZE_SMALL = 25
     const val FLOATING_BUTTON_SIZE_MEDIUM = 40
     const val FLOATING_BUTTON_SIZE_LARGE = 56
-    
-    // Night light intensity levels
-    const val NIGHT_LIGHT_INTENSITY_LOW = 25
-    const val NIGHT_LIGHT_INTENSITY_MEDIUM = 50
-    const val NIGHT_LIGHT_INTENSITY_HIGH = 75
-    const val NIGHT_LIGHT_INTENSITY_MAXIMUM = 100
     
     fun getVolumeStep(context: Context): Int {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -137,26 +129,5 @@ object PreferencesHelper {
     fun setFloatingButtonSize(context: Context, size: Int) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit().putInt(FLOATING_BUTTON_SIZE_KEY, size).apply()
-    }
-    
-    // Night light settings
-    fun isNightLightEnabled(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(NIGHT_LIGHT_ENABLED_KEY, false)
-    }
-    
-    fun setNightLightEnabled(context: Context, enabled: Boolean) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        prefs.edit().putBoolean(NIGHT_LIGHT_ENABLED_KEY, enabled).apply()
-    }
-    
-    fun getNightLightIntensity(context: Context): Int {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getInt(NIGHT_LIGHT_INTENSITY_KEY, NIGHT_LIGHT_INTENSITY_MEDIUM)
-    }
-    
-    fun setNightLightIntensity(context: Context, intensity: Int) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        prefs.edit().putInt(NIGHT_LIGHT_INTENSITY_KEY, intensity).apply()
     }
 }

@@ -179,8 +179,6 @@ fun VolumeControlScreen() {
     var showFloatingDialog by remember { mutableStateOf(false) }
     var showFloatingSizeDialog by remember { mutableStateOf(false) }
     var showVolumeBoostDialog by remember { mutableStateOf(false) }
-    var showNightLightDialog by remember { mutableStateOf(false) }
-    var showNightLightIntensityDialog by remember { mutableStateOf(false) }
     var showPercentage by remember { mutableStateOf(true) }
     var vibrationEnabled by remember { mutableStateOf(true) }
     var volumeStep by remember { mutableIntStateOf(1) }
@@ -190,8 +188,6 @@ fun VolumeControlScreen() {
     var volumeBoostLevel by remember { mutableIntStateOf(AdvancedVolumeHelper.getVolumeBoostLevel(context)) }
     var allVolumeInfo by remember { mutableStateOf(emptyMap<String, AdvancedVolumeHelper.VolumeInfo>()) }
     var currentProfile by remember { mutableStateOf("varsayilan") }
-    var isNightLightRunning by remember { mutableStateOf(NightLightService.isRunning()) }
-    var nightLightIntensity by remember { mutableIntStateOf(PreferencesHelper.getNightLightIntensity(context)) }
     var statsData by remember { mutableStateOf(emptyMap<String, Any>()) }
     // Interstitial ad counter
     var adCounter by remember { mutableIntStateOf(0) }
@@ -257,10 +253,6 @@ fun VolumeControlScreen() {
                     val floatButtonSize = PreferencesHelper.getFloatingButtonSize(context)
                     val volumeInfo = AdvancedVolumeHelper.getAllVolumeInfo(context)
                     
-                    // Night light preferences
-                    val nightLightRunning = NightLightService.isRunning()
-                    val nightLightIntens = PreferencesHelper.getNightLightIntensity(context)
-                    
                     // Sonbahar teması unlock durumunu kontrol et
                     val autumnUnlocked = RewardedUnlockHelper.isAutumnThemeUnlocked(context)
                     val adsWatched = RewardedUnlockHelper.getAutumnThemeAdsWatched(context)
@@ -288,10 +280,6 @@ fun VolumeControlScreen() {
                         scheduledVolumeEnabled = schedEnabled
                         floatingButtonSize = floatButtonSize
                         allVolumeInfo = volumeInfo
-                        
-                        // Night light states
-                        isNightLightRunning = nightLightRunning
-                        nightLightIntensity = nightLightIntens
                         
                         // Sonbahar teması unlock durumunu güncelle
                         isAutumnUnlocked = autumnUnlocked
@@ -909,65 +897,6 @@ fun VolumeControlScreen() {
                 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                 
-                // Night Light
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = context.getString(R.string.night_light),
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                        Text(
-                            text = if (isNightLightRunning) 
-                                "${context.getString(R.string.night_light_enabled)} (${nightLightIntensity}%)"
-                            else 
-                                context.getString(R.string.night_light_disabled),
-                            fontSize = 12.sp,
-                            color = if (isNightLightRunning) 
-                                MaterialTheme.colorScheme.primary 
-                            else 
-                                getSecondaryTextColor()
-                        )
-                    }
-                    Switch(
-                        checked = isNightLightRunning,
-                        onCheckedChange = { enabled ->
-                            if (enabled) {
-                                // Check overlay permission
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
-                                    // Request overlay permission
-                                    (context as MainActivity).startOverlayPermissionRequest()
-                                } else {
-                                    // Start night light
-                                    val startIntent = Intent(context, NightLightService::class.java).apply {
-                                        action = NightLightService.ACTION_START_NIGHT_LIGHT
-                                        putExtra(NightLightService.EXTRA_INTENSITY, nightLightIntensity)
-                                    }
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                        context.startForegroundService(startIntent)
-                                    } else {
-                                        context.startService(startIntent)
-                                    }
-                                    isNightLightRunning = true
-                                }
-                            } else {
-                                // Stop night light
-                                val stopIntent = Intent(context, NightLightService::class.java).apply {
-                                    action = NightLightService.ACTION_STOP_NIGHT_LIGHT
-                                }
-                                context.startService(stopIntent)
-                                isNightLightRunning = false
-                            }
-                        }
-                    )
-                }
-                
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-                
                 // İstatistikler
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -1195,37 +1124,6 @@ fun VolumeControlScreen() {
                 
                 Text(
                     text = context.getString(R.string.volume_boost_description),
-                    fontSize = 12.sp,
-                    color = getSecondaryTextColor(),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                // Night Light kontrolü
-                OutlinedButton(
-                    onClick = { showNightLightDialog = true },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text("🌙")
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = if (isNightLightRunning) 
-                                "${context.getString(R.string.night_light_enabled)} (${nightLightIntensity}%)"
-                            else 
-                                context.getString(R.string.night_light),
-                            fontSize = 14.sp
-                        )
-                    }
-                }
-                
-                Text(
-                    text = context.getString(R.string.night_light_description),
                     fontSize = 12.sp,
                     color = getSecondaryTextColor(),
                     textAlign = TextAlign.Center,
@@ -2254,202 +2152,6 @@ fun VolumeControlScreen() {
                 },
                 confirmButton = {
                     TextButton(onClick = { showVolumeBoostDialog = false }) {
-                        Text("OK")
-                    }
-                }
-            )
-        }
-        
-        // Night Light Dialog
-        if (showNightLightDialog) {
-            AlertDialog(
-                onDismissRequest = { showNightLightDialog = false },
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text("🌙")
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = context.getString(R.string.night_light_title))
-                    }
-                },
-                text = {
-                    Column {
-                        // Night Light status
-                        Text(
-                            text = if (isNightLightRunning) 
-                                context.getString(R.string.night_light_enabled)
-                            else 
-                                context.getString(R.string.night_light_disabled),
-                            fontWeight = FontWeight.Medium,
-                            color = if (isNightLightRunning) 
-                                MaterialTheme.colorScheme.primary 
-                            else 
-                                getSecondaryTextColor(),
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        )
-                        
-                        // Eye protection info
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        ) {
-                            Text(text = context.getString(R.string.eye_protection))
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = context.getString(R.string.reduces_blue_light),
-                                fontSize = 12.sp,
-                                color = getSecondaryTextColor()
-                            )
-                        }
-                        
-                        // Start/Stop Button
-                        Button(
-                            onClick = {
-                                if (isNightLightRunning) {
-                                    // Stop night light
-                                    val stopIntent = Intent(context, NightLightService::class.java).apply {
-                                        action = NightLightService.ACTION_STOP_NIGHT_LIGHT
-                                    }
-                                    context.startService(stopIntent)
-                                    isNightLightRunning = false
-                                } else {
-                                    // Check overlay permission
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
-                                        // Request overlay permission
-                                        (context as MainActivity).startOverlayPermissionRequest()
-                                    } else {
-                                        // Start night light
-                                        val startIntent = Intent(context, NightLightService::class.java).apply {
-                                            action = NightLightService.ACTION_START_NIGHT_LIGHT
-                                            putExtra(NightLightService.EXTRA_INTENSITY, nightLightIntensity)
-                                        }
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                            context.startForegroundService(startIntent)
-                                        } else {
-                                            context.startService(startIntent)
-                                        }
-                                        isNightLightRunning = true
-                                    }
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (isNightLightRunning) 
-                                    MaterialTheme.colorScheme.error 
-                                else 
-                                    MaterialTheme.colorScheme.primary
-                            )
-                        ) {
-                            Text(
-                                text = if (isNightLightRunning) 
-                                    context.getString(R.string.stop_night_light) 
-                                else 
-                                    context.getString(R.string.start_night_light)
-                            )
-                        }
-                        
-                        if (!isNightLightRunning && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
-                            Text(
-                                text = context.getString(R.string.night_light_permission_info),
-                                fontSize = 12.sp,
-                                color = MaterialTheme.colorScheme.error,
-                                modifier = Modifier.padding(top = 8.dp)
-                            )
-                        }
-                        
-                        Spacer(modifier = Modifier.height(16.dp))
-                        
-                        // Intensity control
-                        OutlinedButton(
-                            onClick = { 
-                                showNightLightDialog = false
-                                showNightLightIntensityDialog = true 
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("⚙️ ${context.getString(R.string.night_light_intensity)} (${nightLightIntensity}%)")
-                        }
-                    }
-                },
-                confirmButton = {
-                    TextButton(onClick = { showNightLightDialog = false }) {
-                        Text("OK")
-                    }
-                }
-            )
-        }
-        
-        // Night Light Intensity Dialog
-        if (showNightLightIntensityDialog) {
-            AlertDialog(
-                onDismissRequest = { showNightLightIntensityDialog = false },
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text("🌙")
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = context.getString(R.string.night_light_intensity))
-                    }
-                },
-                text = {
-                    Column {
-                        Text(
-                            text = "${context.getString(R.string.night_light_intensity_description)}: ${nightLightIntensity}%",
-                            fontWeight = FontWeight.Medium,
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        )
-                        
-                        val intensityLevels = listOf(
-                            PreferencesHelper.NIGHT_LIGHT_INTENSITY_LOW to context.getString(R.string.intensity_low),
-                            PreferencesHelper.NIGHT_LIGHT_INTENSITY_MEDIUM to context.getString(R.string.intensity_medium),
-                            PreferencesHelper.NIGHT_LIGHT_INTENSITY_HIGH to context.getString(R.string.intensity_high),
-                            PreferencesHelper.NIGHT_LIGHT_INTENSITY_MAXIMUM to context.getString(R.string.intensity_maximum)
-                        )
-                        
-                        intensityLevels.forEach { (level, label) ->
-                            TextButton(
-                                onClick = {
-                                    nightLightIntensity = level
-                                    PreferencesHelper.setNightLightIntensity(context, level)
-                                    
-                                    // If night light is running, update intensity
-                                    if (isNightLightRunning) {
-                                        val updateIntent = Intent(context, NightLightService::class.java).apply {
-                                            action = NightLightService.ACTION_UPDATE_INTENSITY
-                                            putExtra(NightLightService.EXTRA_INTENSITY, level)
-                                        }
-                                        context.startService(updateIntent)
-                                    }
-                                },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = label,
-                                        color = if (nightLightIntensity == level) 
-                                            MaterialTheme.colorScheme.primary 
-                                        else 
-                                            MaterialTheme.colorScheme.onSurface
-                                    )
-                                    if (nightLightIntensity == level) {
-                                        Text("✓", fontSize = 16.sp, color = MaterialTheme.colorScheme.primary)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                confirmButton = {
-                    TextButton(onClick = { 
-                        showNightLightIntensityDialog = false
-                        showNightLightDialog = true
-                    }) {
                         Text("OK")
                     }
                 }

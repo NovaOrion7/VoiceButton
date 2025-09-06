@@ -240,28 +240,4 @@
     <string name="aquarium_theme_locked">🔒 %d reklam izleyerek aç</string>
     <string name="aquarium_unlock_title">Akvaryum Teması</string>
     <string name="aquarium_unlock_description">Bu sakinleştirici akvaryum temasını açmak için reklam izleyerek destek olun!</string>
-    
-    <!-- Night Light / Blue Light Filter -->
-    <string name="night_light">Gece Işığı</string>
-    <string name="night_light_title">Gece Işığı (Blue Light Filter)</string>
-    <string name="night_light_description">Mavi ışığı filtreler ve gözlerinizi korur</string>
-    <string name="night_light_enabled">Gece Işığı Aktif</string>
-    <string name="night_light_disabled">Gece Işığı Kapalı</string>
-    <string name="night_light_intensity">Filtre Yoğunluğu</string>
-    <string name="night_light_intensity_description">Blue light filtre seviyesini ayarlayın</string>
-    <string name="intensity_low">Düşük (%25)</string>
-    <string name="intensity_medium">Orta (%50)</string>
-    <string name="intensity_high">Yüksek (%75)</string>
-    <string name="intensity_maximum">Maksimum (%100)</string>
-    <string name="night_light_overlay_active">Blue light filtre aktif - Gözleriniz korunuyor</string>
-    <string name="start_night_light">Gece Işığını Başlat</string>
-    <string name="stop_night_light">Gece Işığını Durdur</string>
-    <string name="night_light_permission_info">Gece ışığı için ekran üstü izni gerekli</string>
-    <string name="night_light_active_description">Mavi ışık filtresi şu anda aktif</string>
-    <string name="night_light_service_running">Gece ışığı çalışıyor</string>
-    <string name="night_light_service_stopped">Gece ışığı durduruldu</string>
-    <string name="night_light_notification_title">🌙 Gece Işığı Aktif</string>
-    <string name="night_light_notification_content">Mavi ışık filtresi çalışıyor - Gözleriniz korunuyor</string>
-    <string name="eye_protection">👁️ Göz Koruması</string>
-    <string name="reduces_blue_light">Mavi ışığı azaltır ve göz yorgunluğunu önler</string>
 </resources>
