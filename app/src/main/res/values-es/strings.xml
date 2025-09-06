@@ -210,4 +210,10 @@
     <string name="loading_ad">Cargando...</string>
     <string name="theme_unlocked">🎉 ¡Felicidades! ¡Tema desbloqueado!</string>
     <string name="use_theme">Usar Tema</string>
+    
+    <!-- Sakura Theme Unlock -->
+    <string name="sakura_theme">Tema Sakura</string>
+    <string name="sakura_theme_locked">🔒 Desbloquear viendo %d anuncios</string>
+    <string name="sakura_unlock_title">Tema Sakura</string>
+    <string name="sakura_unlock_description">¡Apóyanos viendo anuncios para desbloquear este hermoso tema rosa sakura!</string>
 </resources>

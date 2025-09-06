@@ -210,4 +210,10 @@
     <string name="loading_ad">লোড হচ্ছে...</string>
     <string name="theme_unlocked">🎉 অভিনন্দন! থিম আনলক হয়েছে!</string>
     <string name="use_theme">থিম ব্যবহার করুন</string>
+    
+    <!-- Sakura Theme Unlock -->
+    <string name="sakura_theme">সাকুরা থিম</string>
+    <string name="sakura_theme_locked">🔒 %d বিজ্ঞাপন দেখে আনলক করুন</string>
+    <string name="sakura_unlock_title">সাকুরা থিম</string>
+    <string name="sakura_unlock_description">এই সুন্দর গোলাপী সাকুরা থিম আনলক করতে বিজ্ঞাপন দেখে আমাদের সাহায্য করুন!</string>
 </resources>

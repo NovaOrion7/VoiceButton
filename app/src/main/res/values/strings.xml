@@ -228,4 +228,10 @@
     <string name="loading_ad">Yükleniyor...</string>
     <string name="theme_unlocked">🎉 Tebrikler! Tema açıldı!</string>
     <string name="use_theme">Tema\'yı Kullan</string>
+    
+    <!-- Sakura Theme Unlock -->
+    <string name="sakura_theme">Sakura Teması</string>
+    <string name="sakura_theme_locked">🔒 %d reklam izleyerek aç</string>
+    <string name="sakura_unlock_title">Sakura Teması</string>
+    <string name="sakura_unlock_description">Bu güzel pembe sakura temasını açmak için reklam izleyerek destek olun!</string>
 </resources>

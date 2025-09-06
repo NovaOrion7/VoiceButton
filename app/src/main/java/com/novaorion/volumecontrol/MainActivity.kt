@@ -1,6 +1,7 @@
 package com.novaorion.volumecontrol
 
 import android.Manifest
+import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
@@ -47,6 +48,7 @@ import com.novaorion.volumecontrol.ui.theme.VoiceButtonTheme
 import com.novaorion.volumecontrol.ui.FallingLeavesBackground
 import com.novaorion.volumecontrol.ui.TestAnimation
 import com.novaorion.volumecontrol.ui.SimpleAutumnAnimation
+import com.novaorion.volumecontrol.ui.SimpleSakuraAnimation
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -194,6 +196,13 @@ fun VolumeControlScreen() {
     var autumnAdsWatched by remember { mutableIntStateOf(0) }
     var autumnAdsRemaining by remember { mutableIntStateOf(3) }
     var isAutumnUnlocked by remember { mutableStateOf(false) }
+    
+    // Sakura theme unlock variables
+    var showSakuraUnlockDialog by remember { mutableStateOf(false) }
+    var sakuraAdsWatched by remember { mutableIntStateOf(0) }
+    var sakuraAdsRemaining by remember { mutableIntStateOf(3) }
+    var isSakuraUnlocked by remember { mutableStateOf(false) }
+    
     var isRewardedAdReady by remember { mutableStateOf(false) }
     
     val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -242,6 +251,11 @@ fun VolumeControlScreen() {
                     val adsWatched = RewardedUnlockHelper.getAutumnThemeAdsWatched(context)
                     val adsRemaining = RewardedUnlockHelper.getRemainingAdsForAutumn(context)
                     
+                    // Sakura teması unlock durumunu kontrol et
+                    val sakuraUnlocked = SakuraUnlockHelper.isSakuraThemeUnlocked(context)
+                    val sakuraAdsWatchedVal = SakuraUnlockHelper.getSakuraThemeAdsWatched(context)
+                    val sakuraAdsRemainingVal = SakuraUnlockHelper.getRemainingAdsForSakura(context)
+                    
                     // UI güncellemelerini Main dispatcher'da yap
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
                         statsData = stats
@@ -259,6 +273,11 @@ fun VolumeControlScreen() {
                         isAutumnUnlocked = autumnUnlocked
                         autumnAdsWatched = adsWatched
                         autumnAdsRemaining = adsRemaining
+                        
+                        // Sakura teması unlock durumunu güncelle
+                        isSakuraUnlocked = sakuraUnlocked
+                        sakuraAdsWatched = sakuraAdsWatchedVal
+                        sakuraAdsRemaining = sakuraAdsRemainingVal
                     }
                 } catch (e: Exception) {
                     // Hata durumunda varsayılan değerleri kullan
@@ -287,10 +306,11 @@ fun VolumeControlScreen() {
                 // Scheduled volume hatası önemli değil, devam et
             }
             
-            // Ödüllü reklam yükle (eğer sonbahar unlock edilmemişse)
+            // Ödüllü reklam yükle (eğer sonbahar veya sakura unlock edilmemişse)
             kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                 try {
-                    if (!RewardedUnlockHelper.isAutumnThemeUnlocked(context)) {
+                    if (!RewardedUnlockHelper.isAutumnThemeUnlocked(context) || 
+                        !SakuraUnlockHelper.isSakuraThemeUnlocked(context)) {
                         AdMobHelper.loadRewardedAd(context)
                     }
                 } catch (e: Exception) {
@@ -385,6 +405,11 @@ fun VolumeControlScreen() {
             // YAPRAK ANİMASYONU - Scaffold içinde
             if (PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_AUTUMN) {
                 SimpleAutumnAnimation()
+            }
+            
+            // SAKURA ANİMASYONU - Scaffold içinde
+            if (PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_SAKURA) {
+                SimpleSakuraAnimation()
             }
             
             // İçerik üstte
@@ -761,6 +786,7 @@ fun VolumeControlScreen() {
                                 PreferencesHelper.THEME_LIGHT -> context.getString(R.string.light_theme)
                                 PreferencesHelper.THEME_DARK -> context.getString(R.string.dark_theme)
                                 PreferencesHelper.THEME_AUTUMN -> context.getString(R.string.autumn_theme)
+                                PreferencesHelper.THEME_SAKURA -> context.getString(R.string.sakura_theme)
                                 else -> context.getString(R.string.auto_theme)
                             } + " • ${ScheduledVolumeHelper.getScheduleStatus(context)}",
                             fontSize = 12.sp,
@@ -779,6 +805,7 @@ fun VolumeControlScreen() {
                                 PreferencesHelper.THEME_LIGHT -> "☀️"
                                 PreferencesHelper.THEME_DARK -> "🌙"
                                 PreferencesHelper.THEME_AUTUMN -> "🍂"
+                                PreferencesHelper.THEME_SAKURA -> "🌸"
                                 else -> "🌙/☀️"
                             }
                         )
@@ -1548,6 +1575,63 @@ fun VolumeControlScreen() {
                             }
                         }
                         
+                        // Sakura theme option - Unlock sistemi ile
+                        TextButton(
+                            onClick = {
+                                if (isSakuraUnlocked) {
+                                    // Unlock edilmişse direkt değiştir
+                                    currentTheme = PreferencesHelper.THEME_SAKURA
+                                    PreferencesHelper.setTheme(context, PreferencesHelper.THEME_SAKURA)
+                                    showThemeDialog = false
+                                    (context as ComponentActivity).recreate()
+                                } else {
+                                    // Unlock edilmemişse unlock dialog'unu göster
+                                    showThemeDialog = false
+                                    showSakuraUnlockDialog = true
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🌸",
+                                    fontSize = 24.sp
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Column(
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(
+                                        text = context.getString(R.string.sakura_theme),
+                                        fontSize = 16.sp,
+                                        fontWeight = if (currentTheme == PreferencesHelper.THEME_SAKURA) 
+                                            FontWeight.Bold else FontWeight.Normal,
+                                        color = if (currentTheme == PreferencesHelper.THEME_SAKURA) 
+                                            MaterialTheme.colorScheme.primary 
+                                        else 
+                                            MaterialTheme.colorScheme.onSurface
+                                    )
+                                    if (!isSakuraUnlocked) {
+                                        Text(
+                                            text = context.getString(R.string.sakura_theme_locked, sakuraAdsRemaining),
+                                            fontSize = 12.sp,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                }
+                                if (!isSakuraUnlocked) {
+                                    Icon(
+                                        imageVector = Icons.Default.Lock,
+                                        contentDescription = "Kilitli",
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+                            }
+                        }
+                        
                         TextButton(
                             onClick = {
                                 currentTheme = PreferencesHelper.THEME_AUTO
@@ -1992,51 +2076,116 @@ fun VolumeControlScreen() {
             )
         }
         
-        // Sonbahar teması unlock dialog'u
+        // Autumn unlock dialog
         if (showAutumnUnlockDialog) {
             AutumnUnlockDialog(
                 adsWatched = autumnAdsWatched,
                 adsRemaining = autumnAdsRemaining,
                 isAdReady = isRewardedAdReady,
                 onWatchAd = {
-                    // Ödüllü reklam göster
-                    AdMobHelper.showRewardedAdForAutumnTheme(
-                        activity = context as ComponentActivity,
-                        onProgress = { watched, remaining ->
-                            // Progress güncelle
-                            autumnAdsWatched = watched
-                            autumnAdsRemaining = remaining
-                        },
-                        onUnlocked = {
-                            // Tema unlock edildi
-                            isAutumnUnlocked = true
-                            autumnAdsRemaining = 0
-                            showAutumnUnlockDialog = false
-                            
-                            // Temayı direkt uygula
-                            currentTheme = PreferencesHelper.THEME_AUTUMN
-                            PreferencesHelper.setTheme(context, PreferencesHelper.THEME_AUTUMN)
-                            (context as ComponentActivity).recreate()
-                        },
-                        onAdDismissed = {
-                            // Reklam kapandı, durumu güncelle
-                            val newWatched = RewardedUnlockHelper.getAutumnThemeAdsWatched(context)
-                            val newRemaining = RewardedUnlockHelper.getRemainingAdsForAutumn(context)
-                            val newUnlocked = RewardedUnlockHelper.isAutumnThemeUnlocked(context)
-                            
-                            autumnAdsWatched = newWatched
-                            autumnAdsRemaining = newRemaining
-                            isAutumnUnlocked = newUnlocked
-                            
-                            // Eğer unlock olduysa dialog'u kapat
-                            if (newUnlocked) {
-                                showAutumnUnlockDialog = false
+                    // Reklam göster
+                    if (context is Activity) {
+                        AdMobHelper.showRewardedAdForAutumnTheme(
+                            context as Activity,
+                            onProgress = { watched, remaining ->
+                                autumnAdsWatched = watched
+                                autumnAdsRemaining = remaining
+                                isAutumnUnlocked = RewardedUnlockHelper.isAutumnThemeUnlocked(context)
+                            },
+                            onUnlocked = {
+                                isAutumnUnlocked = true
+                                autumnAdsWatched = 3
+                                autumnAdsRemaining = 0
+                            },
+                            onAdDismissed = {
+                                // Reklam kapandı, durumu güncelle
+                                val newWatched = RewardedUnlockHelper.getAutumnThemeAdsWatched(context)
+                                val newRemaining = RewardedUnlockHelper.getRemainingAdsForAutumn(context)
+                                val newUnlocked = RewardedUnlockHelper.isAutumnThemeUnlocked(context)
+                                
+                                autumnAdsWatched = newWatched
+                                autumnAdsRemaining = newRemaining
+                                isAutumnUnlocked = newUnlocked
+                                
+                                // Eğer unlock olduysa dialog'u kapat
+                                if (newUnlocked) {
+                                    showAutumnUnlockDialog = false
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 },
                 onDismiss = { 
                     showAutumnUnlockDialog = false
+                    
+                    // Eğer tema unlock edildiyse, direkt uygula
+                    if (RewardedUnlockHelper.isAutumnThemeUnlocked(context)) {
+                        showAutumnUnlockDialog = false
+                        
+                        // Temayı direkt uygula
+                        currentTheme = PreferencesHelper.THEME_AUTUMN
+                        PreferencesHelper.setTheme(context, PreferencesHelper.THEME_AUTUMN)
+                        if (context is Activity) {
+                            (context as Activity).recreate()
+                        }
+                    }
+                }
+            )
+        }
+        
+        // Sakura unlock dialog
+        if (showSakuraUnlockDialog) {
+            SakuraUnlockDialog(
+                adsWatched = sakuraAdsWatched,
+                adsRemaining = sakuraAdsRemaining,
+                isAdReady = isRewardedAdReady,
+                onWatchAd = {
+                    // Reklam göster
+                    if (context is Activity) {
+                        AdMobHelper.showRewardedAdForSakuraTheme(
+                            context as Activity,
+                            onProgress = { watched, remaining ->
+                                sakuraAdsWatched = watched
+                                sakuraAdsRemaining = remaining
+                                isSakuraUnlocked = SakuraUnlockHelper.isSakuraThemeUnlocked(context)
+                            },
+                            onUnlocked = {
+                                isSakuraUnlocked = true
+                                sakuraAdsWatched = 3
+                                sakuraAdsRemaining = 0
+                            },
+                            onAdDismissed = {
+                                // Reklam kapandı, durumu güncelle
+                                val newWatched = SakuraUnlockHelper.getSakuraThemeAdsWatched(context)
+                                val newRemaining = SakuraUnlockHelper.getRemainingAdsForSakura(context)
+                                val newUnlocked = SakuraUnlockHelper.isSakuraThemeUnlocked(context)
+                                
+                                sakuraAdsWatched = newWatched
+                                sakuraAdsRemaining = newRemaining
+                                isSakuraUnlocked = newUnlocked
+                                
+                                // Eğer unlock olduysa dialog'u kapat
+                                if (newUnlocked) {
+                                    showSakuraUnlockDialog = false
+                                }
+                            }
+                        )
+                    }
+                },
+                onDismiss = { 
+                    showSakuraUnlockDialog = false
+                    
+                    // Eğer tema unlock edildiyse, direkt uygula
+                    if (SakuraUnlockHelper.isSakuraThemeUnlocked(context)) {
+                        showSakuraUnlockDialog = false
+                        
+                        // Temayı direkt uygula
+                        currentTheme = PreferencesHelper.THEME_SAKURA
+                        PreferencesHelper.setTheme(context, PreferencesHelper.THEME_SAKURA)
+                        if (context is Activity) {
+                            (context as Activity).recreate()
+                        }
+                    }
                 }
             )
         }

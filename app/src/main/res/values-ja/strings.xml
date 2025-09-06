@@ -229,4 +229,10 @@
     <string name="loading_ad">読み込み中...</string>
     <string name="theme_unlocked">🎉 おめでとうございます！テーマがアンロックされました！</string>
     <string name="use_theme">テーマを使用</string>
+    
+    <!-- Sakura Theme Unlock -->
+    <string name="sakura_theme">桜テーマ</string>
+    <string name="sakura_theme_locked"> %d個の広告を見てアンロック</string>
+    <string name="sakura_unlock_title">桜テーマ</string>
+    <string name="sakura_unlock_description">この美しいピンクの桜テーマをアンロックするために広告を見てサポートしてください！</string>
 </resources>

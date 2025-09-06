@@ -51,6 +51,21 @@ private val AutumnColorScheme = lightColorScheme(
     onSurfaceVariant = Color(0xFF5D4037) // Medium brown
 )
 
+// Sakura theme color scheme - pink and light colors for cherry blossoms
+private val SakuraColorScheme = lightColorScheme(
+    primary = Color(0xFFE91E63), // Pink
+    onPrimary = Color.White,
+    secondary = Color(0xFFF8BBD0), // Light pink
+    onSecondary = Color(0xFF3E2723), // Dark brown text
+    tertiary = Color(0xFFFF80AB), // Lighter pink
+    onTertiary = Color.White,
+    background = Color(0xFFFFF0F5), // Lavender blush background
+    onBackground = Color(0xFF3E2723), // Dark brown text
+    surface = Color(0xFFFFE4E1), // Misty rose surface
+    onSurface = Color(0xFF3E2723), // Dark brown text
+    onSurfaceVariant = Color(0xFF880E4F) // Dark pink
+)
+
 @Composable
 fun VoiceButtonTheme(
     darkTheme: Boolean? = null,
@@ -67,15 +82,19 @@ fun VoiceButtonTheme(
             PreferencesHelper.THEME_LIGHT -> false
             PreferencesHelper.THEME_DARK -> true
             PreferencesHelper.THEME_AUTUMN -> false // Autumn theme is always light
+            PreferencesHelper.THEME_SAKURA -> false // Sakura theme is always light
             PreferencesHelper.THEME_AUTO -> isSystemInDarkTheme()
             else -> isSystemInDarkTheme()
         }
     }
     
-    // Check if autumn theme is selected
+    // Check if autumn or sakura theme is selected
     val isAutumnTheme = PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_AUTUMN
+    val isSakuraTheme = PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_SAKURA
     
     val colorScheme = when {
+        // If sakura theme, use sakura color scheme
+        isSakuraTheme -> SakuraColorScheme
         // If autumn theme, always use autumn color scheme regardless of dynamic color
         isAutumnTheme -> AutumnColorScheme
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {

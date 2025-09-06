@@ -269,6 +269,58 @@ object AdMobHelper {
         }
     }
     
+    // Sakura teması için özel ödüllü reklam gösterme
+    fun showRewardedAdForSakuraTheme(activity: Activity, onProgress: (watched: Int, remaining: Int) -> Unit, onUnlocked: () -> Unit, onAdDismissed: () -> Unit = {}) {
+        if (rewardedAd != null) {
+            rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdClicked() {
+                    Log.d("AdMob", "Sakura teması ödüllü reklam tıklandı")
+                }
+                
+                override fun onAdDismissedFullScreenContent() {
+                    Log.d("AdMob", "Sakura teması ödüllü reklam kapatıldı")
+                    rewardedAd = null
+                    onAdDismissed()
+                    // Yeni reklam yükle
+                    loadRewardedAd(activity)
+                }
+                
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    Log.e("AdMob", "Sakura teması ödüllü reklam gösterilemedi: ${adError.message}")
+                    rewardedAd = null
+                    onAdDismissed()
+                }
+                
+                override fun onAdImpression() {
+                    Log.d("AdMob", "Sakura teması ödüllü reklam impression")
+                }
+                
+                override fun onAdShowedFullScreenContent() {
+                    Log.d("AdMob", "Sakura teması ödüllü reklam gösterildi")
+                }
+            }
+            
+            rewardedAd?.show(activity) { rewardItem ->
+                Log.d("AdMob", "Sakura teması için ödül kazanıldı: ${rewardItem.amount} ${rewardItem.type}")
+                
+                // Reklam sayısını artır
+                val watchedCount = SakuraUnlockHelper.incrementSakuraThemeAds(activity)
+                val remainingCount = SakuraUnlockHelper.getRemainingAdsForSakura(activity)
+                
+                Log.d("AdMob", "Sakura teması: $watchedCount izlendi, $remainingCount kaldı")
+                
+                if (SakuraUnlockHelper.isSakuraThemeUnlocked(activity)) {
+                    onUnlocked()
+                } else {
+                    onProgress(watchedCount, remainingCount)
+                }
+            }
+        } else {
+            Log.e("AdMob", "Sakura teması için ödüllü reklam henüz yüklenmemiş")
+            onAdDismissed()
+        }
+    }
+    
     // Genel ödüllü reklam gösterme
     fun showRewardedAd(activity: Activity, onUserEarnedReward: () -> Unit, onAdDismissed: () -> Unit = {}) {
         if (rewardedAd != null) {

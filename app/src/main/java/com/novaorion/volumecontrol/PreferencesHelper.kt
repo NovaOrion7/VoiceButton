@@ -20,6 +20,7 @@ object PreferencesHelper {
     const val THEME_DARK = 1
     const val THEME_AUTO = 2
     const val THEME_AUTUMN = 3
+    const val THEME_SAKURA = 4  // Add new sakura theme constant
     
     // Floating button sizes (in dp)
     const val FLOATING_BUTTON_SIZE_SMALL = 25
