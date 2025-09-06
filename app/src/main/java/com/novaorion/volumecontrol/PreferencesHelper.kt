@@ -16,7 +16,6 @@ object PreferencesHelper {
     private const val FLOATING_BUTTON_SIZE_KEY = "floating_button_size"
     private const val NIGHT_LIGHT_ENABLED_KEY = "night_light_enabled"
     private const val NIGHT_LIGHT_INTENSITY_KEY = "night_light_intensity"
-    private const val NIGHT_LIGHT_PERSISTENT_KEY = "night_light_persistent"
     
     // Tema modları
     const val THEME_LIGHT = 0
@@ -159,15 +158,5 @@ object PreferencesHelper {
     fun setNightLightIntensity(context: Context, intensity: Int) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit().putInt(NIGHT_LIGHT_INTENSITY_KEY, intensity).apply()
-    }
-    
-    fun isNightLightPersistent(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(NIGHT_LIGHT_PERSISTENT_KEY, true)
-    }
-    
-    fun setNightLightPersistent(context: Context, persistent: Boolean) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        prefs.edit().putBoolean(NIGHT_LIGHT_PERSISTENT_KEY, persistent).apply()
     }
 }

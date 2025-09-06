@@ -2370,32 +2370,6 @@ fun VolumeControlScreen() {
                         ) {
                             Text("⚙️ ${context.getString(R.string.night_light_intensity)} (${nightLightIntensity}%)")
                         }
-                        
-                        // Persistent option
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    text = context.getString(R.string.persistent_night_light),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Medium
-                                )
-                                Text(
-                                    text = context.getString(R.string.persistent_night_light_description),
-                                    fontSize = 12.sp,
-                                    color = getSecondaryTextColor()
-                                )
-                            }
-                            Switch(
-                                checked = PreferencesHelper.isNightLightPersistent(context),
-                                onCheckedChange = { enabled ->
-                                    PreferencesHelper.setNightLightPersistent(context, enabled)
-                                }
-                            )
-                        }
                     }
                 },
                 confirmButton = {

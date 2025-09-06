@@ -23,9 +23,8 @@ class BootReceiver : BroadcastReceiver() {
                 }
             }
             
-            // Gece ışığı kalıcı ise başlat
-            if (PreferencesHelper.isNightLightEnabled(context) && 
-                PreferencesHelper.isNightLightPersistent(context)) {
+            // Gece ışığı aktifse başlat (artık her zaman persistent)
+            if (PreferencesHelper.isNightLightEnabled(context)) {
                 
                 // Overlay iznini kontrol et
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || 

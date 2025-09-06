@@ -57,11 +57,8 @@ class NightLightService : Service() {
             }
         }
         
-        return if (PreferencesHelper.isNightLightPersistent(this)) {
-            START_STICKY
-        } else {
-            START_NOT_STICKY
-        }
+        // Always use START_STICKY for persistent night light
+        return START_STICKY
     }
     
     private fun startNightLight(intensity: Int) {
