@@ -223,4 +223,10 @@
     <string name="sakura_theme_locked">🔒 إلغاء القفل بمشاهدة %d إعلانات</string>
     <string name="sakura_unlock_title">موضوع الساكورا</string>
     <string name="sakura_unlock_description">ادعمنا من خلال مشاهدة الإعلانات لإلغاء قفل موضوع الساكورا الوردي الجميل هذا!</string>
+    
+    <!-- Aquarium Theme Unlock -->
+    <string name="aquarium_theme">موضوع الحوض</string>
+    <string name="aquarium_theme_locked">🔒 إلغاء القفل بمشاهدة %d إعلانات</string>
+    <string name="aquarium_unlock_title">موضوع الحوض</string>
+    <string name="aquarium_unlock_description">ادعمنا من خلال مشاهدة الإعلانات لإلغاء قفل موضوع الحوض المريح هذا!</string>
 </resources>
