@@ -49,6 +49,7 @@ import com.novaorion.volumecontrol.ui.FallingLeavesBackground
 import com.novaorion.volumecontrol.ui.TestAnimation
 import com.novaorion.volumecontrol.ui.SimpleAutumnAnimation
 import com.novaorion.volumecontrol.ui.SimpleSakuraAnimation
+import com.novaorion.volumecontrol.ui.SimpleAquariumAnimation
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -203,6 +204,12 @@ fun VolumeControlScreen() {
     var sakuraAdsRemaining by remember { mutableIntStateOf(3) }
     var isSakuraUnlocked by remember { mutableStateOf(false) }
     
+    // Aquarium theme unlock variables
+    var showAquariumUnlockDialog by remember { mutableStateOf(false) }
+    var aquariumAdsWatched by remember { mutableIntStateOf(0) }
+    var aquariumAdsRemaining by remember { mutableIntStateOf(3) }
+    var isAquariumUnlocked by remember { mutableStateOf(false) }
+    
     var isRewardedAdReady by remember { mutableStateOf(false) }
     
     val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -256,6 +263,11 @@ fun VolumeControlScreen() {
                     val sakuraAdsWatchedVal = SakuraUnlockHelper.getSakuraThemeAdsWatched(context)
                     val sakuraAdsRemainingVal = SakuraUnlockHelper.getRemainingAdsForSakura(context)
                     
+                    // Akvaryum teması unlock durumunu kontrol et
+                    val aquariumUnlocked = AquariumUnlockHelper.isAquariumThemeUnlocked(context)
+                    val aquariumAdsWatchedVal = AquariumUnlockHelper.getAquariumThemeAdsWatched(context)
+                    val aquariumAdsRemainingVal = AquariumUnlockHelper.getRemainingAdsForAquarium(context)
+                    
                     // UI güncellemelerini Main dispatcher'da yap
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
                         statsData = stats
@@ -278,6 +290,11 @@ fun VolumeControlScreen() {
                         isSakuraUnlocked = sakuraUnlocked
                         sakuraAdsWatched = sakuraAdsWatchedVal
                         sakuraAdsRemaining = sakuraAdsRemainingVal
+                        
+                        // Akvaryum teması unlock durumunu güncelle
+                        isAquariumUnlocked = aquariumUnlocked
+                        aquariumAdsWatched = aquariumAdsWatchedVal
+                        aquariumAdsRemaining = aquariumAdsRemainingVal
                     }
                 } catch (e: Exception) {
                     // Hata durumunda varsayılan değerleri kullan
@@ -306,11 +323,12 @@ fun VolumeControlScreen() {
                 // Scheduled volume hatası önemli değil, devam et
             }
             
-            // Ödüllü reklam yükle (eğer sonbahar veya sakura unlock edilmemişse)
+            // Ödüllü reklam yükle (eğer sonbahar, sakura veya akvaryum unlock edilmemişse)
             kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                 try {
                     if (!RewardedUnlockHelper.isAutumnThemeUnlocked(context) || 
-                        !SakuraUnlockHelper.isSakuraThemeUnlocked(context)) {
+                        !SakuraUnlockHelper.isSakuraThemeUnlocked(context) ||
+                        !AquariumUnlockHelper.isAquariumThemeUnlocked(context)) {
                         AdMobHelper.loadRewardedAd(context)
                     }
                 } catch (e: Exception) {
@@ -410,6 +428,11 @@ fun VolumeControlScreen() {
             // SAKURA ANİMASYONU - Scaffold içinde
             if (PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_SAKURA) {
                 SimpleSakuraAnimation()
+            }
+            
+            // AKVARYUM ANİMASYONU - Scaffold içinde
+            if (PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_AQUARIUM) {
+                SimpleAquariumAnimation()
             }
             
             // İçerik üstte
@@ -787,6 +810,7 @@ fun VolumeControlScreen() {
                                 PreferencesHelper.THEME_DARK -> context.getString(R.string.dark_theme)
                                 PreferencesHelper.THEME_AUTUMN -> context.getString(R.string.autumn_theme)
                                 PreferencesHelper.THEME_SAKURA -> context.getString(R.string.sakura_theme)
+                                PreferencesHelper.THEME_AQUARIUM -> context.getString(R.string.aquarium_theme)
                                 else -> context.getString(R.string.auto_theme)
                             } + " • ${ScheduledVolumeHelper.getScheduleStatus(context)}",
                             fontSize = 12.sp,
@@ -806,6 +830,7 @@ fun VolumeControlScreen() {
                                 PreferencesHelper.THEME_DARK -> "🌙"
                                 PreferencesHelper.THEME_AUTUMN -> "🍂"
                                 PreferencesHelper.THEME_SAKURA -> "🌸"
+                                PreferencesHelper.THEME_AQUARIUM -> "🐠"
                                 else -> "🌙/☀️"
                             }
                         )
@@ -1632,6 +1657,63 @@ fun VolumeControlScreen() {
                             }
                         }
                         
+                        // Aquarium theme option - Unlock sistemi ile
+                        TextButton(
+                            onClick = {
+                                if (isAquariumUnlocked) {
+                                    // Unlock edilmişse direkt değiştir
+                                    currentTheme = PreferencesHelper.THEME_AQUARIUM
+                                    PreferencesHelper.setTheme(context, PreferencesHelper.THEME_AQUARIUM)
+                                    showThemeDialog = false
+                                    (context as ComponentActivity).recreate()
+                                } else {
+                                    // Unlock edilmemişse unlock dialog'unu göster
+                                    showThemeDialog = false
+                                    showAquariumUnlockDialog = true
+                                }
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "🐠",
+                                    fontSize = 24.sp
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Column(
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(
+                                        text = context.getString(R.string.aquarium_theme),
+                                        fontSize = 16.sp,
+                                        fontWeight = if (currentTheme == PreferencesHelper.THEME_AQUARIUM) 
+                                            FontWeight.Bold else FontWeight.Normal,
+                                        color = if (currentTheme == PreferencesHelper.THEME_AQUARIUM) 
+                                            MaterialTheme.colorScheme.primary 
+                                        else 
+                                            MaterialTheme.colorScheme.onSurface
+                                    )
+                                    if (!isAquariumUnlocked) {
+                                        Text(
+                                            text = context.getString(R.string.aquarium_theme_locked, aquariumAdsRemaining),
+                                            fontSize = 12.sp,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                }
+                                if (!isAquariumUnlocked) {
+                                    Icon(
+                                        imageVector = Icons.Default.Lock,
+                                        contentDescription = "Kilitli",
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+                            }
+                        }
+                        
                         TextButton(
                             onClick = {
                                 currentTheme = PreferencesHelper.THEME_AUTO
@@ -2182,6 +2264,54 @@ fun VolumeControlScreen() {
                         // Temayı direkt uygula
                         currentTheme = PreferencesHelper.THEME_SAKURA
                         PreferencesHelper.setTheme(context, PreferencesHelper.THEME_SAKURA)
+                        if (context is Activity) {
+                            (context as Activity).recreate()
+                        }
+                    }
+                }
+            )
+        }
+        
+        // Aquarium unlock dialog
+        if (showAquariumUnlockDialog) {
+            AquariumUnlockDialog(
+                adsWatched = aquariumAdsWatched,
+                adsRemaining = aquariumAdsRemaining,
+                isAdReady = isRewardedAdReady,
+                onWatchAd = {
+                    // Reklam göster
+                    if (context is Activity) {
+                        AdMobHelper.showRewardedAdForAquariumTheme(
+                            context as Activity,
+                            onProgress = { watched, remaining ->
+                                aquariumAdsWatched = watched
+                                aquariumAdsRemaining = remaining
+                                isAquariumUnlocked = AquariumUnlockHelper.isAquariumThemeUnlocked(context)
+                            },
+                            onUnlocked = {
+                                isAquariumUnlocked = true
+                                aquariumAdsRemaining = 0
+                                
+                                // Başarı bildirimi göster
+                                val newUnlocked = AquariumUnlockHelper.isAquariumThemeUnlocked(context)
+                                if (newUnlocked) {
+                                    // Theme unlock edildi, dialog'u kapat
+                                    showAquariumUnlockDialog = false
+                                }
+                            }
+                        )
+                    }
+                },
+                onDismiss = { 
+                    showAquariumUnlockDialog = false
+                    
+                    // Eğer tema unlock edildiyse, direkt uygula
+                    if (AquariumUnlockHelper.isAquariumThemeUnlocked(context)) {
+                        showAquariumUnlockDialog = false
+                        
+                        // Temayı direkt uygula
+                        currentTheme = PreferencesHelper.THEME_AQUARIUM
+                        PreferencesHelper.setTheme(context, PreferencesHelper.THEME_AQUARIUM)
                         if (context is Activity) {
                             (context as Activity).recreate()
                         }

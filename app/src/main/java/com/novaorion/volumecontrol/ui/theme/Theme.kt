@@ -66,6 +66,21 @@ private val SakuraColorScheme = lightColorScheme(
     onSurfaceVariant = Color(0xFF880E4F) // Dark pink
 )
 
+// Aquarium theme color scheme - blue and aqua colors for underwater feeling
+private val AquariumColorScheme = lightColorScheme(
+    primary = Color(0xFF00BCD4), // Cyan
+    onPrimary = Color.White,
+    secondary = Color(0xFF81DEEA), // Light cyan
+    onSecondary = Color(0xFF263238), // Dark blue-grey text
+    tertiary = Color(0xFF4DD0E1), // Medium cyan
+    onTertiary = Color.White,
+    background = Color(0xFFE0F7FA), // Very light cyan background
+    onBackground = Color(0xFF263238), // Dark blue-grey text
+    surface = Color(0xFFB2EBF2), // Light cyan surface
+    onSurface = Color(0xFF263238), // Dark blue-grey text
+    onSurfaceVariant = Color(0xFF00695C) // Dark teal
+)
+
 @Composable
 fun VoiceButtonTheme(
     darkTheme: Boolean? = null,
@@ -83,16 +98,20 @@ fun VoiceButtonTheme(
             PreferencesHelper.THEME_DARK -> true
             PreferencesHelper.THEME_AUTUMN -> false // Autumn theme is always light
             PreferencesHelper.THEME_SAKURA -> false // Sakura theme is always light
+            PreferencesHelper.THEME_AQUARIUM -> false // Aquarium theme is always light
             PreferencesHelper.THEME_AUTO -> isSystemInDarkTheme()
             else -> isSystemInDarkTheme()
         }
     }
     
-    // Check if autumn or sakura theme is selected
+    // Check if autumn, sakura, or aquarium theme is selected
     val isAutumnTheme = PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_AUTUMN
     val isSakuraTheme = PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_SAKURA
+    val isAquariumTheme = PreferencesHelper.getTheme(context) == PreferencesHelper.THEME_AQUARIUM
     
     val colorScheme = when {
+        // If aquarium theme, use aquarium color scheme
+        isAquariumTheme -> AquariumColorScheme
         // If sakura theme, use sakura color scheme
         isSakuraTheme -> SakuraColorScheme
         // If autumn theme, always use autumn color scheme regardless of dynamic color

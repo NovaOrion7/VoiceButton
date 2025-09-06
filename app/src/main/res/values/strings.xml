@@ -234,4 +234,10 @@
     <string name="sakura_theme_locked">🔒 %d reklam izleyerek aç</string>
     <string name="sakura_unlock_title">Sakura Teması</string>
     <string name="sakura_unlock_description">Bu güzel pembe sakura temasını açmak için reklam izleyerek destek olun!</string>
+    
+    <!-- Aquarium Theme Unlock -->
+    <string name="aquarium_theme">Akvaryum Teması</string>
+    <string name="aquarium_theme_locked">🔒 %d reklam izleyerek aç</string>
+    <string name="aquarium_unlock_title">Akvaryum Teması</string>
+    <string name="aquarium_unlock_description">Bu sakinleştirici akvaryum temasını açmak için reklam izleyerek destek olun!</string>
 </resources>

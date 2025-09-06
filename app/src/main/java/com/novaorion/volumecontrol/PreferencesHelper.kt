@@ -21,6 +21,7 @@ object PreferencesHelper {
     const val THEME_AUTO = 2
     const val THEME_AUTUMN = 3
     const val THEME_SAKURA = 4  // Add new sakura theme constant
+    const val THEME_AQUARIUM = 5  // Add new aquarium theme constant
     
     // Floating button sizes (in dp)
     const val FLOATING_BUTTON_SIZE_SMALL = 25

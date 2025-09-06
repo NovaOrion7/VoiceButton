@@ -235,4 +235,10 @@
     <string name="sakura_theme_locked"> %d個の広告を見てアンロック</string>
     <string name="sakura_unlock_title">桜テーマ</string>
     <string name="sakura_unlock_description">この美しいピンクの桜テーマをアンロックするために広告を見てサポートしてください！</string>
+    
+    <!-- Aquarium Theme Unlock -->
+    <string name="aquarium_theme">水族館テーマ</string>
+    <string name="aquarium_theme_locked">🔒 %d個の広告を見てアンロック</string>
+    <string name="aquarium_unlock_title">水族館テーマ</string>
+    <string name="aquarium_unlock_description">このリラックスできる水族館テーマをアンロックするために、広告を見てサポートしてください！</string>
 </resources>

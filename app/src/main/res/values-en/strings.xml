@@ -222,4 +222,10 @@
     <string name="sakura_theme_locked">🔒 Unlock by watching %d ads</string>
     <string name="sakura_unlock_title">Sakura Theme</string>
     <string name="sakura_unlock_description">Support us by watching ads to unlock this beautiful pink sakura theme!</string>
+    
+    <!-- Aquarium Theme Unlock -->
+    <string name="aquarium_theme">Aquarium Theme</string>
+    <string name="aquarium_theme_locked">🔒 Unlock by watching %d ads</string>
+    <string name="aquarium_unlock_title">Aquarium Theme</string>
+    <string name="aquarium_unlock_description">Support us by watching ads to unlock this relaxing aquarium theme!</string>
 </resources>

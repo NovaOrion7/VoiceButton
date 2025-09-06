@@ -216,4 +216,10 @@
     <string name="sakura_theme_locked">🔒 Durch %d Werbung freischalten</string>
     <string name="sakura_unlock_title">Sakura-Theme</string>
     <string name="sakura_unlock_description">Unterstützen Sie uns durch das Ansehen von Werbung, um dieses schöne rosa Sakura-Theme freizuschalten!</string>
+    
+    <!-- Aquarium Theme Unlock -->
+    <string name="aquarium_theme">Aquarium-Theme</string>
+    <string name="aquarium_theme_locked">🔒 Durch %d Werbung freischalten</string>
+    <string name="aquarium_unlock_title">Aquarium-Theme</string>
+    <string name="aquarium_unlock_description">Unterstützen Sie uns durch das Ansehen von Werbung, um dieses entspannende Aquarium-Theme freizuschalten!</string>
 </resources>
