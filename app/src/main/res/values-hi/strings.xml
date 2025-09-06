@@ -222,4 +222,30 @@
     <string name="aquarium_theme_locked">🔒 %d विज्ञापन देखकर अनलॉक करें</string>
     <string name="aquarium_unlock_title">एक्वेरियम थीम</string>
     <string name="aquarium_unlock_description">इस आरामदायक एक्वेरियम थीम को अनलॉक करने के लिए विज्ञापन देखकर हमारा समर्थन करें!</string>
+    
+    <!-- Night Light / Blue Light Filter -->
+    <string name="night_light">नाइट लाइट</string>
+    <string name="night_light_title">नाइट लाइट (ब्लू लाइट फिल्टर)</string>
+    <string name="night_light_description">नीली रोशनी को फिल्टर करता है और आपकी आंखों की सुरक्षा करता है</string>
+    <string name="night_light_enabled">नाइट लाइट सक्रिय</string>
+    <string name="night_light_disabled">नाइट लाइट बंद</string>
+    <string name="night_light_intensity">फिल्टर तीव्रता</string>
+    <string name="night_light_intensity_description">ब्लू लाइट फिल्टर स्तर समायोजित करें</string>
+    <string name="intensity_low">कम (25%)</string>
+    <string name="intensity_medium">मध्यम (50%)</string>
+    <string name="intensity_high">उच्च (75%)</string>
+    <string name="intensity_maximum">अधिकतम (100%)</string>
+    <string name="night_light_overlay_active">ब्लू लाइट फिल्टर सक्रिय - आपकी आंखें सुरक्षित हैं</string>
+    <string name="start_night_light">नाइट लाइट शुरू करें</string>
+    <string name="stop_night_light">नाइट लाइट बंद करें</string>
+    <string name="night_light_permission_info">नाइट लाइट के लिए ओवरले अनुमति आवश्यक</string>
+    <string name="night_light_active_description">ब्लू लाइट फिल्टर वर्तमान में सक्रिय है</string>
+    <string name="persistent_night_light">स्थायी नाइट लाइट</string>
+    <string name="persistent_night_light_description">ऐप बंद होने पर भी नाइट लाइट सक्रिय रहता है</string>
+    <string name="night_light_service_running">नाइट लाइट चल रहा है</string>
+    <string name="night_light_service_stopped">नाइट लाइट बंद हो गया</string>
+    <string name="night_light_notification_title">🌙 नाइट लाइट सक्रिय</string>
+    <string name="night_light_notification_content">ब्लू लाइट फिल्टर चल रहा है - आपकी आंखें सुरक्षित हैं</string>
+    <string name="eye_protection">👁️ आंख सुरक्षा</string>
+    <string name="reduces_blue_light">नीली रोशनी कम करता है और आंखों के तनाव को रोकता है</string>
 </resources>

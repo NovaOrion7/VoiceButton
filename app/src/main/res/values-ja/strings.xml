@@ -241,4 +241,30 @@
     <string name="aquarium_theme_locked">🔒 %d個の広告を見てアンロック</string>
     <string name="aquarium_unlock_title">水族館テーマ</string>
     <string name="aquarium_unlock_description">このリラックスできる水族館テーマをアンロックするために、広告を見てサポートしてください！</string>
+    
+    <!-- Night Light / Blue Light Filter -->
+    <string name="night_light">ナイトライト</string>
+    <string name="night_light_title">ナイトライト（ブルーライトフィルター）</string>
+    <string name="night_light_description">ブルーライトをフィルタリングし、目を保護します</string>
+    <string name="night_light_enabled">ナイトライト有効</string>
+    <string name="night_light_disabled">ナイトライト無効</string>
+    <string name="night_light_intensity">フィルター強度</string>
+    <string name="night_light_intensity_description">ブルーライトフィルターレベルを調整</string>
+    <string name="intensity_low">低（25%）</string>
+    <string name="intensity_medium">中（50%）</string>
+    <string name="intensity_high">高（75%）</string>
+    <string name="intensity_maximum">最大（100%）</string>
+    <string name="night_light_overlay_active">ブルーライトフィルター有効 - 目が保護されています</string>
+    <string name="start_night_light">ナイトライト開始</string>
+    <string name="stop_night_light">ナイトライト停止</string>
+    <string name="night_light_permission_info">ナイトライトにはオーバーレイ許可が必要です</string>
+    <string name="night_light_active_description">ブルーライトフィルターが現在有効です</string>
+    <string name="persistent_night_light">常時ナイトライト</string>
+    <string name="persistent_night_light_description">アプリを閉じてもナイトライトが有効のままになります</string>
+    <string name="night_light_service_running">ナイトライト実行中</string>
+    <string name="night_light_service_stopped">ナイトライト停止</string>
+    <string name="night_light_notification_title">🌙 ナイトライト有効</string>
+    <string name="night_light_notification_content">ブルーライトフィルターが実行中 - 目が保護されています</string>
+    <string name="eye_protection">👁️ 目の保護</string>
+    <string name="reduces_blue_light">ブルーライトを軽減し、眼精疲労を防ぎます</string>
 </resources>

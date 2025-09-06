@@ -222,4 +222,30 @@
     <string name="aquarium_theme_locked">🔒 %d বিজ্ঞাপন দেখে আনলক করুন</string>
     <string name="aquarium_unlock_title">অ্যাকোয়ারিয়াম থিম</string>
     <string name="aquarium_unlock_description">এই শান্তিদায়ক অ্যাকোয়ারিয়াম থিম আনলক করতে বিজ্ঞাপন দেখে আমাদের সাহায্য করুন!</string>
+    
+    <!-- Night Light / Blue Light Filter -->
+    <string name="night_light">নাইট লাইট</string>
+    <string name="night_light_title">নাইট লাইট (ব্লু লাইট ফিল্টার)</string>
+    <string name="night_light_description">নীল আলো ফিল্টার করে এবং আপনার চোখ রক্ষা করে</string>
+    <string name="night_light_enabled">নাইট লাইট সক্রিয়</string>
+    <string name="night_light_disabled">নাইট লাইট বন্ধ</string>
+    <string name="night_light_intensity">ফিল্টার তীব্রতা</string>
+    <string name="night_light_intensity_description">ব্লু লাইট ফিল্টার স্তর সামঞ্জস্য করুন</string>
+    <string name="intensity_low">কম (২৫%)</string>
+    <string name="intensity_medium">মাঝারি (৫০%)</string>
+    <string name="intensity_high">উচ্চ (৭৫%)</string>
+    <string name="intensity_maximum">সর্বোচ্চ (১০০%)</string>
+    <string name="night_light_overlay_active">ব্লু লাইট ফিল্টার সক্রিয় - আপনার চোখ সুরক্ষিত</string>
+    <string name="start_night_light">নাইট লাইট শুরু করুন</string>
+    <string name="stop_night_light">নাইট লাইট বন্ধ করুন</string>
+    <string name="night_light_permission_info">নাইট লাইটের জন্য ওভারলে অনুমতি প্রয়োজন</string>
+    <string name="night_light_active_description">ব্লু লাইট ফিল্টার বর্তমানে সক্রিয়</string>
+    <string name="persistent_night_light">স্থায়ী নাইট লাইট</string>
+    <string name="persistent_night_light_description">অ্যাপ বন্ধ হয়ে গেলেও নাইট লাইট সক্রিয় থাকে</string>
+    <string name="night_light_service_running">নাইট লাইট চলছে</string>
+    <string name="night_light_service_stopped">নাইট লাইট বন্ধ হয়েছে</string>
+    <string name="night_light_notification_title">🌙 নাইট লাইট সক্রিয়</string>
+    <string name="night_light_notification_content">ব্লু লাইট ফিল্টার চলছে - আপনার চোখ সুরক্ষিত</string>
+    <string name="eye_protection">👁️ চোখের সুরক্ষা</string>
+    <string name="reduces_blue_light">নীল আলো কমায় এবং চোখের চাপ প্রতিরোধ করে</string>
 </resources>

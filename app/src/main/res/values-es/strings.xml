@@ -222,4 +222,30 @@
     <string name="aquarium_theme_locked">🔒 Desbloquear viendo %d anuncios</string>
     <string name="aquarium_unlock_title">Tema Acuario</string>
     <string name="aquarium_unlock_description">¡Apóyanos viendo anuncios para desbloquear este relajante tema de acuario!</string>
+    
+    <!-- Night Light / Blue Light Filter -->
+    <string name="night_light">Luz Nocturna</string>
+    <string name="night_light_title">Luz Nocturna (Filtro de Luz Azul)</string>
+    <string name="night_light_description">Filtra la luz azul y protege tus ojos</string>
+    <string name="night_light_enabled">Luz Nocturna Activa</string>
+    <string name="night_light_disabled">Luz Nocturna Apagada</string>
+    <string name="night_light_intensity">Intensidad del Filtro</string>
+    <string name="night_light_intensity_description">Ajustar el nivel del filtro de luz azul</string>
+    <string name="intensity_low">Bajo (25%)</string>
+    <string name="intensity_medium">Medio (50%)</string>
+    <string name="intensity_high">Alto (75%)</string>
+    <string name="intensity_maximum">Máximo (100%)</string>
+    <string name="night_light_overlay_active">Filtro de luz azul activo - Tus ojos están protegidos</string>
+    <string name="start_night_light">Iniciar Luz Nocturna</string>
+    <string name="stop_night_light">Detener Luz Nocturna</string>
+    <string name="night_light_permission_info">Permiso de superposición requerido para luz nocturna</string>
+    <string name="night_light_active_description">El filtro de luz azul está actualmente activo</string>
+    <string name="persistent_night_light">Luz Nocturna Persistente</string>
+    <string name="persistent_night_light_description">La luz nocturna permanece activa incluso cuando se cierra la aplicación</string>
+    <string name="night_light_service_running">Luz nocturna en funcionamiento</string>
+    <string name="night_light_service_stopped">Luz nocturna detenida</string>
+    <string name="night_light_notification_title">🌙 Luz Nocturna Activa</string>
+    <string name="night_light_notification_content">El filtro de luz azul está funcionando - Tus ojos están protegidos</string>
+    <string name="eye_protection">👁️ Protección Ocular</string>
+    <string name="reduces_blue_light">Reduce la luz azul y previene la fatiga ocular</string>
 </resources>

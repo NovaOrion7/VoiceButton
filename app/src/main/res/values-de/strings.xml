@@ -222,4 +222,30 @@
     <string name="aquarium_theme_locked">🔒 Durch %d Werbung freischalten</string>
     <string name="aquarium_unlock_title">Aquarium-Theme</string>
     <string name="aquarium_unlock_description">Unterstützen Sie uns durch das Ansehen von Werbung, um dieses entspannende Aquarium-Theme freizuschalten!</string>
+    
+    <!-- Night Light / Blue Light Filter -->
+    <string name="night_light">Nachtlicht</string>
+    <string name="night_light_title">Nachtlicht (Blaulichtfilter)</string>
+    <string name="night_light_description">Filtert blaues Licht und schützt Ihre Augen</string>
+    <string name="night_light_enabled">Nachtlicht aktiv</string>
+    <string name="night_light_disabled">Nachtlicht aus</string>
+    <string name="night_light_intensity">Filterintensität</string>
+    <string name="night_light_intensity_description">Blaulichtfilterstufe einstellen</string>
+    <string name="intensity_low">Niedrig (25%)</string>
+    <string name="intensity_medium">Mittel (50%)</string>
+    <string name="intensity_high">Hoch (75%)</string>
+    <string name="intensity_maximum">Maximum (100%)</string>
+    <string name="night_light_overlay_active">Blaulichtfilter aktiv - Ihre Augen sind geschützt</string>
+    <string name="start_night_light">Nachtlicht starten</string>
+    <string name="stop_night_light">Nachtlicht stoppen</string>
+    <string name="night_light_permission_info">Overlay-Berechtigung für Nachtlicht erforderlich</string>
+    <string name="night_light_active_description">Blaulichtfilter ist derzeit aktiv</string>
+    <string name="persistent_night_light">Dauerhaftes Nachtlicht</string>
+    <string name="persistent_night_light_description">Nachtlicht bleibt aktiv, auch wenn die App geschlossen wird</string>
+    <string name="night_light_service_running">Nachtlicht läuft</string>
+    <string name="night_light_service_stopped">Nachtlicht gestoppt</string>
+    <string name="night_light_notification_title">🌙 Nachtlicht aktiv</string>
+    <string name="night_light_notification_content">Blaulichtfilter läuft - Ihre Augen sind geschützt</string>
+    <string name="eye_protection">👁️ Augenschutz</string>
+    <string name="reduces_blue_light">Reduziert blaues Licht und verhindert Augenbelastung</string>
 </resources>
