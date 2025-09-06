@@ -246,8 +246,6 @@
     <string name="stop_night_light">Stop Night Light</string>
     <string name="night_light_permission_info">Overlay permission required for night light</string>
     <string name="night_light_active_description">Blue light filter is currently active</string>
-    <string name="persistent_night_light">Persistent Night Light</string>
-    <string name="persistent_night_light_description">Night light stays active even when app is closed</string>
     <string name="night_light_service_running">Night light running</string>
     <string name="night_light_service_stopped">Night light stopped</string>
     <string name="night_light_notification_title">🌙 Night Light Active</string>

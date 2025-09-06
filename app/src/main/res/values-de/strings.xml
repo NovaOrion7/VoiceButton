@@ -240,8 +240,6 @@
     <string name="stop_night_light">Nachtlicht stoppen</string>
     <string name="night_light_permission_info">Overlay-Berechtigung für Nachtlicht erforderlich</string>
     <string name="night_light_active_description">Blaulichtfilter ist derzeit aktiv</string>
-    <string name="persistent_night_light">Dauerhaftes Nachtlicht</string>
-    <string name="persistent_night_light_description">Nachtlicht bleibt aktiv, auch wenn die App geschlossen wird</string>
     <string name="night_light_service_running">Nachtlicht läuft</string>
     <string name="night_light_service_stopped">Nachtlicht gestoppt</string>
     <string name="night_light_notification_title">🌙 Nachtlicht aktiv</string>

@@ -247,8 +247,6 @@
     <string name="stop_night_light">إيقاف الإضاءة الليلية</string>
     <string name="night_light_permission_info">إذن الطبقة العلوية مطلوب للإضاءة الليلية</string>
     <string name="night_light_active_description">مرشح الضوء الأزرق نشط حالياً</string>
-    <string name="persistent_night_light">إضاءة ليلية دائمة</string>
-    <string name="persistent_night_light_description">تبقى الإضاءة الليلية نشطة حتى عند إغلاق التطبيق</string>
     <string name="night_light_service_running">الإضاءة الليلية تعمل</string>
     <string name="night_light_service_stopped">الإضاءة الليلية متوقفة</string>
     <string name="night_light_notification_title">🌙 الإضاءة الليلية نشطة</string>

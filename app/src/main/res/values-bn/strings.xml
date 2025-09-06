@@ -240,8 +240,6 @@
     <string name="stop_night_light">নাইট লাইট বন্ধ করুন</string>
     <string name="night_light_permission_info">নাইট লাইটের জন্য ওভারলে অনুমতি প্রয়োজন</string>
     <string name="night_light_active_description">ব্লু লাইট ফিল্টার বর্তমানে সক্রিয়</string>
-    <string name="persistent_night_light">স্থায়ী নাইট লাইট</string>
-    <string name="persistent_night_light_description">অ্যাপ বন্ধ হয়ে গেলেও নাইট লাইট সক্রিয় থাকে</string>
     <string name="night_light_service_running">নাইট লাইট চলছে</string>
     <string name="night_light_service_stopped">নাইট লাইট বন্ধ হয়েছে</string>
     <string name="night_light_notification_title">🌙 নাইট লাইট সক্রিয়</string>

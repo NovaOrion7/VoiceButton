@@ -258,8 +258,6 @@
     <string name="stop_night_light">Gece Işığını Durdur</string>
     <string name="night_light_permission_info">Gece ışığı için ekran üstü izni gerekli</string>
     <string name="night_light_active_description">Mavi ışık filtresi şu anda aktif</string>
-    <string name="persistent_night_light">Kalıcı Gece Işığı</string>
-    <string name="persistent_night_light_description">Uygulama kapatılsa bile gece ışığı aktif kalır</string>
     <string name="night_light_service_running">Gece ışığı çalışıyor</string>
     <string name="night_light_service_stopped">Gece ışığı durduruldu</string>
     <string name="night_light_notification_title">🌙 Gece Işığı Aktif</string>

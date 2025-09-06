@@ -240,8 +240,6 @@
     <string name="stop_night_light">Detener Luz Nocturna</string>
     <string name="night_light_permission_info">Permiso de superposición requerido para luz nocturna</string>
     <string name="night_light_active_description">El filtro de luz azul está actualmente activo</string>
-    <string name="persistent_night_light">Luz Nocturna Persistente</string>
-    <string name="persistent_night_light_description">La luz nocturna permanece activa incluso cuando se cierra la aplicación</string>
     <string name="night_light_service_running">Luz nocturna en funcionamiento</string>
     <string name="night_light_service_stopped">Luz nocturna detenida</string>
     <string name="night_light_notification_title">🌙 Luz Nocturna Activa</string>

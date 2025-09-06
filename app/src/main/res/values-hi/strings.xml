@@ -240,8 +240,6 @@
     <string name="stop_night_light">नाइट लाइट बंद करें</string>
     <string name="night_light_permission_info">नाइट लाइट के लिए ओवरले अनुमति आवश्यक</string>
     <string name="night_light_active_description">ब्लू लाइट फिल्टर वर्तमान में सक्रिय है</string>
-    <string name="persistent_night_light">स्थायी नाइट लाइट</string>
-    <string name="persistent_night_light_description">ऐप बंद होने पर भी नाइट लाइट सक्रिय रहता है</string>
     <string name="night_light_service_running">नाइट लाइट चल रहा है</string>
     <string name="night_light_service_stopped">नाइट लाइट बंद हो गया</string>
     <string name="night_light_notification_title">🌙 नाइट लाइट सक्रिय</string>

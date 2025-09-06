@@ -259,8 +259,6 @@
     <string name="stop_night_light">ナイトライト停止</string>
     <string name="night_light_permission_info">ナイトライトにはオーバーレイ許可が必要です</string>
     <string name="night_light_active_description">ブルーライトフィルターが現在有効です</string>
-    <string name="persistent_night_light">常時ナイトライト</string>
-    <string name="persistent_night_light_description">アプリを閉じてもナイトライトが有効のままになります</string>
     <string name="night_light_service_running">ナイトライト実行中</string>
     <string name="night_light_service_stopped">ナイトライト停止</string>
     <string name="night_light_notification_title">🌙 ナイトライト有効</string>
