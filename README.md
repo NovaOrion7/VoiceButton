@@ -7,8 +7,16 @@
 ### 🎯 Ana Özellikler
 - **Kalıcı Ses Kontrolü**: Bildirimlerde sürekli + ve - butonları
 - **Widget Desteği**: Ana ekrana ses kontrolü widget'ı ekleyebilme
+- **Gece Işığı (Blue Light Filter)**: Mavi ışığı filtreleyerek göz yorgunluğunu önler
+- **Ekran Üstü Kontroller**: Sürüklenebilir floating butonlar
 - **Çoklu Dil**: Türkçe ve İngilizce desteği
 - **Tema Desteği**: Açık, koyu ve otomatik tema
+
+### 🌙 Göz Sağlığı Özellikleri
+- **Blue Light Filter**: Ayarlanabilir yoğunlukta mavi ışık filtresi
+- **Kalıcı Koruma**: Uygulama kapatılsa bile gece ışığı aktif kalır
+- **Otomatik Başlatma**: Telefon açıldığında otomatik devreye girer
+- **4 Farklı Yoğunluk**: %25, %50, %75, %100 filtre seviyeleri
 
 ### 🎛️ Gelişmiş Ses Kontrolleri
 - **Ses Türleri**: Medya, zil, bildirim, alarm sesi ayrı ayrı kontrol
@@ -52,10 +60,23 @@ git clone https://github.com/ismailSoylu/VoiceButton.git
 
 ## 🎮 Kullanım
 
+### 🔊 Ses Kontrolü
 1. **Servis Başlatma**: "Başlat" butonuna tıklayın
 2. **Ses Kontrolü**: Bildirim panelindeki + ve - butonlarını kullanın
 3. **Profil Seçimi**: Farklı durumlar için ses profilleri seçin
 4. **Widget Ekleme**: Ana ekrana widget ekleyerek hızlı erişim sağlayın
+
+### 🌙 Gece Işığı Kullanımı
+1. **Aktivasyon**: Ayarlar'dan "Gece Işığı" switch'ini açın
+2. **İzin Verme**: Ekran üstü izni için "İzin Ver" butonuna tıklayın
+3. **Yoğunluk Ayarı**: İhtiyacınıza göre filtre yoğunluğunu seçin
+4. **Kalıcı Koruma**: "Kalıcı Gece Işığı" seçeneğini aktif edin
+
+### 💡 Gece Işığı İpuçları
+- Akşam saatlerinde %50-75 yoğunluk önerilir
+- Uyku öncesi %75-100 yoğunluk göz rahatlığı sağlar
+- Gündüz kullanımında %25 yoğunluk yeterlidir
+- Uygulama kapatılsa bile koruma devam eder
 
 ## 🔧 Geliştirici Bilgileri
 
@@ -66,13 +87,18 @@ git clone https://github.com/ismailSoylu/VoiceButton.git
 ## 🎯 Hedef Kitle
 
 - Ses tuşları bozuk telefon kullanıcıları
+- Göz sağlığına dikkat eden kullanıcılar
+- Gece geç saatlerde telefon kullananlar
 - Accessibility gereksinimleri olan kullanıcılar
 - Ses kontrolünde daha fazla seçenek isteyen kullanıcılar
 - Gaming ve medya tüketicileri
+- Bilgisayar başında uzun süre çalışanlar
 
 ## 📈 Gelecek Özellikler
 
 - [ ] Equalizer entegrasyonu
+- [ ] Otomatik gece ışığı zamanlama
+- [ ] Göz yorgunluğu analiz sistemi
 - [ ] Ses kaydı ve analiz
 - [ ] Bulut senkronizasyon
 - [ ] Daha fazla dil desteği

@@ -60,11 +60,28 @@
             android:enabled="true"
             android:exported="false" />
             
+        <!-- Night Light Service -->
+        <service
+            android:name=".NightLightService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+            
         <!-- Volume Change Receiver -->
         <receiver android:name=".VolumeChangeReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.media.VOLUME_CHANGED_ACTION" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- Boot Receiver for auto start -->
+        <receiver android:name=".BootReceiver"
+            android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
             
